@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -180,10 +181,11 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6f6c983caf0c1944db16df8b79cf5be4, type: 2}
+  - {fileID: 2100000, guid: 3697c0ec7156c514e88a52245e949dca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -268,8 +270,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -371,7 +374,7 @@ Terrain:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186955625}
   m_Enabled: 1
-  serializedVersion: 5
+  serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: d582f042f8bdb3b4e9919965c7d99214, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
@@ -394,6 +397,7 @@ Terrain:
   m_ScaleInLightmap: 0.0256
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
+  m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
 --- !u!4 &1186955628
 Transform:
@@ -540,6 +544,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -615,11 +620,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5baf16e8b0d8f64ab7492bf9bc39e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charRigidbody: {fileID: 2039890647}
+  cam: {fileID: 1836019548}
   minimumCharacterSize: 1
   maximumCharacterSize: 5
   characterSize: 1
-  maxMoveSpeed: 5
-  baseMoveAcceleration: 50
-  baseMoveImpuls: 2
-  charRigidbody: {fileID: 2039890647}
-  cam: {fileID: 1836019548}
+  maxAccelerationTime: 3
+  moveSpeed: 5
+  pastMovementStrength: 1
+  currentMovementStrength: 5
