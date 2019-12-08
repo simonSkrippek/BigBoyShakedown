@@ -359,7 +359,7 @@ TerrainCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186955625}
-  m_Material: {fileID: 13400000, guid: 4e6d305522ddf564e9e2220a1e395e3a, type: 2}
+  m_Material: {fileID: 13400000, guid: 189358beb5cbf6d4792db5c9f6e6b4b2, type: 2}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: d582f042f8bdb3b4e9919965c7d99214, type: 2}
   m_EnableTreeColliders: 1
@@ -601,7 +601,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &2039890648
 MonoBehaviour:
@@ -615,4 +615,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5baf16e8b0d8f64ab7492bf9bc39e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  minimumCharacterSize: 1
+  maximumCharacterSize: 5
+  characterSize: 1
+  maxMoveSpeed: 5
+  baseMoveAcceleration: 50
+  baseMoveImpuls: 2
+  charRigidbody: {fileID: 2039890647}
+  cam: {fileID: 1836019548}
