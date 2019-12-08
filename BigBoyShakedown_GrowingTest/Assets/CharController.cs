@@ -18,9 +18,9 @@ public class CharController : MonoBehaviour
 
     #region movement
     [Header("character size")]
-    [Tooltip("minimum size of character;")]
+    [Tooltip("minimum size of character")]
     [SerializeField] private int minimumCharacterSize;
-    [Tooltip("maximum size of character;")]
+    [Tooltip("maximum size of character")]
     [SerializeField] private int maximumCharacterSize;
     [Tooltip("current size of character; DO NOT CHANGE")]
     [SerializeField] private int characterSize;
@@ -29,6 +29,9 @@ public class CharController : MonoBehaviour
     private Dictionary<Vector2, float> previousDirections;
     private float timeAcceleratingInDirection;
     private float maxAccelerationTime;
+    [Header("movement speed")]
+    [Tooltip("")]
+    [SerializeField] private int moveSpeed;
 
 
     #endregion
@@ -37,7 +40,7 @@ public class CharController : MonoBehaviour
     {
         cameraForward = cam.transform.forward; // Set forward to equal the camera's forward vector
         cameraForward.y = 0; // make sure y is 0
-        cameraForward = Vector3.Normalize(cameraForward); // make sure the length of vector is set to a max of 1.0
+        cameraForward.Normalize(); // make sure the length of vector is set to a max of 1.0
         cameraRight = Quaternion.Euler(new Vector3(0, 90, 0)) * cameraForward; // set the right-facing vector to be facing right relative to the camera's forward vector
 
         previousDirections = new Dictionary<Vector2, float>();
@@ -61,37 +64,36 @@ public class CharController : MonoBehaviour
             previousDirections.Add(currentMovement, characterSize);
             currentMovement = newCurrentMovement;
         }
+
+        if (Input.mouseScrollDelta.y != 0) ChangeCharacterSize(Input.mouseScrollDelta.y);
+    }
+    private void ChangeCharacterSize(float y)
+    {
+        if (y > 0 && characterSize < maximumCharacterSize) characterSize++;        
+        else if (characterSize > minimumCharacterSize) characterSize--;        
     }
 
     private void FixedUpdate()
     {
         ApplyMovement();
-        //CapMovement();
     }
-
-    private void CapMovement()
-    {
-        if (charRigidbody.velocity.x > maxMoveSpeed) charRigidbody.velocity = new Vector3(maxMoveSpeed, 0f, charRigidbody.velocity.z);
-        if (charRigidbody.velocity.z > maxMoveSpeed) charRigidbody.velocity = new Vector3(charRigidbody.velocity.x, 0f, maxMoveSpeed);
-    }
-
     private void ApplyMovement()
     {
-        if (currentMovement != Vector2.zero)
+        Vector2 pastMovement = new Vector2();
+        foreach (var keyValuePair in previousDirections)
         {
-            //charRigidbody.velocity = Vector3.zero;
+            Vector2 direction = keyValuePair.Key;
+            float time = keyValuePair.Value;
+        }
 
-            Vector3 rightMovement = cameraRight * Time.deltaTime * currentMovement.x; 
-            Vector3 upMovement = cameraForward * Time.deltaTime * currentMovement.y; 
+        Vector3 rightMovement = cameraRight;
+        Vector3 upMovement = cameraForward;
 
-            Vector3 heading = rightMovement + upMovement;
-            transform.forward = Vector3.Normalize(heading);
+        Vector3 heading = rightMovement + upMovement; 
 
-            charRigidbody.AddForce(heading * baseMoveImpuls, ForceMode.VelocityChange);
-            //charRigidbody.AddForce(heading * baseMoveAcceleration * (float)characterSize, ForceMode.Acceleration);
+        transform.forward = heading.normalized; 
 
-            currentMovement = Vector2.zero;
-        }        
+        transform.position += heading;
     }
 
     void Move()
