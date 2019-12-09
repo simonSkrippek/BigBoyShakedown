@@ -510,6 +510,7 @@ GameObject:
   - component: {fileID: 2039890643}
   - component: {fileID: 2039890647}
   - component: {fileID: 2039890648}
+  - component: {fileID: 2039890649}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -615,7 +616,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2039890642}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5baf16e8b0d8f64ab7492bf9bc39e63, type: 3}
   m_Name: 
@@ -629,3 +630,22 @@ MonoBehaviour:
   moveSpeed: 3
   pastMovementStrength: 1
   currentMovementStrength: 5
+--- !u!114 &2039890649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039890642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f08a50c724cd80488183ad5509c920f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charRigidbody: {fileID: 2039890647}
+  cam: {fileID: 1836019548}
+  minimumCharacterSize: 1
+  maximumCharacterSize: 5
+  characterSize: 1
+  maxAccelerationTime: 1
+  moveSpeed: 8
