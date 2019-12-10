@@ -14,7 +14,7 @@ public class Billboard : MonoBehaviour
 
     bool changeInProgress = false;
     int framesChangeInProgress = 0;
-    [Header("change length")][Tooltip("time score changes in frames")]
+    [Header("change length")][Tooltip("length of score change animation in fixed frames; project runs at 50 fixed frames a second")]
     [SerializeField] int scoreChangeLength = 3;
     
 
