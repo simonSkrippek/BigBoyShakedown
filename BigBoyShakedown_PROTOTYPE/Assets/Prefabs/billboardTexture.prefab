@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5863295604042081345}
   - component: {fileID: 5863295604042081346}
-  - component: {fileID: 5863295604042081344}
+  - component: {fileID: 7730868164230471077}
   m_Layer: 0
   m_Name: billboardTexture
   m_TagString: Untagged
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5863295604042081344
+--- !u!114 &7730868164230471077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,10 +90,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5863295604042081347}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 451401926dcbbc2469cb139c29ba0234, type: 3}
+  m_Script: {fileID: 11500000, guid: 339b3448417986d4d80cc8c4b7df1a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
-  line: {fileID: 0}
-  scoreZones: []
-  scoreChangeLength: 3
+  worldStartPoint: {fileID: 0}
+  worldEndPoint: {fileID: 0}
+  coordinateStartPoint: {x: 0, y: 0}
+  coordinateEndPoint: {x: 120, y: 10}
+  graphPrefab: {fileID: 5837025938213827101, guid: 7dd236cc5dc09e746a0aa3c4629508dc,
+    type: 3}

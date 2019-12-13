@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class scoreZone : MonoBehaviour
 {
     [SerializeField] string CHARACTER_TAG;
     [SerializeField] float scoreChange;
 
-    public event Action<float> OnCharacterEnter;
+    public event Action<int, float> OnCharacterEnter;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class scoreZone : MonoBehaviour
     {
         if (other.gameObject.CompareTag(CHARACTER_TAG))
         {
-            OnCharacterEnter.Invoke(scoreChange);
+            OnCharacterEnter?.Invoke(other.gameObject.GetComponent<PlayerInput>().playerIndex, scoreChange);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ public class MultiplayerManager : MonoBehaviour
     [Tooltip("default material that will be assigned if not enough materials in playerColors")]
     [SerializeField] private Material defaultMaterial;
 
+    public event Action<Material> NewPlayerJoinedEvent; 
 
     private void Awake()
     {
@@ -21,8 +23,16 @@ public class MultiplayerManager : MonoBehaviour
 
     private void OnPlayerJoinedHandler(PlayerInput input)
     {
-        Debug.Log("PlayerJoined");
+        var newPlayerMaterial = playerColors.Length > input.playerIndex? playerColors[input.playerIndex] : defaultMaterial;
+        input.gameObject.GetComponent<MeshRenderer>().material = newPlayerMaterial;
 
-        input.gameObject.GetComponent<MeshRenderer>().material = playerColors.Length > input.playerIndex? playerColors[input.playerIndex] : defaultMaterial;
+        input.gameObject.transform.position = new Vector3(20,3,20);
+
+        NewPlayerJoinedEvent?.Invoke(newPlayerMaterial);
     }
+
+    //public int GetPlayerIndex(PlayerInput input)
+    //{
+    //    input.playerIndex
+    //}
 }
