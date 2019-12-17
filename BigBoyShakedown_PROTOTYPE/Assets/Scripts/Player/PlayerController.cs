@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(PlayerInput), typeof(Rigidbody))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     #region camera
     private Camera cam;
@@ -27,6 +27,17 @@ public class PlayerMovement : MonoBehaviour
     [Header("movement speed")]
     [Tooltip("base movement speed")]
     [SerializeField] private float moveSpeed;
+    #endregion
+
+    #region combat
+    [Header("Combat"), Tooltip("base attack range of the character"), SerializeField]
+    private float range = 1.5f;
+    [Tooltip("base attack speed"), SerializeField]
+    private float timeBetweenPunches = 1f;
+    [Tooltip("attack angle for normal punches"), SerializeField]
+    float attackAngle = 60;
+    private float timeToNextPunch = 1.5f;
+
     #endregion
 
     #region components
@@ -76,6 +87,68 @@ public class PlayerMovement : MonoBehaviour
     private void HandlePunchAction()
     {
         Debug.Log("punch");
+        Collider[] results = Physics.OverlapSphere(this.transform.position, range, LayerMask.GetMask(new string[] {"test" }));
+
+        Collider closestCollider = null;
+        float distanceToClosestCollider = float.MaxValue;
+        foreach (var item in results)
+        {
+            if (item.transform.root != this.transform.root)
+            {
+                var vectorToCollider3D = item.ClosestPoint(this.transform.root.position) - this.transform.root.position;
+                var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
+                vectorToCollider.Normalize();
+
+                var facing3D = this.transform.forward;
+                var facing = new Vector2(facing3D.x, facing3D.z);
+                facing.Normalize();
+
+                var distanceToCollider = (facing - vectorToCollider).magnitude;
+
+                if (distanceToCollider < distanceToClosestCollider)
+                {
+                    distanceToClosestCollider = distanceToCollider;
+                    closestCollider = item;
+                }
+            }
+        }
+
+        if (closestCollider != null)
+        {
+            var newForward = closestCollider.transform.position - this.transform.position;
+            newForward.y = 0;
+            this.transform.forward = newForward.normalized;
+            currentMovement = Vector2.zero;
+        }
+        else
+        {
+            Debug.Log("noone in range");
+        }
+        
+        var maxDistance = Mathf.Sin(attackAngle * Mathf.Deg2Rad) / Mathf.Sin((180 - attackAngle) * Mathf.Deg2Rad / 2);
+        //Debug.Log("maximum distance: " + maxDistance);
+        foreach (var item in results)
+        {
+            if (item.transform.root != this.transform.root)
+            {
+                var vectorToCollider3D = item.ClosestPoint(this.transform.root.position) - this.transform.root.position;
+                var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
+                vectorToCollider.Normalize();
+
+                var facing3D = this.transform.forward;
+                var facing = new Vector2(facing3D.x, facing3D.z);
+                facing.Normalize();
+
+                var distanceToCollider = (facing - vectorToCollider).magnitude;
+                //Debug.Log("distance to collider: " + distanceToCollider);
+
+                if (distanceToCollider < maxDistance)
+                {
+                    Debug.Log("We punched em: " + item.name);
+                }
+            }
+        }
+
     }
     private void HandleResizeAction(float y)
     {

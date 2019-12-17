@@ -13,6 +13,12 @@ public class MultiplayerManager : MonoBehaviour
     [SerializeField] private Material[] playerColors;
     [Tooltip("default material that will be assigned if not enough materials in playerColors")]
     [SerializeField] private Material defaultMaterial;
+    [Header("player rings")]
+    [Tooltip("array of colors that will be assigned to player rings, in order of joining")]
+    [SerializeField]
+    private Material[] playerRings;
+    [Tooltip("default material that will be assigned if not enough materials in playerRings")]
+    [SerializeField] private Material defaultRingMaterial;
 
     public event Action<Material> NewPlayerJoinedEvent; 
 
@@ -23,10 +29,14 @@ public class MultiplayerManager : MonoBehaviour
 
     private void OnPlayerJoinedHandler(PlayerInput input)
     {
-        var newPlayerMaterial = playerColors.Length > input.playerIndex? playerColors[input.playerIndex] : defaultMaterial;
-        input.gameObject.GetComponent<MeshRenderer>().material = newPlayerMaterial;
+        var allComponents = input.gameObject.GetComponent<PLayerComponents>();
 
-        input.gameObject.transform.position = new Vector3(20,3,20);
+        var newPlayerMaterial = playerColors.Length > input.playerIndex? playerColors[input.playerIndex] : defaultMaterial;
+        allComponents.modelMeshRenderer.material = newPlayerMaterial;
+        var newRingMaterial = playerRings.Length > input.playerIndex ? playerRings[input.playerIndex] : defaultRingMaterial;
+        allComponents.quadMeshRenderer.material = newRingMaterial;
+
+        input.gameObject.transform.position = new Vector3(20,10,20);
 
         NewPlayerJoinedEvent?.Invoke(newPlayerMaterial);
     }

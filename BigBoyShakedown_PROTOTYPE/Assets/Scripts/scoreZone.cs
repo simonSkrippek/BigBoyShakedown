@@ -20,7 +20,7 @@ public class scoreZone : MonoBehaviour
     {
         if (other.gameObject.CompareTag(CHARACTER_TAG))
         {
-            OnCharacterEnter?.Invoke(other.gameObject.GetComponent<PlayerInput>().playerIndex, scoreChange);
+            OnCharacterEnter?.Invoke(other.transform.root.GetComponent<PlayerInput>().playerIndex, scoreChange);
         }
     }
 }
