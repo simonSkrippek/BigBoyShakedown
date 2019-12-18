@@ -34,6 +34,11 @@ public class PlayerController : MonoBehaviour
     private PLayerComponents components;
     #endregion
 
+    #region models
+    [Header("Models"), Tooltip("character models, mapped to stances \n REQUIRED: Punch, Idle"), SerializeField]
+    private Mesh punchingModel, idleModel;
+    #endregion
+
     private void Awake()
     {
         components = this.transform.root.GetComponent<PLayerComponents>();
@@ -83,9 +88,9 @@ public class PlayerController : MonoBehaviour
             Debug.Log("punch");
             readyToPunch = false;
             ChangeModel("Punch");
-            timeToNextPunch = PlayerMetrics.PlayerPunchSpeed[characterSize];
+            timeToNextPunch = PlayerMetrics.PlayerPunchSpeed[characterSize-1];
 
-            Collider[] results = Physics.OverlapSphere(this.transform.position, PlayerMetrics.PlayerPunchRange[characterSize], LayerMask.GetMask(new string[] { "Player", "test" }));
+            Collider[] results = Physics.OverlapSphere(this.transform.position, PlayerMetrics.PlayerPunchRange[characterSize-1], LayerMask.GetMask(new string[] { "Player", "test" }));
             var closestCollider = SnapToClosest(results, "Player");
             if (closestCollider != null)
             {
@@ -206,7 +211,7 @@ public class PlayerController : MonoBehaviour
     {
         if (sizeChanged)
         {
-            var position = new Vector3(this.transform.position.x, characterSize / 2f + .3f, this.transform.position.z);
+            var position = new Vector3(this.transform.position.x, (characterSize-1) / 2f + .3f, this.transform.position.z);
             this.transform.localScale = new Vector3(characterSize, characterSize, characterSize);
             this.transform.position = position;
             sizeChanged = false;
@@ -218,7 +223,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentMovement != Vector2.zero)
         {
-            Vector2 currentMovementScaled = currentMovement * PlayerMetrics.PlayerMoveSpeed[characterSize] * Time.fixedDeltaTime * 5f;
+            Vector2 currentMovementScaled = currentMovement * PlayerMetrics.PlayerMoveSpeed[characterSize-1] * Time.fixedDeltaTime * 5f;
 
             Vector3 rightMovement = cameraRight * currentMovementScaled.x;
             Vector3 upMovement = cameraForward * currentMovementScaled.y;
@@ -242,6 +247,7 @@ public class PlayerController : MonoBehaviour
             if (timeToNextPunch <= 0)
             {
                 readyToPunch = true;
+                ChangeModel("Idle");
             }
         }
     }
@@ -254,11 +260,15 @@ public class PlayerController : MonoBehaviour
     
     private void ChangeModel(string newState)
     {
+        Mesh mesh;
         switch (newState)
         {
             case "Punch":
-
-                break;
+                components.modelMeshFilter.mesh = punchingModel;
+                return;
+            case "Idle":
+                components.modelMeshFilter.mesh = idleModel;
+                return;
         }
     }
 }

@@ -7,7 +7,8 @@ public class PLayerComponents : MonoBehaviour
 {
     public PlayerInput playerInput;
     new public Rigidbody rigidbody;
-    public SkinnedMeshRenderer modelMeshRenderer;
+    public MeshRenderer modelMeshRenderer;
+    public MeshFilter modelMeshFilter;
     public MeshRenderer quadMeshRenderer;
     public BoxCollider modelBoxCollider;
 }
