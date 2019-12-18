@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerComponents : MonoBehaviour
 {
+    public PlayerController playerController;
     public PlayerInput playerInput;
     new public Rigidbody rigidbody;
     public MeshRenderer modelMeshRenderer;

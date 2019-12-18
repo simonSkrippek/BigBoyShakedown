@@ -23,6 +23,19 @@ public class PlayerMetrics : ScriptableObject
 
     [Space()]
 
+    #region score
+
+    [Header("Score Stages"), Tooltip("monetary value associated with each plasyerSize"), SerializeField]
+    private int[] playerScore = { 0, 500, 900, 1500, 2000, 3500 };
+    public int[] PlayerScore { get => playerScore; }
+
+    [Header("Start Score"), Tooltip("monetary value player starts on when joining the game"), SerializeField]
+    private int playerStartScore = 600;
+    public int PlayerStartScore { get => playerStartSize; }
+    #endregion
+
+    [Space()]
+
     #region stats
     #region movement
     [Header("Scale"), Tooltip("real world scale of player characters in all stages"), SerializeField]
@@ -48,8 +61,8 @@ public class PlayerMetrics : ScriptableObject
 
 
     [Header("Damage"), Tooltip("damage player does in all stages"), SerializeField]
-    private float[] playerDamage = { 40, 50, 80, 120, 200 };
-    public float[] PlayerDamage { get => playerDamage; }
+    private int[] playerDamage = { 40, 50, 80, 120, 200 };
+    public int[] PlayerDamage { get => playerDamage; }
     #endregion
     #endregion
 

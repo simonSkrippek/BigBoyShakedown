@@ -7,9 +7,9 @@ using UnityEngine.InputSystem;
 public class scoreZone : MonoBehaviour
 {
     [SerializeField] string CHARACTER_TAG;
-    [SerializeField] float scoreChange;
+    [SerializeField] int scoreChange;
 
-    public event Action<int, float> OnCharacterEnter;
+    public event Action<int, int> OnCharacterEnter;
     // Start is called before the first frame update
     void Start()
     {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4302894775866835071}
   - component: {fileID: 8291446144460906577}
   - component: {fileID: 3370125180528285153}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 7856089622901879779}
   - component: {fileID: 7856089622901879774}
   - component: {fileID: 7856089622901879773}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Quad
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 1169597467237479166}
   - component: {fileID: 7624820877241095835}
   - component: {fileID: 5243005442181016620}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlayerGirl
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d942799e2cde1243b65ac6e7c16491c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 7624820877241095835}
   playerInput: {fileID: 4901649409185602458}
   rigidbody: {fileID: 1169597467237479166}
   modelMeshRenderer: {fileID: 8291446144460906577}

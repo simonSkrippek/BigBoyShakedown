@@ -14,7 +14,7 @@ public class BillboardManager : MonoBehaviour
     [Header("corner points")]
     [Tooltip("empty game object used to mark bottom left & top right of the billboard; use gizmo script")]
     [SerializeField] private Transform worldStartPoint, worldEndPoint;
-    [Header("Coordinat3e Points")]
+    [Header("Coordinate Points")]
     [Tooltip("vector2s to describe the coordinate system; min & max values")]
     [SerializeField] private Vector2 coordinateStartPoint, coordinateEndPoint;
     private CoordinateSystem coordinateSystem;
@@ -44,7 +44,6 @@ public class BillboardManager : MonoBehaviour
             zone.OnCharacterEnter += ScoreChangedEventHandler;
         }
     }
-
     private void InitialiseCoordinateSystem()
     {
         coordinateSystem = new CoordinateSystem((Vector2)worldStartPoint.localPosition, (Vector2)worldEndPoint.localPosition, coordinateStartPoint, coordinateEndPoint);
@@ -59,9 +58,10 @@ public class BillboardManager : MonoBehaviour
         Debug.Log("GraphsInitialized");
     }
     
-    private void NewPlayerJoinedEventHandler(Material material)
+    private void NewPlayerJoinedEventHandler(PlayerController player, Material material)
     {
         AddGraph(material);
+        player.scoreChangedEvent += ScoreChangedEventHandler;
     }
     private void AddGraph(Material graphMaterial)
     {
@@ -78,7 +78,6 @@ public class BillboardManager : MonoBehaviour
     {
         UpdateGraphs();
     }
-
     private void UpdateGraphs()
     {
         foreach (var item in graphManagers)
@@ -87,7 +86,7 @@ public class BillboardManager : MonoBehaviour
         }
     }
 
-    private void ScoreChangedEventHandler(int playerIndex, float scoreChange)
+    private void ScoreChangedEventHandler(int playerIndex, int scoreChange)
     {
         graphManagers[playerIndex].ChangeBy(scoreChange);
     }

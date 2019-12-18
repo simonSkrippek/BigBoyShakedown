@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
     [Header("character size")]
     [Tooltip("current size of character; DO NOT CHANGE")]
     [SerializeField] private int characterSize = 1;
+    public int CharacterSize { get => characterSize; set => characterSize = value; }
     private bool sizeChanged = false;
+    public bool SizeChanged { get => sizeChanged; set => sizeChanged = value; }
 
     private Vector2 currentMovement;
     #endregion
@@ -30,15 +32,25 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region score
+    private int score;
+    #endregion
+
     #region components
     private PlayerComponents components;
     [Header("Player Metrics"), Tooltip("default player metrics; REQUIRED"), SerializeField]
     private PlayerMetrics playerMetrics;
+
+    private int playerIndex;
     #endregion
 
     #region models
     [Header("Models"), Tooltip("character models, mapped to stances \n REQUIRED: Punch, Idle"), SerializeField]
     private Mesh punchingModel, idleModel;
+    #endregion
+
+    #region events
+    public event Action<int, int> scoreChangedEvent;
     #endregion
 
     private void Awake()
@@ -52,9 +64,10 @@ public class PlayerController : MonoBehaviour
         cameraForward.Normalize(); // make sure the length of vector is set to a max of 1.0
         cameraRight = Quaternion.Euler(new Vector3(0, 90, 0)) * cameraForward; // set the right-facing vector to be facing right relative to the camera's forward vector
 
-        LoadPlayerMetrices();
+        LoadPlayerMetrics();
 
         components.playerInput.onActionTriggered += HandleInputAction;
+        playerIndex = components.playerInput.playerIndex;
     }
 
     #region handleInput
@@ -70,12 +83,6 @@ public class PlayerController : MonoBehaviour
                 case "Punch":
                     HandlePunchAction();
                     break;
-                case "Grow":
-                    HandleResizeAction(1f);
-                    break;
-                case "Shrink":
-                    HandleResizeAction(-1f);
-                    break;
             }
         }
         else if (context.canceled)
@@ -88,20 +95,22 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
     private void HandleMoveAction(Vector2 movement)
     {
         currentMovement = movement;
     }
+
     private void HandlePunchAction()
     {
         if (readyToPunch)
         {
             Debug.Log("punch");
             readyToPunch = false;
+            timeToNextPunch = playerMetrics.PlayerPunchSpeed[CharacterSize-1];
             ChangeModel("Punch");
-            timeToNextPunch = playerMetrics.PlayerPunchSpeed[characterSize-1];
 
-            Collider[] results = Physics.OverlapSphere(this.transform.position, playerMetrics.PlayerPunchRange[characterSize-1], LayerMask.GetMask(new string[] { "Player", "test" }));
+            Collider[] results = Physics.OverlapSphere(this.transform.position, playerMetrics.PlayerPunchRange[CharacterSize-1], LayerMask.GetMask(new string[] { "Player", "test" }));
             var closestCollider = SnapToClosest(results, "Player");
             if (closestCollider != null)
             {
@@ -121,13 +130,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.Log("Cooldown");
-        }
-    }
-    private void ApplyHit(List<Transform> enemiesHit)
-    {
-        foreach (var item in enemiesHit)
-        {
-            Debug.Log("We punched em: " + item.name);
         }
     }
     private List<Transform> GetAllEnemiesInCone(Collider[] results)
@@ -150,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
                 if (distanceToCollider < maxDistance)
                 {
-                    enemiesHit.Add(item.transform);
+                    enemiesHit.Add(item.transform.root);
                 }
             }
         }
@@ -176,7 +178,12 @@ public class PlayerController : MonoBehaviour
                 var distanceToCollider = (facing - vectorToCollider).magnitude;
                 //in case of higher importance or being closer to view direction, note as new closest
                 int priorityLayer = LayerMask.NameToLayer(priority);
-                if (closestCollider == null || (item.gameObject.layer == closestCollider.gameObject.layer))
+                if (closestCollider == null)
+                {
+                    distanceToClosestCollider = distanceToCollider;
+                    closestCollider = item;
+                }
+                else if (item.gameObject.layer == closestCollider.gameObject.layer)
                 {
                     if (distanceToCollider < distanceToClosestCollider)
                     {
@@ -197,21 +204,24 @@ public class PlayerController : MonoBehaviour
         }
         return closestCollider;
     }
-
-    private void HandleResizeAction(float y)
+    private void ApplyHit(List<Transform> enemiesHit)
     {
-        if (y > 0 && characterSize < playerMetrics.PlayerMaximumSize)
+        foreach (var item in enemiesHit)
         {
-            characterSize++;
-            sizeChanged = true;
-        }
-        else if (y < 0 && characterSize > playerMetrics.PlayerMinimumSize)
-        {
-            characterSize--;
-            sizeChanged = true;
+            if (item.CompareTag("Player"))
+            {
+                var components = item.GetComponent<PlayerComponents>();
+                components.playerController.TakeDamage(this.transform, characterSize);
+                var scoreChange = playerMetrics.PlayerDamage[characterSize - 1];
+                this.score += scoreChange;
+                scoreChangedEvent?.Invoke(playerIndex, scoreChange);
+            }
+            Debug.Log("We punched em: " + item.name);
         }
     }
+
     #endregion
+
     #region fixedUpdate
     private void FixedUpdate()
     {
@@ -220,12 +230,12 @@ public class PlayerController : MonoBehaviour
     }
     private void ApplySize()
     {
-        if (sizeChanged)
+        if (SizeChanged)
         {
-            var position = new Vector3(this.transform.position.x, (characterSize-1) / 2f + .3f, this.transform.position.z);
-            this.transform.localScale = new Vector3(characterSize, characterSize, characterSize);
+            var position = new Vector3(this.transform.position.x, CharacterSize / 2f + .3f, this.transform.position.z);
+            this.transform.localScale = new Vector3(CharacterSize, CharacterSize, CharacterSize);
             this.transform.position = position;
-            sizeChanged = false;
+            SizeChanged = false;
 
             currentMovement = Vector2.zero;
         }
@@ -234,7 +244,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentMovement != Vector2.zero)
         {
-            Vector2 currentMovementScaled = currentMovement * playerMetrics.PlayerMoveSpeed[characterSize-1] * Time.fixedDeltaTime * 5f;
+            Vector2 currentMovementScaled = currentMovement * playerMetrics.PlayerMoveSpeed[CharacterSize-1] * Time.fixedDeltaTime * 5f;
 
             Vector3 rightMovement = cameraRight * currentMovementScaled.x;
             Vector3 upMovement = cameraForward * currentMovementScaled.y;
@@ -242,7 +252,7 @@ public class PlayerController : MonoBehaviour
             Vector3 heading = rightMovement + upMovement;
 
             if (heading != Vector3.zero)
-            {
+            { 
                 transform.forward = heading.normalized;
                 transform.position += heading;
             }
@@ -261,12 +271,28 @@ public class PlayerController : MonoBehaviour
                 ChangeModel("Idle");
             }
         }
+        CheckSize();
+    }
+    private void CheckSize()
+    {
+        if (score >= playerMetrics.PlayerScore[characterSize - 1])
+        {
+            characterSize -= 1;
+            SizeChanged = true;
+        }
+        else if (score > playerMetrics.PlayerScore[characterSize])
+        {
+            characterSize += 1;
+            SizeChanged = true;
+        }
     }
     #endregion
 
-    private void LoadPlayerMetrices()
+    private void LoadPlayerMetrics()
     {
-        characterSize = playerMetrics.PlayerStartSize;
+        CharacterSize = playerMetrics.PlayerStartSize;
+        score = playerMetrics.PlayerStartScore;
+        scoreChangedEvent?.Invoke(playerIndex, score);
     }
     
     private void ChangeModel(string newState)
@@ -281,5 +307,19 @@ public class PlayerController : MonoBehaviour
                 components.modelMeshFilter.mesh = idleModel;
                 return;
         }
+    }
+
+    public void TakeDamage(Transform origin, int originSize)
+    {
+        this.transform.Translate(origin.forward);
+        var scoreChange = -playerMetrics.PlayerDamage[originSize - 1];
+        this.score += scoreChange;
+        scoreChangedEvent?.Invoke(playerIndex, scoreChange*100);
+        if (score < 0) Die();
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player dies");
     }
 }
