@@ -15,37 +15,29 @@ public class PlayerController : MonoBehaviour
 
     #region movement
     [Header("character size")]
-    [Tooltip("minimum size of character; CANNOT BE ZERO")]
-    [SerializeField] private int minimumCharacterSize;
-    [Tooltip("maximum size of character")]
-    [SerializeField] private int maximumCharacterSize;
     [Tooltip("current size of character; DO NOT CHANGE")]
     [SerializeField] private int characterSize = 1;
     private bool sizeChanged = false;
 
     private Vector2 currentMovement;
-    [Header("movement speed")]
-    [Tooltip("base movement speed")]
-    [SerializeField] private float moveSpeed;
     #endregion
 
     #region combat
-    [Header("Combat"), Tooltip("base attack range of the character"), SerializeField]
-    private float range = 1.5f;
-    [Tooltip("base attack speed"), SerializeField]
-    private float timeBetweenPunches = 1f;
-    [Tooltip("attack angle for normal punches"), SerializeField]
+    [Header("Combat"), Tooltip("attack angle for normal punches"), SerializeField]
     float attackAngle = 60;
     private float timeToNextPunch = 1.5f;
+    private bool readyToPunch = true;
 
     #endregion
 
     #region components
-    private PlayerInput playerInput;
+    private PLayerComponents components;
     #endregion
 
     private void Awake()
     {
+        components = this.transform.root.GetComponent<PLayerComponents>();
+
         cam = Camera.main;
 
         cameraForward = cam.transform.forward; // Set forward to equal the camera's forward vector
@@ -53,12 +45,12 @@ public class PlayerController : MonoBehaviour
         cameraForward.Normalize(); // make sure the length of vector is set to a max of 1.0
         cameraRight = Quaternion.Euler(new Vector3(0, 90, 0)) * cameraForward; // set the right-facing vector to be facing right relative to the camera's forward vector
 
-        characterSize = 1;
+        LoadPlayerMetrices();
 
-        playerInput = GetComponent<PlayerInput>();
-        playerInput.onActionTriggered += HandleInputAction;
+        components.playerInput.onActionTriggered += HandleInputAction;
     }
 
+    #region handleInput
     private void HandleInputAction(CallbackContext context)
     {
         if (context.performed)
@@ -86,84 +78,125 @@ public class PlayerController : MonoBehaviour
     }
     private void HandlePunchAction()
     {
-        Debug.Log("punch");
-        Collider[] results = Physics.OverlapSphere(this.transform.position, range, LayerMask.GetMask(new string[] {"test" }));
+        if (readyToPunch)
+        {
+            Debug.Log("punch");
+            readyToPunch = false;
+            ChangeModel("Punch");
+            timeToNextPunch = PlayerMetrics.PlayerPunchSpeed[characterSize];
 
+            Collider[] results = Physics.OverlapSphere(this.transform.position, PlayerMetrics.PlayerPunchRange[characterSize], LayerMask.GetMask(new string[] { "Player", "test" }));
+            var closestCollider = SnapToClosest(results, "Player");
+            if (closestCollider != null)
+            {
+                var newForward = closestCollider.transform.position - this.transform.position;
+                newForward.y = 0;
+                this.transform.forward = newForward.normalized;
+                currentMovement = Vector2.zero;
+            }
+            else
+            {
+                Debug.Log("noone in range");
+                return;
+            }
+            var enemiesHit = GetAllEnemiesInCone(results);
+            ApplyHit(enemiesHit);
+        }
+        else
+        {
+            Debug.Log("Cooldown");
+        }
+    }
+    private void ApplyHit(List<Transform> enemiesHit)
+    {
+        foreach (var item in enemiesHit)
+        {
+            Debug.Log("We punched em: " + item.name);
+        }
+    }
+    private List<Transform> GetAllEnemiesInCone(Collider[] results)
+    {
+        var enemiesHit = new List<Transform>();
+        var maxDistance = Mathf.Sin(attackAngle * Mathf.Deg2Rad) / Mathf.Sin((180 - attackAngle) * Mathf.Deg2Rad / 2);
+        foreach (var item in results)
+        {
+            if (item.transform.root != this.transform.root)
+            {
+                var vectorToCollider3D = item.ClosestPoint(this.transform.root.position) - this.transform.root.position;
+                var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
+                vectorToCollider.Normalize();
+
+                var facing3D = this.transform.forward;
+                var facing = new Vector2(facing3D.x, facing3D.z);
+                facing.Normalize();
+
+                var distanceToCollider = (facing - vectorToCollider).magnitude;
+
+                if (distanceToCollider < maxDistance)
+                {
+                    enemiesHit.Add(item.transform);
+                }
+            }
+        }
+        return enemiesHit;
+    }
+    private Collider SnapToClosest(Collider[] results, string priority)
+    {
         Collider closestCollider = null;
         float distanceToClosestCollider = float.MaxValue;
         foreach (var item in results)
         {
             if (item.transform.root != this.transform.root)
             {
+                //creating vector to enemy in range
                 var vectorToCollider3D = item.ClosestPoint(this.transform.root.position) - this.transform.root.position;
                 var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
                 vectorToCollider.Normalize();
-
+                //tracking view direction
                 var facing3D = this.transform.forward;
                 var facing = new Vector2(facing3D.x, facing3D.z);
                 facing.Normalize();
 
                 var distanceToCollider = (facing - vectorToCollider).magnitude;
-
-                if (distanceToCollider < distanceToClosestCollider)
+                //in case of higher importance or being closer to view direction, note as new closest
+                int priorityLayer = LayerMask.NameToLayer(priority);
+                if (closestCollider == null || (item.gameObject.layer == closestCollider.gameObject.layer))
+                {
+                    if (distanceToCollider < distanceToClosestCollider)
+                    {
+                        distanceToClosestCollider = distanceToCollider;
+                        closestCollider = item;
+                    }
+                }
+                else if (item.gameObject.layer == priorityLayer)
                 {
                     distanceToClosestCollider = distanceToCollider;
                     closestCollider = item;
                 }
-            }
-        }
-
-        if (closestCollider != null)
-        {
-            var newForward = closestCollider.transform.position - this.transform.position;
-            newForward.y = 0;
-            this.transform.forward = newForward.normalized;
-            currentMovement = Vector2.zero;
-        }
-        else
-        {
-            Debug.Log("noone in range");
-        }
-        
-        var maxDistance = Mathf.Sin(attackAngle * Mathf.Deg2Rad) / Mathf.Sin((180 - attackAngle) * Mathf.Deg2Rad / 2);
-        //Debug.Log("maximum distance: " + maxDistance);
-        foreach (var item in results)
-        {
-            if (item.transform.root != this.transform.root)
-            {
-                var vectorToCollider3D = item.ClosestPoint(this.transform.root.position) - this.transform.root.position;
-                var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
-                vectorToCollider.Normalize();
-
-                var facing3D = this.transform.forward;
-                var facing = new Vector2(facing3D.x, facing3D.z);
-                facing.Normalize();
-
-                var distanceToCollider = (facing - vectorToCollider).magnitude;
-                //Debug.Log("distance to collider: " + distanceToCollider);
-
-                if (distanceToCollider < maxDistance)
+                else
                 {
-                    Debug.Log("We punched em: " + item.name);
+                    continue;
                 }
             }
         }
-
+        return closestCollider;
     }
+
     private void HandleResizeAction(float y)
     {
-        if (y > 0 && characterSize < maximumCharacterSize)
+        if (y > 0 && characterSize < PlayerMetrics.PlayerMaximumSize)
         {
             characterSize++;
             sizeChanged = true;
         }
-        else if (y < 0 && characterSize > minimumCharacterSize)
+        else if (y < 0 && characterSize > PlayerMetrics.PlayerMinimumSize)
         {
             characterSize--;
             sizeChanged = true;
         }
     }
-
+    #endregion
+    #region fixedUpdate
     private void FixedUpdate()
     {
         ApplySize();
@@ -185,7 +218,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentMovement != Vector2.zero)
         {
-            Vector2 currentMovementScaled = currentMovement * (moveSpeed - characterSize) * Time.fixedDeltaTime;
+            Vector2 currentMovementScaled = currentMovement * PlayerMetrics.PlayerMoveSpeed[characterSize] * Time.fixedDeltaTime * 5f;
 
             Vector3 rightMovement = cameraRight * currentMovementScaled.x;
             Vector3 upMovement = cameraForward * currentMovementScaled.y;
@@ -199,5 +232,33 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region update
+    private void Update()
+    {
+        if (!readyToPunch)
+        {
+            timeToNextPunch -= Time.deltaTime;
+            if (timeToNextPunch <= 0)
+            {
+                readyToPunch = true;
+            }
+        }
+    }
+    #endregion
 
+    private void LoadPlayerMetrices()
+    {
+        characterSize = PlayerMetrics.PlayerStartSize;
+    }
+    
+    private void ChangeModel(string newState)
+    {
+        switch (newState)
+        {
+            case "Punch":
+
+                break;
+        }
+    }
 }

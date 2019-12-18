@@ -200,12 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322583d37173c8844bb453f896fb4a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumCharacterSize: 1
-  maximumCharacterSize: 5
   characterSize: 1
-  moveSpeed: 10
-  range: 10
-  timeBetweenPunches: 1
   attackAngle: 45
 --- !u!114 &7512377517029799725
 MonoBehaviour:
@@ -219,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d942799e2cde1243b65ac6e7c16491c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 4901649409185602458}
   rigidbody: {fileID: 1169597467237479166}
   modelMeshRenderer: {fileID: 3467236245517710780}
   quadMeshRenderer: {fileID: 7856089622901879773}
