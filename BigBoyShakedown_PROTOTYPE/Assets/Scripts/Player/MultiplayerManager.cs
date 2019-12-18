@@ -7,18 +7,8 @@ using UnityEngine.InputSystem;
 public class MultiplayerManager : MonoBehaviour
 {
     public PlayerInputManager inputManager;
-    
-    [Header("player colors")]
-    [Tooltip("array of colors that will be assigned to players, in order of joining")]
-    [SerializeField] private Material[] playerColors;
-    [Tooltip("default material that will be assigned if not enough materials in playerColors")]
-    [SerializeField] private Material defaultMaterial;
-    [Header("player rings")]
-    [Tooltip("array of colors that will be assigned to player rings, in order of joining")]
-    [SerializeField]
-    private Material[] playerRings;
-    [Tooltip("default material that will be assigned if not enough materials in playerRings")]
-    [SerializeField] private Material defaultRingMaterial;
+    [Header("Player Metrics"), Tooltip("default player metrics; REQUIRED"), SerializeField]
+    private PlayerMetrics playerMetrics;
 
     public event Action<Material> NewPlayerJoinedEvent; 
 
@@ -29,11 +19,11 @@ public class MultiplayerManager : MonoBehaviour
 
     private void OnPlayerJoinedHandler(PlayerInput input)
     {
-        var allComponents = input.gameObject.GetComponent<PLayerComponents>();
+        var allComponents = input.gameObject.GetComponent<PlayerComponents>();
 
-        var newPlayerMaterial = playerColors.Length > input.playerIndex? playerColors[input.playerIndex] : defaultMaterial;
+        var newPlayerMaterial = playerMetrics.PlayerColors.Length > input.playerIndex? playerMetrics.PlayerColors[input.playerIndex] : playerMetrics.DefaultMaterial;
         allComponents.modelMeshRenderer.material = newPlayerMaterial;
-        var newRingMaterial = playerRings.Length > input.playerIndex ? playerRings[input.playerIndex] : defaultRingMaterial;
+        var newRingMaterial = playerMetrics.PlayerRings.Length > input.playerIndex ? playerMetrics.PlayerColors[input.playerIndex] : playerMetrics.DefaultMaterial;
         allComponents.quadMeshRenderer.material = newRingMaterial;
 
         input.gameObject.transform.position = new Vector3(20,10,20);

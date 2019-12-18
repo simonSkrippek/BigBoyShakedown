@@ -31,7 +31,9 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region components
-    private PLayerComponents components;
+    private PlayerComponents components;
+    [Header("Player Metrics"), Tooltip("default player metrics; REQUIRED"), SerializeField]
+    private PlayerMetrics playerMetrics;
     #endregion
 
     #region models
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        components = this.transform.root.GetComponent<PLayerComponents>();
+        components = this.transform.root.GetComponent<PlayerComponents>();
 
         cam = Camera.main;
 
@@ -97,9 +99,9 @@ public class PlayerController : MonoBehaviour
             Debug.Log("punch");
             readyToPunch = false;
             ChangeModel("Punch");
-            timeToNextPunch = PlayerMetrics.PlayerPunchSpeed[characterSize-1];
+            timeToNextPunch = playerMetrics.PlayerPunchSpeed[characterSize-1];
 
-            Collider[] results = Physics.OverlapSphere(this.transform.position, PlayerMetrics.PlayerPunchRange[characterSize-1], LayerMask.GetMask(new string[] { "Player", "test" }));
+            Collider[] results = Physics.OverlapSphere(this.transform.position, playerMetrics.PlayerPunchRange[characterSize-1], LayerMask.GetMask(new string[] { "Player", "test" }));
             var closestCollider = SnapToClosest(results, "Player");
             if (closestCollider != null)
             {
@@ -198,12 +200,12 @@ public class PlayerController : MonoBehaviour
 
     private void HandleResizeAction(float y)
     {
-        if (y > 0 && characterSize < PlayerMetrics.PlayerMaximumSize)
+        if (y > 0 && characterSize < playerMetrics.PlayerMaximumSize)
         {
             characterSize++;
             sizeChanged = true;
         }
-        else if (y < 0 && characterSize > PlayerMetrics.PlayerMinimumSize)
+        else if (y < 0 && characterSize > playerMetrics.PlayerMinimumSize)
         {
             characterSize--;
             sizeChanged = true;
@@ -232,7 +234,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentMovement != Vector2.zero)
         {
-            Vector2 currentMovementScaled = currentMovement * PlayerMetrics.PlayerMoveSpeed[characterSize-1] * Time.fixedDeltaTime * 5f;
+            Vector2 currentMovementScaled = currentMovement * playerMetrics.PlayerMoveSpeed[characterSize-1] * Time.fixedDeltaTime * 5f;
 
             Vector3 rightMovement = cameraRight * currentMovementScaled.x;
             Vector3 upMovement = cameraForward * currentMovementScaled.y;
@@ -264,7 +266,7 @@ public class PlayerController : MonoBehaviour
 
     private void LoadPlayerMetrices()
     {
-        characterSize = PlayerMetrics.PlayerStartSize;
+        characterSize = playerMetrics.PlayerStartSize;
     }
     
     private void ChangeModel(string newState)

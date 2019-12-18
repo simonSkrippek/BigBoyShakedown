@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 4901649409185602458}
   - component: {fileID: 1169597467237479166}
   - component: {fileID: 7624820877241095835}
-  - component: {fileID: 7512377517029799725}
+  - component: {fileID: 5243005442181016620}
   m_Layer: 0
   m_Name: PlayerGirl
   m_TagString: Player
@@ -282,11 +282,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterSize: 1
   attackAngle: 45
+  playerMetrics: {fileID: 11400000, guid: 95bf9873155afd2459b5d56594e246f0, type: 2}
   punchingModel: {fileID: -8207535772633010297, guid: 19a4f52c84f7d334e9948198e127ef88,
     type: 3}
   idleModel: {fileID: -8207535772633010297, guid: e3c3750beb84207449e58abff64c0d6d,
     type: 3}
---- !u!114 &7512377517029799725
+--- !u!114 &5243005442181016620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -303,4 +304,4 @@ MonoBehaviour:
   modelMeshRenderer: {fileID: 8291446144460906577}
   modelMeshFilter: {fileID: 4302894775866835071}
   quadMeshRenderer: {fileID: 7856089622901879773}
-  modelBoxCollider: {fileID: 0}
+  modelBoxCollider: {fileID: 3370125180528285153}
