@@ -76,6 +76,15 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
+        else if (context.canceled)
+        {
+            switch (context.action.name)
+            {
+                case "Move":
+                    currentMovement = Vector2.zero;
+                    break;
+            }
+        }
     }
     private void HandleMoveAction(Vector2 movement)
     {
