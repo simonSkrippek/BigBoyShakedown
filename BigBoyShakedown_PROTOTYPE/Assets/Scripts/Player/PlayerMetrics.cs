@@ -31,7 +31,7 @@ public class PlayerMetrics : ScriptableObject
 
     [Header("Start Score"), Tooltip("monetary value player starts on when joining the game"), SerializeField]
     private int playerStartScore = 600;
-    public int PlayerStartScore { get => playerStartSize; }
+    public int PlayerStartScore { get => playerStartScore; }
     #endregion
 
     [Space()]

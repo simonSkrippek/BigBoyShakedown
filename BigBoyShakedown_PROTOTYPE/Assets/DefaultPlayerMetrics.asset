@@ -15,6 +15,8 @@ MonoBehaviour:
   playerMinimumSize: 1
   playerMaximumSize: 5
   playerStartSize: 2
+  playerScore: 00000000f401000084030000dc050000d0070000ac0d0000
+  playerStartScore: 600
   playerScale:
   - 0.75
   - 1
@@ -39,12 +41,7 @@ MonoBehaviour:
   - 10
   - 10
   - 10
-  playerDamage:
-  - 40
-  - 50
-  - 80
-  - 120
-  - 200
+  playerDamage: 28000000320000005000000078000000c8000000
   playerColors:
   - {fileID: 2100000, guid: 3902e701c73903942aab5307cfa889e5, type: 2}
   - {fileID: 2100000, guid: 63ad402b34a59e44a88e9ff2d135f395, type: 2}

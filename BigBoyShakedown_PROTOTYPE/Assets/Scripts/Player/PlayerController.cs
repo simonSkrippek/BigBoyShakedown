@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         components = this.transform.root.GetComponent<PlayerComponents>();
+        playerIndex = components.playerInput.playerIndex;
 
         cam = Camera.main;
 
@@ -67,7 +68,6 @@ public class PlayerController : MonoBehaviour
         LoadPlayerMetrics();
 
         components.playerInput.onActionTriggered += HandleInputAction;
-        playerIndex = components.playerInput.playerIndex;
     }
 
     #region handleInput
@@ -213,8 +213,7 @@ public class PlayerController : MonoBehaviour
                 var components = item.GetComponent<PlayerComponents>();
                 components.playerController.TakeDamage(this.transform, characterSize);
                 var scoreChange = playerMetrics.PlayerDamage[characterSize - 1];
-                this.score += scoreChange;
-                scoreChangedEvent?.Invoke(playerIndex, scoreChange);
+                ChangeScore(scoreChange);
             }
             Debug.Log("We punched em: " + item.name);
         }
@@ -275,12 +274,12 @@ public class PlayerController : MonoBehaviour
     }
     private void CheckSize()
     {
-        if (score >= playerMetrics.PlayerScore[characterSize - 1])
+        if ((characterSize - 1) >= playerMetrics.PlayerMinimumSize && score < playerMetrics.PlayerScore[characterSize - 1])
         {
             characterSize -= 1;
             SizeChanged = true;
         }
-        else if (score > playerMetrics.PlayerScore[characterSize])
+        else if ((characterSize + 1) <= playerMetrics.PlayerMaximumSize && score > playerMetrics.PlayerScore[characterSize])
         {
             characterSize += 1;
             SizeChanged = true;
@@ -311,15 +310,30 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(Transform origin, int originSize)
     {
-        this.transform.Translate(origin.forward);
+        this.transform.position -= (origin.position - this.transform.position).normalized;
         var scoreChange = -playerMetrics.PlayerDamage[originSize - 1];
+        ChangeScore(scoreChange);
+    }
+
+    private void ChangeScore(int scoreChange)
+    {
         this.score += scoreChange;
-        scoreChangedEvent?.Invoke(playerIndex, scoreChange*100);
-        if (score < 0) Die();
+        scoreChangedEvent?.Invoke(playerIndex, scoreChange);
+
+        if (score < 0)
+        {
+            Die();
+            score = 0;
+        }
+        else if (score > playerMetrics.PlayerScore[playerMetrics.PlayerScore.Length - 1])
+        {
+            score = playerMetrics.PlayerScore[playerMetrics.PlayerScore.Length - 1];
+        }
     }
 
     private void Die()
     {
         Debug.Log("Player dies");
+        score = 0;
     }
 }

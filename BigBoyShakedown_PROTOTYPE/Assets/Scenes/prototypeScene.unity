@@ -5521,7 +5521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CHARACTER_TAG: Player
-  scoreChange: -1
+  scoreChange: 0
 --- !u!65 &915079551
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5903,6 +5903,11 @@ PrefabInstance:
       propertyPath: scoreZones.Array.data[1]
       value: 
       objectReference: {fileID: 2098830557}
+    - target: {fileID: 7730868164230471077, guid: 6fdff2a2496f2c643b433a31126ddb82,
+        type: 3}
+      propertyPath: coordinateEndPoint.y
+      value: 4000
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5863295604042081344, guid: 6fdff2a2496f2c643b433a31126ddb82, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fdff2a2496f2c643b433a31126ddb82, type: 3}
@@ -6480,7 +6485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CHARACTER_TAG: Player
-  scoreChange: 1
+  scoreChange: 0
 --- !u!65 &2098830558
 BoxCollider:
   m_ObjectHideFlags: 0
