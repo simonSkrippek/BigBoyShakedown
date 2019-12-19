@@ -13,4 +13,5 @@ public class PlayerComponents : MonoBehaviour
     public MeshRenderer ringMeshRenderer;
     public GameObject attackIndicator;
     public BoxCollider modelBoxCollider;
+
 }

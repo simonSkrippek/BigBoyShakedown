@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 4901649409185602458}
   - component: {fileID: 1169597467237479166}
   - component: {fileID: 7624820877241095835}
-  - component: {fileID: 5243005442181016620}
+  - component: {fileID: 3186324828564587742}
   m_Layer: 11
   m_Name: PlayerGirl
   m_TagString: Player
@@ -367,7 +367,7 @@ MonoBehaviour:
     type: 3}
   idleModel: {fileID: -8207535772633010297, guid: e3c3750beb84207449e58abff64c0d6d,
     type: 3}
---- !u!114 &5243005442181016620
+--- !u!114 &3186324828564587742
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
