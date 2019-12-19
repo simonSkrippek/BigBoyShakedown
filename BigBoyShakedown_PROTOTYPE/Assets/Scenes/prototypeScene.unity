@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5283,7 +5283,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.5e-43, y: -6.413994e-10, z: 4.5e-43, w: -1.3801647e+26}
+  m_BoundingSphereOverride: {x: 6.15e-43, y: 1.5e-44, z: 0, w: 6.33e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -5503,7 +5503,7 @@ GameObject:
   - component: {fileID: 915079550}
   m_Layer: 0
   m_Name: scorezone1
-  m_TagString: Untagged
+  m_TagString: scorezone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5520,8 +5520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a1912136aacd34f9c893305cf287b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CHARACTER_TAG: Player
-  scoreChange: 0
+  scoreChange: 1000
 --- !u!65 &915079551
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6473,7 +6472,7 @@ GameObject:
   - component: {fileID: 2098830557}
   m_Layer: 0
   m_Name: scorezone2
-  m_TagString: Untagged
+  m_TagString: scorezone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6490,8 +6489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a1912136aacd34f9c893305cf287b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CHARACTER_TAG: Player
-  scoreChange: 0
+  scoreChange: -1000
 --- !u!65 &2098830558
 BoxCollider:
   m_ObjectHideFlags: 0
