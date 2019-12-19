@@ -24,7 +24,7 @@ public class MultiplayerManager : MonoBehaviour
         var newPlayerMaterial = playerMetrics.PlayerColors.Length > input.playerIndex? playerMetrics.PlayerColors[input.playerIndex] : playerMetrics.DefaultMaterial;
         allComponents.modelMeshRenderer.material = newPlayerMaterial;
         var newRingMaterial = playerMetrics.PlayerRings.Length > input.playerIndex ? playerMetrics.PlayerRings[input.playerIndex] : playerMetrics.DefaultRingMaterial;
-        allComponents.quadMeshRenderer.material = newRingMaterial;
+        allComponents.ringMeshRenderer.material = newRingMaterial;
 
         input.gameObject.transform.position = new Vector3(20,10,20);
 

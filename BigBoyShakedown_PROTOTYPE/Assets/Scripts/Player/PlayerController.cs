@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     #region models
     [Header("Models"), Tooltip("character models, mapped to stances \n REQUIRED: Punch, Idle"), SerializeField]
     private Mesh punchingModel, idleModel;
+    private bool isPunching;
     #endregion
 
     #region events
@@ -98,19 +99,27 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMoveAction(Vector2 movement)
     {
-        currentMovement = movement;
+        if (!isPunching)
+        {
+            currentMovement = movement;
+        }
+        else
+        {
+            currentMovement = Vector2.zero;
+        }
     }
 
     private void HandlePunchAction()
     {
         if (readyToPunch)
         {
+            isPunching = true;
             Debug.Log("punch");
             readyToPunch = false;
-            timeToNextPunch = playerMetrics.PlayerPunchSpeed[CharacterSize-1];
+            timeToNextPunch = playerMetrics.PlayerPunchSpeed[CharacterSize - 1];
             ChangeModel("Punch");
 
-            Collider[] results = Physics.OverlapSphere(this.transform.position, playerMetrics.PlayerPunchRange[CharacterSize-1], LayerMask.GetMask(new string[] { "Player", "test" }));
+            Collider[] results = Physics.OverlapSphere(this.transform.position, playerMetrics.PlayerPunchRange[CharacterSize - 1], LayerMask.GetMask(new string[] { "Player", "test" }));
             var closestCollider = SnapToClosest(results, "Player");
             if (closestCollider != null)
             {
@@ -121,11 +130,8 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.Log("noone in range");
-                return;
+                currentMovement = Vector2.zero;
             }
-            var enemiesHit = GetAllEnemiesInCone(results);
-            ApplyHit(enemiesHit);
         }
         else
         {
@@ -204,6 +210,20 @@ public class PlayerController : MonoBehaviour
         }
         return closestCollider;
     }
+    private void PunchFollowThough()
+    {
+        Collider[] results = Physics.OverlapSphere(this.transform.position, playerMetrics.PlayerPunchRange[CharacterSize - 1], LayerMask.GetMask(new string[] { "Player", "test" }));
+        if (results != null && results.Length > 0)
+        {
+            var enemiesHit = GetAllEnemiesInCone(results);
+            ApplyHit(enemiesHit);
+        }
+        else
+        {
+            Debug.Log("noone in range");
+            return;
+        }
+    }
     private void ApplyHit(List<Transform> enemiesHit)
     {
         foreach (var item in enemiesHit)
@@ -261,17 +281,24 @@ public class PlayerController : MonoBehaviour
     #region update
     private void Update()
     {
-        if (!readyToPunch)
+        if (isPunching)
         {
             timeToNextPunch -= Time.deltaTime;
+            if (components.attackIndicator.activeSelf && timeToNextPunch <= playerMetrics.PlayerPunchSpeed[CharacterSize - 1] * .2f)
+            {
+                PunchFollowThough();
+                components.attackIndicator.SetActive(false);
+            }
             if (timeToNextPunch <= 0)
             {
+                isPunching = false;
                 readyToPunch = true;
                 ChangeModel("Idle");
             }
         }
         CheckSize();
     }
+
     private void CheckSize()
     {
         if ((characterSize - 1) >= playerMetrics.PlayerMinimumSize && score < playerMetrics.PlayerScore[characterSize - 1])
@@ -300,6 +327,8 @@ public class PlayerController : MonoBehaviour
         {
             case "Punch":
                 components.modelMeshFilter.mesh = punchingModel;
+                components.attackIndicator.transform.localScale = new Vector3(playerMetrics.PlayerPunchRange[characterSize - 1], playerMetrics.PlayerPunchRange[characterSize - 1], playerMetrics.PlayerPunchRange[characterSize - 1]) * 2 / this.transform.localScale.x;
+                components.attackIndicator.SetActive(true);
                 return;
             case "Idle":
                 components.modelMeshFilter.mesh = idleModel;
@@ -334,5 +363,15 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player dies");
         score = 0;
+    }
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("scorezone"))
+        {
+            ChangeScore(other.gameObject.GetComponent<scoreZone>().scoreChange);
+        }
     }
 }

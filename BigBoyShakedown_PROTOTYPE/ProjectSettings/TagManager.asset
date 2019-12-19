@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BillboardRecording
   - test
+  - scorezone
   layers:
   - Default
   - TransparentFX

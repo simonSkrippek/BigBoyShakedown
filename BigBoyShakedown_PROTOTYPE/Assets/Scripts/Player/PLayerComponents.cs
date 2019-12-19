@@ -10,6 +10,7 @@ public class PlayerComponents : MonoBehaviour
     new public Rigidbody rigidbody;
     public MeshRenderer modelMeshRenderer;
     public MeshFilter modelMeshFilter;
-    public MeshRenderer quadMeshRenderer;
+    public MeshRenderer ringMeshRenderer;
+    public GameObject attackIndicator;
     public BoxCollider modelBoxCollider;
 }

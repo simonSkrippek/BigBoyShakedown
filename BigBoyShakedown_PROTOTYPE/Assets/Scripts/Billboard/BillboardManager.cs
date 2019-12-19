@@ -29,8 +29,6 @@ public class BillboardManager : MonoBehaviour
     [Header("Player Metrics"), Tooltip("default player metrics"), SerializeField]
     private PlayerMetrics playerMetrics;
 
-    [SerializeField] scoreZone[] scoreZones;
-
     private void Awake()
     {
         multiplayerManager.NewPlayerJoinedEvent += NewPlayerJoinedEventHandler;
@@ -39,11 +37,6 @@ public class BillboardManager : MonoBehaviour
         graphs = new List<LineRenderer>();
         InitialiseGraphs();
         InitialiseCoordinateSystem();
-
-        foreach (var zone in scoreZones)
-        {
-            zone.OnCharacterEnter += ScoreChangedEventHandler;
-        }
     }
     private void InitialiseCoordinateSystem()
     {
