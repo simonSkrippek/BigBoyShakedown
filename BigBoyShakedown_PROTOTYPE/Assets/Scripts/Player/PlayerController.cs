@@ -291,7 +291,6 @@ public class PlayerController : MonoBehaviour
     {
         CharacterSize = playerMetrics.PlayerStartSize;
         score = playerMetrics.PlayerStartScore;
-        scoreChangedEvent?.Invoke(playerIndex, score);
     }
     
     private void ChangeModel(string newState)

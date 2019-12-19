@@ -16,7 +16,10 @@ MonoBehaviour:
   playerMaximumSize: 5
   playerStartSize: 2
   playerScore: 00000000f401000084030000dc050000d0070000ac0d0000
-  playerStartScore: 600
+  playerStartScore: 2000
+  playerMinScore: {x: 0, y: 0}
+  playerMaxScore: {x: 120, y: 3600}
+  changeAnimationRate: 2
   playerScale:
   - 0.75
   - 1

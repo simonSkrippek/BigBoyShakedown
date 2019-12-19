@@ -14,9 +14,6 @@ public class BillboardManager : MonoBehaviour
     [Header("corner points")]
     [Tooltip("empty game object used to mark bottom left & top right of the billboard; use gizmo script")]
     [SerializeField] private Transform worldStartPoint, worldEndPoint;
-    [Header("Coordinate Points")]
-    [Tooltip("vector2s to describe the coordinate system; min & max values")]
-    [SerializeField] private Vector2 coordinateStartPoint, coordinateEndPoint;
     private CoordinateSystem coordinateSystem;
     #endregion
     #region lines
@@ -29,11 +26,15 @@ public class BillboardManager : MonoBehaviour
 
     #endregion
 
+    [Header("Player Metrics"), Tooltip("default player metrics"), SerializeField]
+    private PlayerMetrics playerMetrics;
+
     [SerializeField] scoreZone[] scoreZones;
 
     private void Awake()
     {
         multiplayerManager.NewPlayerJoinedEvent += NewPlayerJoinedEventHandler;
+
         graphManagers = new List<GraphManager>();
         graphs = new List<LineRenderer>();
         InitialiseGraphs();
@@ -46,7 +47,7 @@ public class BillboardManager : MonoBehaviour
     }
     private void InitialiseCoordinateSystem()
     {
-        coordinateSystem = new CoordinateSystem((Vector2)worldStartPoint.localPosition, (Vector2)worldEndPoint.localPosition, coordinateStartPoint, coordinateEndPoint);
+        coordinateSystem = new CoordinateSystem((Vector2)worldStartPoint.localPosition, (Vector2)worldEndPoint.localPosition, playerMetrics.PlayerMinScore, playerMetrics.PlayerMaxScore);
     }
     private void InitialiseGraphs()
     {
@@ -70,7 +71,7 @@ public class BillboardManager : MonoBehaviour
         var graphToAdd = graphs[graphManagers.Count];
         graphToAdd.material = graphMaterial;
         graphToAdd.gameObject.SetActive(true);
-        graphManagers.Add(new GraphManager(graphToAdd, coordinateSystem, 0f));
+        graphManagers.Add(new GraphManager(graphToAdd, coordinateSystem, playerMetrics.PlayerStartScore, playerMetrics.ChangeAnimationRate));
         Debug.Log("Graphs added");
     }
 

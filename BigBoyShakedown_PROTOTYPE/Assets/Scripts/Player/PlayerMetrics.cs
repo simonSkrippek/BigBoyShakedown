@@ -32,6 +32,18 @@ public class PlayerMetrics : ScriptableObject
     [Header("Start Score"), Tooltip("monetary value player starts on when joining the game"), SerializeField]
     private int playerStartScore = 600;
     public int PlayerStartScore { get => playerStartScore; }
+
+    [Header("Min Score"), Tooltip("0 point of score coordinate system: time on x, score on y"), SerializeField]
+    private Vector2 playerMinScore = new Vector2(0,0);
+    public Vector2 PlayerMinScore { get => playerMinScore; }
+
+    [Header("Max Score"), Tooltip("monetary value player starts on when joining the game"), SerializeField]
+    private Vector2 playerMaxScore = new Vector2(0, 0);
+    public Vector2 PlayerMaxScore { get => playerMaxScore; }
+
+    [Header("Change Animation Rate"), Tooltip("rate at which graphs change"), SerializeField]
+    private float changeAnimationRate = 5f;
+    public float ChangeAnimationRate { get => changeAnimationRate; }
     #endregion
 
     [Space()]

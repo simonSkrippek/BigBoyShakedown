@@ -21,10 +21,11 @@ public class GraphManager
     private Vector3 pointToSet;
     #endregion
     
-    public GraphManager(LineRenderer graph, CoordinateSystem coordinateSystem, float startValue)
+    public GraphManager(LineRenderer graph, CoordinateSystem coordinateSystem, float startValue, float changeAnimationRate)
     {
         this.graph = graph;
         this.coordinateSystem = coordinateSystem;
+        this.changeAnimationRate = changeAnimationRate;
         graphValue = startValue;
 
         StartGraph();

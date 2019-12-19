@@ -5908,6 +5908,12 @@ PrefabInstance:
       propertyPath: coordinateEndPoint.y
       value: 4000
       objectReference: {fileID: 0}
+    - target: {fileID: 7730868164230471077, guid: 6fdff2a2496f2c643b433a31126ddb82,
+        type: 3}
+      propertyPath: playerMetrics
+      value: 
+      objectReference: {fileID: 11400000, guid: 95bf9873155afd2459b5d56594e246f0,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 5863295604042081344, guid: 6fdff2a2496f2c643b433a31126ddb82, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fdff2a2496f2c643b433a31126ddb82, type: 3}
