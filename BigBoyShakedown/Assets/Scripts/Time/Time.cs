@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Time : MonoBehaviour
-{
+{  
     private static bool isRunning;
     public static bool IsRunning { get => isRunning; private set => isRunning = value; }
     private static float timeEnlapsed;
@@ -73,11 +73,11 @@ public class Time : MonoBehaviour
 
     public static void PauseGame()
     {
-        GamePausedEvent();
+        FindObjectOfType<Time>().GamePausedEvent();
     }
     public static void ContinueGame()
     {
-        GameContinuedEvent();
+        FindObjectOfType<Time>().GameContinuedEvent();
     }
 }
 

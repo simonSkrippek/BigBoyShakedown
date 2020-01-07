@@ -29,11 +29,18 @@ public class Player : MonoBehaviour
     #endregion
 
     #region actions
+    private bool notInvulnerable = true;
+    public bool NotInvulnerable
+    {
+        get => notInvulnerable;
+        set => notInvulnerable = value;
+    }
+
     private bool unstunned = true;
     public bool Unstunned
     {
         get => unstunned;
-        private set => unstunned = value;
+        set => unstunned = value;
     }
 
     #region punch
@@ -41,7 +48,7 @@ public class Player : MonoBehaviour
     public bool ReadyToPunch
     {
         get => readyToPunch;
-        private set => readyToPunch = value;
+        set => readyToPunch = value;
     }
 
     private bool punchTriggered = false;
@@ -57,7 +64,7 @@ public class Player : MonoBehaviour
     public bool ReadyToInteract
     {
         get => readyToInteract;
-        private set => readyToInteract = value;
+        set => readyToInteract = value;
     }
 
     private bool interactionTriggered = false;
@@ -85,14 +92,14 @@ public class Player : MonoBehaviour
     public bool MovementAllowed
     {
         get => movementAllowed;
-        private set => movementAllowed = value;
+        set => movementAllowed = value;
     }
 
     private bool rotationAllowed = true;
     public bool RotationAllowed
     {
         get => rotationAllowed;
-        private set => rotationAllowed = value;
+        set => rotationAllowed = value;
     }
     #endregion
     #endregion
@@ -108,13 +115,13 @@ public class Player : MonoBehaviour
     void Start()
     {
         bool test = false;
-        gameTime.StartTimer(new VariableReference<bool>(() => test, val => { test = val; }), 5f);
+        Time.StartTimer(new VariableReference<bool>(() => test, val => { test = val; }), 5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameTime.IsRunning)
+        if (Time.IsRunning)
         {
             
         }

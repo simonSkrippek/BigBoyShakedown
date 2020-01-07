@@ -76,6 +76,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+
     private void ApplyMovement()
     {
         foreach (var player in allPlayers)
