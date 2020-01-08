@@ -7,6 +7,7 @@ public class Time : MonoBehaviour
 {  
     private static bool isRunning;
     public static bool IsRunning { get => isRunning; private set => isRunning = value; }
+
     private static float timeEnlapsed;
     public static float TimeEnlapsed { get => timeEnlapsed; private set => timeEnlapsed = value; }
 
@@ -31,20 +32,26 @@ public class Time : MonoBehaviour
 
     private void CheckAllTimers()
     {
+        var keysToRemove = new List<VariableReference<bool>>();
         foreach(var keyValuePair in startedTimers)
         {
             if (keyValuePair.Value <= timeEnlapsed)
             {
-                keyValuePair.Key.Set(true);
-                startedTimers.Remove(keyValuePair.Key);
+                keysToRemove.Add(keyValuePair.Key);
                 break;
             }
+        }
+        foreach (var key in keysToRemove)
+        {
+            key.Set(key.valueToSetToo);
+            keysToRemove.Remove(key);
         }
     }
 
     //changes boolean to true after time has run out
     public static void StartTimer(VariableReference<bool> variableToChange, float timeToChange)
     {
+        if (startedTimers.ContainsKey(variableToChange)) startedTimers.Remove(variableToChange);
         startedTimers.Add(variableToChange, timeEnlapsed + timeToChange);
     }
 
@@ -84,10 +91,18 @@ public class Time : MonoBehaviour
 public class VariableReference<T>
 {
     public Func<T> Get { get; private set; }
-    public Action<T> Set { get; private set; }  
+    public Action<T> Set { get; private set; }
+
+    public T valueToSetToo;
+
     public VariableReference(Func<T> getter, Action<T> setter)
     {
         Get = getter;
         Set = setter;
+    }
+    public VariableReference<T> SetEndValue(T valueToSetToo)
+    {
+        this.valueToSetToo = valueToSetToo;
+        return this;
     }
 }

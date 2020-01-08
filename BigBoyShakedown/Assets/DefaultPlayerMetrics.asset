@@ -9,17 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4de7a32d7b54b54e8a3cb1b7f1eb688, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f0bb665aace1764ea64fdb53ed41a3f, type: 3}
   m_Name: DefaultPlayerMetrics
   m_EditorClassIdentifier: 
+  punchingLayers:
+  - Player
   playerMinimumSize: 1
   playerMaximumSize: 5
   playerStartSize: 2
   playerScore: 00000000f401000084030000dc050000d0070000ac0d0000
-  playerStartScore: 2000
+  playerStartScore: 600
   playerMinScore: {x: 0, y: 0}
-  playerMaxScore: {x: 120, y: 3600}
-  changeAnimationRate: 2
+  playerMaxScore: {x: 0, y: 0}
+  changeAnimationRate: 5
   playerScale:
   - 0.75
   - 1
@@ -32,6 +34,7 @@ MonoBehaviour:
   - 0.9
   - 0.75
   - 0.5
+  playerPunchAngle: 45
   playerPunchSpeed:
   - 0.6
   - 0.75
@@ -45,19 +48,9 @@ MonoBehaviour:
   - 10
   - 10
   playerDamage: 28000000320000005000000078000000c8000000
-  playerColors:
-  - {fileID: 2100000, guid: 3902e701c73903942aab5307cfa889e5, type: 2}
-  - {fileID: 2100000, guid: 63ad402b34a59e44a88e9ff2d135f395, type: 2}
-  - {fileID: 2100000, guid: 08fe0ec56b8c9b441abb1ee9249862d2, type: 2}
-  - {fileID: 2100000, guid: cf810ce4f01042c4b9d7e400d8821c37, type: 2}
-  defaultMaterial: {fileID: 2100000, guid: 2922b4988f521134e99a9e49ab5e5727, type: 2}
-  playerRings:
-  - {fileID: 2100000, guid: 464a4cdc56a965d449d1c81dea692b32, type: 2}
-  - {fileID: 2100000, guid: c8153985bb6602a459494962768e97de, type: 2}
-  - {fileID: 2100000, guid: 689b4ff42885827439e7e3aa7e3f8a21, type: 2}
-  - {fileID: 2100000, guid: 9d09b4ed1e0caf341a1f5aed5d587f31, type: 2}
-  defaultRingMaterial: {fileID: 2100000, guid: 4c288e1de5ba8954f832ce41498e6026, type: 2}
-  testMeshIdle: {fileID: -8207535772633010297, guid: e3c3750beb84207449e58abff64c0d6d,
-    type: 3}
-  testMeshPunching: {fileID: -8207535772633010297, guid: 19a4f52c84f7d334e9948198e127ef88,
-    type: 3}
+  playerColors: []
+  defaultMaterial: {fileID: 0}
+  playerRings: []
+  defaultRingMaterial: {fileID: 0}
+  testMeshIdle: {fileID: 0}
+  testMeshPunching: {fileID: 0}

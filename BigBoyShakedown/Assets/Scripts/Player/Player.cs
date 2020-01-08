@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,50 +30,26 @@ public class Player : MonoBehaviour
     #endregion
 
     #region actions
-    private bool notInvulnerable = true;
-    public bool NotInvulnerable
-    {
-        get => notInvulnerable;
-        set => notInvulnerable = value;
-    }
+    private bool invulnerable = false;
+    public VariableReference<bool> Invulnerable;
 
-    private bool unstunned = true;
-    public bool Unstunned
-    {
-        get => unstunned;
-        set => unstunned = value;
-    }
+    private bool stunned = true;
+    public VariableReference<bool> Stunned;
 
     #region punch
     private bool readyToPunch = true;
-    public bool ReadyToPunch
-    {
-        get => readyToPunch;
-        set => readyToPunch = value;
-    }
+    public VariableReference<bool> ReadyToPunch;
 
     private bool punchTriggered = false;
-    public bool PunchTriggered
-    {
-        get => punchTriggered;
-        set => punchTriggered = value;
-    }
+    public VariableReference<bool> PunchTriggered;
     #endregion
 
     #region interaction
     private bool readyToInteract = true;
-    public bool ReadyToInteract
-    {
-        get => readyToInteract;
-        set => readyToInteract = value;
-    }
+    public VariableReference<bool> ReadyToInteract;
 
     private bool interactionTriggered = false;
-    public bool InteractionTriggered
-    {
-        get => interactionTriggered;
-        set => interactionTriggered = value;
-    }
+    public VariableReference<bool> InteractionTriggered;
     #endregion
 
     #region movement
@@ -89,28 +66,34 @@ public class Player : MonoBehaviour
     }
 
     private bool movementAllowed = true;
-    public bool MovementAllowed
-    {
-        get => movementAllowed;
-        set => movementAllowed = value;
-    }
+    public VariableReference<bool> MovementAllowed;
 
     private bool rotationAllowed = true;
-    public bool RotationAllowed
-    {
-        get => rotationAllowed;
-        set => rotationAllowed = value;
-    }
+    public VariableReference<bool> RotationAllowed;
     #endregion
     #endregion
 
     [Header("Animator"), Tooltip("Player Animator on the same object"),SerializeField]
     private Animator animator;
+    [Header("Animator"), Tooltip("Player Animator on the same object"), SerializeField]
+    private PlayerMetrics playerMetrics;
 
-    
     private void Awake()
     {
         gameTime = FindObjectOfType<Time>();
+
+        Invulnerable = new VariableReference<bool>(() => invulnerable, (val) => { invulnerable = val; });
+
+        Stunned = new VariableReference<bool>(() => stunned, (val) => { stunned = val; });
+
+        ReadyToPunch = new VariableReference<bool>(() => readyToPunch, (val) => { readyToPunch = val; });
+        PunchTriggered = new VariableReference<bool>(() => punchTriggered, (val) => { punchTriggered = val; });
+        
+        ReadyToInteract = new VariableReference<bool>(() => readyToInteract, (val) => { readyToInteract = val; });
+        InteractionTriggered = new VariableReference<bool>(() => interactionTriggered, (val) => { interactionTriggered = val; });
+
+        MovementAllowed = new VariableReference<bool>(() => movementAllowed, (val) => { movementAllowed = val; });
+        RotationAllowed = new VariableReference<bool>(() => rotationAllowed, (val) => { rotationAllowed = val; });
     }
     void Start()
     {
@@ -125,5 +108,18 @@ public class Player : MonoBehaviour
         {
             
         }
+    }
+
+    public void StartPunch()
+    {
+        var punchSpeed = playerMetrics.PlayerPunchSpeed[this.CurrentCharacterSize - 1];
+        this.ReadyToPunch.Set(false);
+        Time.StartTimer(this.ReadyToPunch.SetEndValue(true), punchSpeed);
+        this.ReadyToInteract.Set(false);
+        Time.StartTimer(this.ReadyToInteract.SetEndValue(true), punchSpeed);
+        this.MovementAllowed.Set(false);
+        Time.StartTimer(this.MovementAllowed.SetEndValue(true), punchSpeed);
+        this.RotationAllowed.Set(false);
+        Time.StartTimer(this.RotationAllowed.SetEndValue(true), punchSpeed);
     }
 }

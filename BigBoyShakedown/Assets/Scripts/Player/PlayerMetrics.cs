@@ -5,6 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New PlayerMetrics", menuName = "PlayerMetrics", order = 51)]
 public class PlayerMetrics : ScriptableObject
 {
+    #region layers
+    [Header("Layers"), Tooltip("layers the player can hit when punching"), SerializeField]
+    private string[] punchingLayers = new string[] { "Player" };
+    public string[] PunchingLayers { get => punchingLayers; }
+    #endregion
+
     #region sizes
 
     [Header("MinimumSize"), Tooltip("minimum size player can have"), SerializeField]
@@ -61,6 +67,11 @@ public class PlayerMetrics : ScriptableObject
     #endregion
     [Space()]
     #region combat
+
+    [Header("Attack Angle"), Tooltip("angel of cone in which enemies are damaged"), SerializeField]
+    private float playerPunchAngle = 45;
+    public float PlayerPunchAngle { get => playerPunchAngle; }
+
     [Header("AttackSpeed"), Tooltip("time between player attacks in all stages"), SerializeField]
     private float[] playerPunchSpeed = { 0.6f, .75f, 1.0f, 1.75f, 2.25f };
     public float[] PlayerPunchSpeed { get => playerPunchSpeed; }

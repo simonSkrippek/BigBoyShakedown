@@ -45,21 +45,27 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        ApplySize();
-        ApplyMovement();
-        ApplyPunch();
-        ApplyInteraction();
-        ApplyPowerups();
+        if (Time.IsRunning)
+        {
+            foreach (Player player in allPlayers)
+            {
+                ApplySize(player);
+                ApplyPowerups(player);
+                if (!player.Stunned.Get())
+                {
+                    ApplyMovement(player);
+                    ApplyPunch(player);
+                    ApplyInteraction(player);
+                }
+            }
+        }
     }
 
-    private void ApplySize()
+    private void ApplySize(Player player)
     {
-        foreach (Player player in allPlayers)
+        if (player.CurrentCharacterScore >= playerMetrics.PlayerScore[player.CurrentCharacterSize] || player.CurrentCharacterScore < playerMetrics.PlayerScore[player.CurrentCharacterSize - 1])
         {
-            if (player.CurrentCharacterScore >= playerMetrics.PlayerScore[player.CurrentCharacterSize] || player.CurrentCharacterScore < playerMetrics.PlayerScore[player.CurrentCharacterSize - 1])
-            {
-                CorrectPlayerSize(player.playerIndex);
-            }
+            CorrectPlayerSize(player.playerIndex);
         }
     }
     private void CorrectPlayerSize(int playerIndex)
@@ -77,46 +83,131 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void ApplyMovement()
+    private void ApplyPowerups(Player player)
     {
-        foreach (var player in allPlayers)
+        throw new NotImplementedException();
+    }
+
+    private void ApplyMovement(Player player)
+    {
+        if (player.MovementAllowed.Get() && player.CurrentMovement != Vector2.zero)
         {
-            if (player.Unstunned)
+            // possibly check for collision ???
+
+            Vector2 currentMovementScaled = player.CurrentMovement * playerMetrics.PlayerMoveSpeed[player.CurrentCharacterSize - 1] / 8;
+
+            Vector3 rightMovement = cameraRight * currentMovementScaled.x;
+            Vector3 upMovement = cameraForward * currentMovementScaled.y;
+            Vector3 heading = rightMovement + upMovement;
+
+            player.transform.forward = heading.normalized;
+
+
+            if (player.RotationAllowed.Get())
             {
-                if (player.MovementAllowed)
-                {
-                    if (player.CurrentMovement != Vector2.zero)
-                    {
-
-                        // possibly check for collision ???
-
-                        Vector2 currentMovementScaled = player.CurrentMovement * playerMetrics.PlayerMoveSpeed[player.CurrentCharacterSize - 1] / 8;
-
-                        Vector3 rightMovement = cameraRight * currentMovementScaled.x;
-                        Vector3 upMovement = cameraForward * currentMovementScaled.y;
-                        Vector3 heading = rightMovement + upMovement;
-
-                        player.transform.forward = heading.normalized;
-
-
-                        if (player.RotationAllowed)
-                        {
-                            player.transform.position += heading;
-                        }
-                    }
-                }
+                player.transform.position += heading;
             }
         }
     }
-    private void ApplyPunch()
+    private void ApplyPunch(Player player)
     {
-        throw new NotImplementedException();
+        if (player.PunchTriggered.Get())
+        {
+            player.StartPunch();
+
+            Collider[] results = Physics.OverlapSphere(player.transform.position, playerMetrics.PlayerPunchRange[player.CurrentCharacterSize - 1], LayerMask.GetMask(playerMetrics.PunchingLayers));
+            var closestCollider = SnapToClosest(results, "Player");
+            if (closestCollider != null)
+            {
+                var newForward = closestCollider.transform.position - this.transform.position;
+                newForward.y = 0;
+                player.transform.forward = newForward.normalized;
+                player.CurrentMovement = Vector2.zero;
+            }
+            else
+            {
+                player.CurrentMovement = Vector2.zero;
+            }
+        }
+        else
+        {
+            Debug.Log("Cooldown");
+        }
+
     }
-    private void ApplyInteraction()
+    private List<Transform> GetAllEnemiesInCone(Collider[] results)
     {
-        throw new NotImplementedException();
+        var enemiesHit = new List<Transform>();
+        var maxDistance = Mathf.Sin(playerMetrics.PlayerPunchAngle * Mathf.Deg2Rad) / Mathf.Sin((180 - playerMetrics.PlayerPunchAngle) * Mathf.Deg2Rad / 2);
+        foreach (var item in results)
+        {
+            if (item.transform.root != this.transform.root)
+            {
+                var vectorToCollider3D = item.ClosestPoint(this.transform.root.position) - this.transform.root.position;
+                var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
+                vectorToCollider.Normalize();
+
+                var facing3D = this.transform.forward;
+                var facing = new Vector2(facing3D.x, facing3D.z);
+                facing.Normalize();
+
+                var distanceToCollider = (facing - vectorToCollider).magnitude;
+
+                if (distanceToCollider < maxDistance)
+                {
+                    enemiesHit.Add(item.transform.root);
+                }
+            }
+        }
+        return enemiesHit;
     }
-    private void ApplyPowerups()
+    private Collider SnapToClosest(Collider[] results, string priority)
+    {
+        Collider closestCollider = null;
+        float distanceToClosestCollider = float.MaxValue;
+        foreach (var item in results)
+        {
+            if (item.transform.root != this.transform.root)
+            {
+                //creating vector to enemy in range
+                var vectorToCollider3D = item.ClosestPoint(this.transform.root.position) - this.transform.root.position;
+                var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
+                vectorToCollider.Normalize();
+                //tracking view direction
+                var facing3D = this.transform.forward;
+                var facing = new Vector2(facing3D.x, facing3D.z);
+                facing.Normalize();
+
+                var distanceToCollider = (facing - vectorToCollider).magnitude;
+                //in case of higher importance or being closer to view direction, note as new closest
+                int priorityLayer = LayerMask.NameToLayer(priority);
+                if (closestCollider == null)
+                {
+                    distanceToClosestCollider = distanceToCollider;
+                    closestCollider = item;
+                }
+                else if (item.gameObject.layer == closestCollider.gameObject.layer)
+                {
+                    if (distanceToCollider < distanceToClosestCollider)
+                    {
+                        distanceToClosestCollider = distanceToCollider;
+                        closestCollider = item;
+                    }
+                }
+                else if (item.gameObject.layer == priorityLayer)
+                {
+                    distanceToClosestCollider = distanceToCollider;
+                    closestCollider = item;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        return closestCollider;
+    }
+    private void ApplyInteraction(Player player)
     {
         throw new NotImplementedException();
     }
@@ -199,10 +290,10 @@ public class PlayerManager : MonoBehaviour
                         player.CurrentMovement =context.ReadValue<Vector2>();
                         break;
                     case "Punch":
-                        if (player.ReadyToPunch) player.PunchTriggered = true;
+                        if (player.ReadyToPunch.Get()) player.PunchTriggered.Set(true);
                         break;
                     case "Interact":
-                        if (player.ReadyToInteract) player.InteractionTriggered = true;
+                        if (player.ReadyToInteract.Get()) player.InteractionTriggered.Set(true);
                         break;
                 }
             }
