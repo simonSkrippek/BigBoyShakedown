@@ -105,4 +105,12 @@ public class VariableReference<T>
         this.valueToSetToo = valueToSetToo;
         return this;
     }
+    public override bool Equals(object obj)
+    {
+        return obj.GetHashCode() == this.GetHashCode();
+    }
+    public override int GetHashCode()
+    {
+        return this.GetHashCode();
+    }
 }

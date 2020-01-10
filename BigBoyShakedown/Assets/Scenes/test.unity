@@ -293,8 +293,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e36af88b2c54744182afbebdfb130b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameTime: {fileID: 0}
   playerIndex: 0
+  currentCharacterSize: 1
+  currentCharacterScore: 0
+  invulnerable: 0
+  stunned: 1
+  readyToPunch: 1
+  punchTriggered: 0
+  readyToInteract: 1
+  interactionTriggered: 0
+  currentMovement: {x: 0, y: 0}
+  movementAllowed: 1
+  rotationAllowed: 1
   animator: {fileID: 0}
+  playerMetrics: {fileID: 0}
 --- !u!4 &1460879667
 Transform:
   m_ObjectHideFlags: 0
