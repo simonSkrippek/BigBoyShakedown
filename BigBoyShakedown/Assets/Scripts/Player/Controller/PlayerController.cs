@@ -36,25 +36,66 @@ namespace BigBoyShakedown.Player.Controller
         ///<param name="movement">The movement vector to apply, not adapted to camera perspective</param>
         public void TryApplyMovement(Vector3 movement)
         {
-            
+            Vector3 possibleMovement = CheckCollisionInPath(movement);
+            this.transform.Translate(possibleMovement);
+        }
+        /// <summary>
+        /// cast a capsule in the movement direction, originating from this players transform. values for capsule size are taken form playerMetrics object.
+        /// </summary>
+        /// <param name="movement">the movement direction / length</param>
+        /// <returns>distance / direction until the collision, ie distance that can safely be moved</returns>
+        private Vector3 CheckCollisionInPath(Vector3 movement)
+        {
+            var point1 = this.transform.position;
+            point1.y = metrics.PlayerScale[size].x * 1 / 3;
+            var point2 = this.transform.position;
+            point1.y = metrics.PlayerScale[size].x * 2 / 3;
+            var radius = metrics.PlayerScale[size].y / 2;
+            var mask = LayerMask.GetMask(metrics.Mask_collidables);
+            RaycastHit hit;
+            if (Physics.CapsuleCast(point1, point2, radius, movement.normalized, out hit, movement.magnitude, mask, QueryTriggerInteraction.Collide) && hit.transform.root != this.transform)
+                return hit.distance * movement.normalized;
+            else
+                return Vector3.zero;
         }
 
         /// <summary>
-        /// apply a hit from another character to this one. modify score and notify inputRelay.
+        /// relay a hit from another character to this one. if current state allows the hit, ApplyHit() will be called,
         /// </summary>
-        /// <param name="From">the characterController of the character dealing the damage</param>
-        public void TakeDamage(PlayerController From)
+        /// <param name="from">the characterController of the character attacking</param> 
+        /// <param name="damageIntended">the [raw] damage the other character is trying to deal</param>
+        /// <param name="knockbackDistanceIntended">the [raw] distance the other character is trying to knock this back</param>
+        /// <param name="stunDurationIntended">the [raw] duration the other character is trying to stun this for</param>
+        /// [raw] => _not_ modified by current state
+        public void TryApplyHit(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
         {
-
+            this.inputRelay.RelayPlayerHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
         }
 
         /// <summary>
-        /// apply a hit from this character to another one. modify score and notify other character.
+        /// apply a hit from another character to this one. modify this chracter's score and notify other characterController.
         /// </summary>
-        /// <param name="To">the character being hit</param>
-        public void DealDamage(PlayerController To)
+        /// <param name="from">the characterController of the character attacking</param> 
+        /// <param name="damage">the [scaled] damage the other character is trying to deal</param>
+        /// <param name="knockbackDistance">the [scaled] distance the other character is trying to knock this back</param>
+        /// <param name="stunDuration">the [scaled] duration the other character is trying to stun this for</param>
+        /// [scaled] => modified by current state
+        public void ApplyHit(PlayerController from, float damage, float knockbackDistance, float stunDuration)
         {
+            //apply damage
+            score -= (int) damage;
+            //TODO: rest
+            throw new NotImplementedException();
+        }
 
+        /// <summary>
+        /// apply the effects of a successful hit on another player.
+        /// </summary>
+        /// <param name="to">the character that was hit</param>
+        /// <param name="damageDealt">the damage that was accepted by the other player.</param>
+        public void HitCallback(PlayerController to, float damageDealt)
+        {
+            score += (int)damageDealt;
         }
 
         /// <summary>

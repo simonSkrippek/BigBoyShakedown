@@ -7,6 +7,13 @@ namespace BigBoyShakedown.Player.Metrics
     [CreateAssetMenu(fileName = "New PlayerMetrics", menuName = "PlayerMetrics", order = 51)]
     public class PlayerMetrics : ScriptableObject
     {
+        #region LayerMasks
+        [Header("Masks")]
+        [Tooltip("mask fo all layers players should collide with"), SerializeField]
+        private string[] mask_collidables = { "Player", "SolidEnvironment"};
+        public string[] Mask_collidables { get => mask_collidables; }
+        #endregion
+
         #region sizes
 
         [Header("MinimumSize"), Tooltip("minimum size player can have"), SerializeField]
@@ -21,6 +28,13 @@ namespace BigBoyShakedown.Player.Metrics
         [Header("StartSize"), Tooltip("size player starts on when joining the game"), SerializeField]
         private int playerStartSize = 2;
         public int PlayerStartSize { get => playerStartSize; }
+
+
+        [Header("Scale"), Tooltip("real world scale of player characters in all stages; x => height, y => width"), SerializeField]
+        private Vector2[] playerScale = { new Vector2(1f,.5f), new Vector2(1f, .5f), new Vector2(1f, .5f), new Vector2(1f, .5f), new Vector2(1f, .5f) };
+        public Vector2[] PlayerScale { get => playerScale; }
+
+
         #endregion
 
         [Space()]
@@ -52,9 +66,6 @@ namespace BigBoyShakedown.Player.Metrics
 
         #region stats
         #region movement
-        [Header("Scale"), Tooltip("real world scale of player characters in all stages"), SerializeField]
-        private float[] playerScale = { 0.75f, 1.0f, 1.5f, 2.0f, 2.5f };
-        public float[] PlayerScale { get => playerScale; }
 
 
         [Header("MovementSpeed"), Tooltip("movement speed in all stages"), SerializeField]
@@ -67,9 +78,14 @@ namespace BigBoyShakedown.Player.Metrics
         #endregion
         [Space()]
         #region combat
-        [Header("AttackSpeed"), Tooltip("time between player attacks in all stages"), SerializeField]
-        private float[] playerPunchSpeed = { 0.6f, .75f, 1.0f, 1.75f, 2.25f };
-        public float[] PlayerPunchSpeed { get => playerPunchSpeed; }
+        [Header("AttackTimings")]
+        [Tooltip("wind up time for player attacks in all stages"), SerializeField]
+        private float[] playerWindUpTime = { 0.6f, .75f, 1.0f, 1.75f, 2.25f };
+        public float[] PlayerWindUpTime { get => playerWindUpTime; }
+
+        [Tooltip("recovery time for player attacks in all stages"), SerializeField]
+        private float[] playerPunchRecoveryTime = { 0.6f, .75f, 1.0f, 1.75f, 2.25f };
+        public float[] PlayerPunchRecoveryTime { get => playerPunchRecoveryTime; }
 
 
         [Header("Range"), Tooltip("range player has in all stages"), SerializeField]
@@ -81,6 +97,11 @@ namespace BigBoyShakedown.Player.Metrics
         [Header("Damage"), Tooltip("damage player does in all stages"), SerializeField]
         private int[] playerDamage = { 40, 50, 80, 120, 200 };
         public int[] PlayerDamage { get => playerDamage; }
+
+        [Header("Range"), Tooltip("range player has in all stages"), SerializeField]
+        //private static float[] playerPunchRange = { 1.75f, 1.8f, 2.7f, 3.6f, 4.5f };
+        private float[] playerComboModifier = { 10f, 10f, 10f, 10f, 10f };
+        public float[] PlayerComboModifier { get => playerComboModifier; }
         #endregion
         #endregion
 
@@ -105,13 +126,5 @@ namespace BigBoyShakedown.Player.Metrics
         public Material DefaultRingMaterial { get => defaultRingMaterial; }
         #endregion
 
-        [Space()]
-
-        #region testingONLY
-        [Header("Test Meshes"), Tooltip("meshes that get awapped in; \nTEST; INSTEAD OF ANIMATIONS"), SerializeField]
-        private Mesh testMeshIdle, testMeshPunching;
-        public Mesh TestMeshIdle { get => testMeshIdle; }
-        public Mesh TestMeshPunching { get => testMeshPunching; }
-        #endregion
     }
 }   

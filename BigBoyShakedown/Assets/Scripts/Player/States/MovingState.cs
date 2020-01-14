@@ -20,18 +20,13 @@ namespace BigBoyShakedown.Player.State
             {
                 movement.y = controller.metrics.PlayerYMoveSpeed[controller.size];
             }
+            else
+            {
+                movement.y = 0f;
+            }
             //1. check for collision
             //2. move
             controller.TryApplyMovement(movement);
-        }
-        protected override void OnStateEnter()
-        {
-            this.inputRelay.OnMovementInput += OnMovementInputHandler;
-            this.inputRelay.OnInteractionInput += OnInteractionInputHandler;
-            this.inputRelay.OnPunchInput += OnPunchInputHandler;
-            this.inputRelay.OnDashInput += OnDashInputHandler;
-            this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
-            this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
         }
 
         private void OnMovementInputHandler(Vector2 movement_)
@@ -74,17 +69,31 @@ namespace BigBoyShakedown.Player.State
         private void OnPlayerTargetedHandler()
         {
             playerTargeted = true;
-            Time.StartTimer(new VariableReference<bool>(() => playerTargeted, (val) => { playerTargeted = val; }).SetEndValue(false), .2f);
+            Time.StartTimer(new VariableReference<bool>(() => playerTargeted, (val) => { playerTargeted = val; }).SetEndValue(false), .1f);
         }
 
-        private void OnPlayerHitHandler(PlayerController otherPlayer)
+        private void OnPlayerHitHandler(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended) 
         {
-            if (otherPlayer.size > controller.size)
+            if (from.size > controller.size)
             {
-
+                controller.ApplyHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+            }
+            else
+            {
+                controller.ApplyHit(from, damageIntended, 0f, 0f);
             }
         }
 
+        #region eventOverrides
+        protected override void OnStateEnter()
+        {
+            this.inputRelay.OnMovementInput += OnMovementInputHandler;
+            this.inputRelay.OnInteractionInput += OnInteractionInputHandler;
+            this.inputRelay.OnPunchInput += OnPunchInputHandler;
+            this.inputRelay.OnDashInput += OnDashInputHandler;
+            this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
+            this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
+        }
         protected override void OnStateExit()
         {
             this.inputRelay.OnMovementInput -= OnMovementInputHandler;
@@ -98,5 +107,6 @@ namespace BigBoyShakedown.Player.State
         {
 
         }
+        #endregion
     }
 }

@@ -28,6 +28,8 @@ namespace BigBoyShakedown.Player.State
         #region stateEnter
         public void StateEnter()
         {
+            Debug.Log("State entered: " + this.GetType());
+
             enabled = true;
             OnStateEnter();
         }
@@ -39,6 +41,8 @@ namespace BigBoyShakedown.Player.State
         #region stateExit
         public void StateExit()
         {
+            Debug.Log("State exited: " + this.GetType());
+
             OnStateExit();
             enabled = false;
         }

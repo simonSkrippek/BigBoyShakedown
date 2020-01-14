@@ -19,12 +19,12 @@ namespace BigBoyShakedown.Player.Input
         public event Action OnInteractionInput;
         public event Action OnDashInput;
         public event Action OnPlayerTargeted;
-        public event Action<PlayerController> OnPlayerHit;
+        public event Action<PlayerController, float, float, float> OnPlayerHit;
         #endregion
 
-        public void RelayPlayerHit(PlayerController other)
+        public void RelayPlayerHit(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
         {
-            OnPlayerHit(other);
+            OnPlayerHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
         }
 
         private void Awake()

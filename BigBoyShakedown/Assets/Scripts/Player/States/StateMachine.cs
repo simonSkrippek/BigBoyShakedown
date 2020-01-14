@@ -23,6 +23,11 @@ namespace BigBoyShakedown.Player.State
         }
 
 
+        public void setState(State state)
+        {
+            SetState(state);
+        }
+
         /// <summary>
         /// Switch the currentState to a specific State object
         /// </summary>
@@ -42,11 +47,6 @@ namespace BigBoyShakedown.Player.State
                 success = true;
             }
             return success;
-        }
-
-        public void setState(State state)
-        {
-            SetState(state);
         }
 
         /// <summary>
