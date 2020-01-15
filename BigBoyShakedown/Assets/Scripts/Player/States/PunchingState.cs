@@ -29,41 +29,77 @@ namespace BigBoyShakedown.Player.State
                 {
                     if (!punchCompleted)
                     {
-                        //apply punch
+                        CompletePunch();
 
                         inRecovery = true;
-                        Time.StartTimer(new VariableReference<bool>(() => inRecovery, (val) => { inRecovery = val; }).SetEndValue(false), windUpTime);
+                        Time.StartTimer(new VariableReference<bool>(() => inRecovery, (val) => { inRecovery = val; }).SetEndValue(false), recoveryTime);
                         punchCompleted = true;
                     }
                     else
                     {
-                        if (comboChained )
-                            //also check if in combo time window
-                        machine.SetState<IdlingState>();
+                        if (comboChained)
+                        {
+                            machine.SetState<PunchingState>();
+                        }
+                        else
+                        {
+                            machine.SetState<IdlingState>();
+                        }
                     }
-                }
-                else
-                {
-                    //get all players in cone, target them
                 }
             }
         }
 
+        private void CompletePunch()
+        {
+            var enemiesToAttack = controller.GetAllAttackablesInAttackCone(controller.GetAllAttackablesInRange());
+            foreach(var enemy in enemiesToAttack)
+            {
+                
+            }
+        }
+
+        public void TargetAllAttackables()
+        {
+            var objectsInRange = controller.GetAllAttackablesInRange();
+            var objectsInCone = controller.GetAllAttackablesInAttackCone(objectsInRange);
+            controller.TargetAttackables(objectsInCone);
+        }
+
         private void OnPunchInputHandler()
         {
-            
+            if (inRecovery)
+            {
+                comboChained = true;
+            }
         }
 
         private void OnPlayerHitHandler(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
         {
             if (from.size > controller.size)
             {
-                controller.ApplyHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+                controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
             }
             else
             {
-                controller.ApplyHit(from, damageIntended, 0f, 0f);
+                controller.ReceiveHit(from, damageIntended, 0f, 0f);
             }
+        }
+
+        private void StartPunch()
+        {
+            inWindUp = true;
+            Time.StartTimer(new VariableReference<bool>(() => inWindUp, (val) => { inWindUp = val; }).SetEndValue(false), windUpTime);
+            comboCount++;
+            if (comboCount > 3) comboCount = 1;
+
+            var objectsInRange = controller.GetAllAttackablesInRange();
+            var objectToSnapTo = controller.GetClosestAttackable(objectsInRange);
+            controller.TurnTo(objectToSnapTo.position);
+            var objectsInCone = controller.GetAllAttackablesInAttackCone(objectsInRange);
+            controller.TargetAttackables(objectsInCone);
+
+            this.InvokeRepeating("TargetAllAttackables", .101f, .101f);
         }
 
         #region eventOverrides
@@ -73,11 +109,9 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
 
             windUpTime = controller.metrics.PlayerWindUpTime[controller.size];
-            inWindUp = true;
-            Time.StartTimer(new VariableReference<bool>(() => inWindUp, (val) => { inWindUp = val; }).SetEndValue(false), windUpTime);
             recoveryTime = controller.metrics.PlayerPunchRecoveryTime[controller.size];
-            comboCount++;
-            if (comboCount > 3) comboCount = 1;
+
+            StartPunch();
         }
         protected override void OnStateExit()
         {

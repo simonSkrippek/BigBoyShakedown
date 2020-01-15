@@ -20,11 +20,20 @@ namespace BigBoyShakedown.Player.Input
         public event Action OnDashInput;
         public event Action OnPlayerTargeted;
         public event Action<PlayerController, float, float, float> OnPlayerHit;
+        public event Action OnPlayerDeath;
         #endregion
 
         public void RelayPlayerHit(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
         {
-            OnPlayerHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+            OnPlayerHit.Invoke(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+        }
+        public void RelayPlayerTargeted()
+        {
+            OnPlayerTargeted.Invoke();
+        }
+        public void RelayPlayerDeath()
+        {
+            OnPlayerDeath.Invoke();
         }
 
         private void Awake()
@@ -72,7 +81,5 @@ namespace BigBoyShakedown.Player.Input
                 }
             }
         }
-
-
     }
 }

@@ -21,15 +21,95 @@ namespace BigBoyShakedown.Player.Controller
             inputRelay = GetComponent<PlayerInputRelay>();
         }
 
+        #region interactionMethods
         /// <summary>
         /// check if an interactable is in range of the charater.
         /// </summary>
         /// <returns>if an interactable in range was found</returns>
         public bool InteractableInRange()
         {
-            throw new NotImplementedException();
+            var result = GetInteractablesInRange();
+            if (result.Length > 0) return true;
+            else return false;
         }
+        /// <summary>
+        /// check if a specific interactable is in range
+        /// </summary>
+        /// <param name="interactable">the interactable to check</param>
+        /// <returns>true if in range</returns>
+        public bool InteractableInRange(Interactable interactable)
+        {
+            return ((interactable.transform.root.position - this.transform.position).magnitude < metrics.PlayerInteractionRange[size - 1]);
+        }
+        /// <summary>
+        /// get the closest interactable to this player
+        /// </summary>
+        /// <returns>closest interactable found</returns>
+        public Interactable GetClosestInteractable()
+        {
+            var interactables = GetInteractablesInRange();
+            Interactable closestInteractable = null;
+            float distanceToClosestInteractable = float.MaxValue;
+            foreach (var interactable in interactables)
+            {
+                Interactable interactableComponent;
+                if (interactable.transform.root.TryGetComponent<Interactable>(out interactableComponent))
+                {
+                    var distanceToInteractable = (interactable.transform.root.position - this.transform.position).magnitude;
+                    if (distanceToInteractable < distanceToClosestInteractable)
+                    {
+                        distanceToClosestInteractable = distanceToInteractable;
+                        closestInteractable = interactableComponent;
+                    }
+                }
+            }
+            return closestInteractable;
+        }
+        /// <summary>
+        /// return all interactables in range, ie all objects on the layer specified as interactable layers
+        /// </summary>
+        /// <returns>an array of colliders in range</returns>
+        public Collider[] GetInteractablesInRange()
+        {
+            var result = Physics.OverlapSphere(this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x / 2f, 0), metrics.PlayerInteractionRange[size - 1], LayerMask.GetMask(metrics.Mask_interactables), QueryTriggerInteraction.Collide);
+            return result;
+        }
+        /// <summary>
+        /// Start an interaction with the specified interactable. 
+        /// notify playerInput on this gameobject, as well as the interactable
+        /// </summary>
+        /// <param name="interactable">the interactable to start interacting with</param>
+        /// <returns>whether starting the interaction was successful</returns>
+        public bool StartInteraction(Interactable interactable)
+        {
+            throw new NotImplementedException();
+            return false;
+        }
+        /// <summary>
+        /// End an interaction with the specified interactable. 
+        /// notify playerInput on this gameobject, as well as the interactable
+        /// </summary>
+        /// <param name="interactable">the interactable to finish interacting with</param>
+        /// <returns>whether ending the interaction was successful</returns>
+        public bool EndInteraction(Interactable interactable)
+        {
+            throw new NotImplementedException();
+            return false;
+        }
+        /// <summary>
+        /// complete an interaction with the specified interactable.
+        /// notify playerInput on this gameobject, as well as the interactable
+        /// </summary>
+        /// <param name="interactable">the interactable to finish interacting with</param>
+        /// <returns>whether completing the interaction was successful</returns>
+        public bool CompleteInteraction(Interactable interactable)
+        {
+            throw new NotImplementedException();
+            return false;
+        }
+        #endregion
 
+        #region movementMethods
         ///<summary> 
         ///check for collision in the movement direction. If there is none, move the character.
         ///</summary>
@@ -47,16 +127,172 @@ namespace BigBoyShakedown.Player.Controller
         private Vector3 CheckCollisionInPath(Vector3 movement)
         {
             var point1 = this.transform.position;
-            point1.y = metrics.PlayerScale[size].x * 1 / 3;
+            point1.y = metrics.PlayerScale[size-1].x * 1 / 3;
             var point2 = this.transform.position;
-            point1.y = metrics.PlayerScale[size].x * 2 / 3;
-            var radius = metrics.PlayerScale[size].y / 2;
+            point1.y = metrics.PlayerScale[size-1].x * 2 / 3;
+            var radius = metrics.PlayerScale[size-1].y / 2;
             var mask = LayerMask.GetMask(metrics.Mask_collidables);
             RaycastHit hit;
             if (Physics.CapsuleCast(point1, point2, radius, movement.normalized, out hit, movement.magnitude, mask, QueryTriggerInteraction.Collide) && hit.transform.root != this.transform)
                 return hit.distance * movement.normalized;
             else
                 return Vector3.zero;
+        }
+
+        /// <summary>
+        /// rotate the transform attached to this gameobject towards the real world position passed.
+        /// </summary>
+        /// <param name="position">the position to turn to</param>
+        public void TurnTo(Vector3 position)
+        {
+            var direction = position - this.transform.position;
+            TurnIn(direction);
+        }
+
+        /// <summary>
+        /// rotate the transform attached to this gameobject by setting its forward vector to the one passed
+        /// </summary>
+        /// <param name="direction">the direction to set the forward vector to</param>
+        public void TurnIn(Vector3 direction)
+        {
+            direction.y = 0;
+            this.transform.forward = direction;
+        }
+
+        /// <summary>
+        /// checks wether the character is standing on the floor
+        /// </summary>
+        /// <returns>false if character is in the air</returns>
+        public bool IsGrounded()
+        {
+            return this.transform.position.y <= 0;
+        }
+        #endregion
+
+        #region combatMethods
+        /// <summary>
+        /// relay the targetting to the attackables responsible input relay. currently only for players.
+        /// </summary>
+        /// <param name="attackables">all attackables to which targetting should be relayed</param>
+        public void TargetAttackables(Collider[] attackables)
+        {
+            foreach(var attackableCollider in attackables)
+            {
+                PlayerInputRelay relay;
+                if (attackableCollider.transform.root.TryGetComponent<PlayerInputRelay>(out relay))
+                {
+                    relay.RelayPlayerTargeted();
+                }
+            }
+        }
+
+        /// <summary>
+        /// get all objects on the layers classified as "attackable" in player metrics
+        /// </summary>
+        /// <returns>array of colliders in range</returns>
+        public Collider[] GetAllAttackablesInRange()
+        {
+            return Physics.OverlapSphere(this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x, 0), metrics.PlayerPunchRange[size - 1], LayerMask.GetMask(metrics.Mask_attackables));
+        }
+
+        /// <summary>
+        /// calculates the collider with "attackPriority", specified in playerMetrics, that is most in line with this transforms forward direction
+        /// </summary>
+        /// <param name="attackablesInRange">all attackable colliders in range</param>
+        /// <returns>the closest collider</returns>
+        public Transform GetClosestAttackable(Collider[] attackablesInRange)
+        {
+            Collider closestCollider = null;
+            float distanceToClosestCollider = float.MaxValue;
+
+            foreach (var currentCollider in attackablesInRange)
+            {
+                //if not this object
+                if (currentCollider.transform.root != this.transform.root)
+                {
+                    //creating vector to enemy in range
+                    var vectorToCollider3D = currentCollider.ClosestPoint(this.transform.root.position) - this.transform.root.position;
+                    var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
+                    vectorToCollider.Normalize();
+                    //tracking view direction
+                    var facing3D = this.transform.forward;
+                    var facing = new Vector2(facing3D.x, facing3D.z);
+                    facing.Normalize();
+
+                    var distanceToCollider = (facing - vectorToCollider).magnitude;
+
+                    //in case of higher importance or being closer to view direction, note as new closest
+                    if (closestCollider == null)
+                    {
+                        distanceToClosestCollider = distanceToCollider;
+                        closestCollider = currentCollider;
+                    }
+                    else if (HasAttackPriority(currentCollider) == HasAttackPriority(closestCollider))
+                    {
+                        if (distanceToCollider < distanceToClosestCollider)
+                        {
+                            distanceToClosestCollider = distanceToCollider;
+                            closestCollider = currentCollider;
+                        }
+                    }
+                    else if (HasAttackPriority(currentCollider))
+                    {
+                        distanceToClosestCollider = distanceToCollider;
+                        closestCollider = currentCollider;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            return closestCollider.transform.root;
+        }
+
+        /// <summary>
+        /// calculates which colliders are in a cone in this transforms view direction, its angle being specified in playerMetrics
+        /// </summary>
+        /// <param name="attackablesInRange">all attackable colliders in range</param>
+        /// <returns>all colliders in the cone</returns>
+        public Collider[] GetAllAttackablesInAttackCone(Collider[] attackablesInRange)
+        {
+            var attackablesInCone = new List<Collider>();
+            var maxDistance = Mathf.Sin(metrics.PlayerPunchAngle[size-1] * Mathf.Deg2Rad) / Mathf.Sin((180 - metrics.PlayerPunchAngle[size-1]) * Mathf.Deg2Rad / 2);
+            foreach (var item in attackablesInRange)
+            {
+                if (item.transform.root != this.transform.root)
+                {
+                    var vectorToCollider3D = item.ClosestPoint(this.transform.root.position) - this.transform.root.position;
+                    var vectorToCollider = new Vector2(vectorToCollider3D.x, vectorToCollider3D.z);
+                    vectorToCollider.Normalize();
+
+                    var facing3D = this.transform.forward;
+                    var facing = new Vector2(facing3D.x, facing3D.z);
+                    facing.Normalize();
+
+                    var distanceToCollider = (facing - vectorToCollider).magnitude;
+
+                    if (distanceToCollider < maxDistance)
+                    {
+                        attackablesInCone.Add(item);
+                    }
+                }
+            }
+            return attackablesInCone.ToArray();
+        }
+
+        /// <summary>
+        /// determines whether or not an object the given collider is attached to has priority to be attacked
+        /// </summary>
+        /// <param name="collider">the given collider</param>
+        /// <returns>true if it has priority </returns>
+        bool HasAttackPriority(Collider collider)
+        {
+            foreach(var layer in metrics.PriorityAttackables)
+            {
+                if (collider.transform.root.gameObject.layer.Equals(layer)) return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -67,7 +303,7 @@ namespace BigBoyShakedown.Player.Controller
         /// <param name="knockbackDistanceIntended">the [raw] distance the other character is trying to knock this back</param>
         /// <param name="stunDurationIntended">the [raw] duration the other character is trying to stun this for</param>
         /// [raw] => _not_ modified by current state
-        public void TryApplyHit(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
+        public void TryReceiveHit(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
         {
             this.inputRelay.RelayPlayerHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
         }
@@ -80,14 +316,49 @@ namespace BigBoyShakedown.Player.Controller
         /// <param name="knockbackDistance">the [scaled] distance the other character is trying to knock this back</param>
         /// <param name="stunDuration">the [scaled] duration the other character is trying to stun this for</param>
         /// [scaled] => modified by current state
-        public void ApplyHit(PlayerController from, float damage, float knockbackDistance, float stunDuration)
+        public void ReceiveHit(PlayerController from, float damage, float knockbackDistance, float stunDuration)
         {
             //apply damage
             score -= (int) damage;
-            //TODO: rest
-            throw new NotImplementedException();
+
+            from.HitCallback(this, damage);
         }
 
+        /// <summary>
+        /// notify all attackables that they have been hit.
+        /// </summary>
+        /// <param name="attackables">all attackables to be hit</param>
+        public void HitAllAttackables(Transform[] attackables, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
+        {
+            foreach (var attackable in attackables)
+            {
+                PlayerController otherController;
+                if (attackable.TryGetComponent<PlayerController>(out otherController))
+                {
+                    otherController.TryReceiveHit(this, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+                    continue;
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// notify all attackables that they have been hit. finds root transform and proceeds like other overload.
+        /// </summary>
+        /// <param name="attackables"></param>
+        public void HitAllAttackables(Collider[] attackables, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
+        {
+            List<Transform> attackableTransforms = new List<Transform>();
+            foreach (var collider in attackables)
+            {
+                attackableTransforms.Add(collider.transform.root);
+            }
+            HitAllAttackables(attackableTransforms.ToArray(), damageIntended, knockbackDistanceIntended, stunDurationIntended);
+        }
+        
         /// <summary>
         /// apply the effects of a successful hit on another player.
         /// </summary>
@@ -99,12 +370,15 @@ namespace BigBoyShakedown.Player.Controller
         }
 
         /// <summary>
-        /// checks wether the character is standing on the floor
+        /// verify and relay the death of this character
         /// </summary>
-        /// <returns>false if character is in the air</returns>
-        public bool IsGrounded()
+        public void Die()
         {
-            return this.transform.position.y <= 0;
+            if (score < 0)
+            {
+                inputRelay.RelayPlayerDeath();
+            }
         }
+        #endregion
     }
 }

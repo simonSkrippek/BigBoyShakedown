@@ -76,11 +76,11 @@ namespace BigBoyShakedown.Player.State
         {
             if (from.size > controller.size)
             {
-                controller.ApplyHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+                controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
             }
             else
             {
-                controller.ApplyHit(from, damageIntended, 0f, 0f);
+                controller.ReceiveHit(from, damageIntended, 0f, 0f);
             }
         }
 
