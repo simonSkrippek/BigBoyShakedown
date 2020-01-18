@@ -303,7 +303,7 @@ namespace BigBoyShakedown.Player.Controller
         /// <param name="knockbackDistanceIntended">the [raw] distance the other character is trying to knock this back</param>
         /// <param name="stunDurationIntended">the [raw] duration the other character is trying to stun this for</param>
         /// [raw] => _not_ modified by current state
-        public void TryReceiveHit(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
+        public void TryReceiveHit(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended)
         {
             this.inputRelay.RelayPlayerHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
         }
@@ -316,7 +316,7 @@ namespace BigBoyShakedown.Player.Controller
         /// <param name="knockbackDistance">the [scaled] distance the other character is trying to knock this back</param>
         /// <param name="stunDuration">the [scaled] duration the other character is trying to stun this for</param>
         /// [scaled] => modified by current state
-        public void ReceiveHit(PlayerController from, float damage, float knockbackDistance, float stunDuration)
+        public void ReceiveHit(PlayerController from, float damage, Vector3 knockbackDistance, float stunDuration)
         {
             //apply damage
             score -= (int) damage;
@@ -335,7 +335,10 @@ namespace BigBoyShakedown.Player.Controller
                 PlayerController otherController;
                 if (attackable.TryGetComponent<PlayerController>(out otherController))
                 {
-                    otherController.TryReceiveHit(this, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+                    var directionToAttackable = attackable.transform.position - this.transform.position;
+                    directionToAttackable.y = 0;
+                    directionToAttackable.Normalize();
+                    otherController.TryReceiveHit(this, damageIntended, knockbackDistanceIntended * directionToAttackable, stunDurationIntended);
                     continue;
                 }
                 else

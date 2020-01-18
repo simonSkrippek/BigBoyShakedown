@@ -7,12 +7,13 @@ using BigBoyShakedown.Player.Controller;
 
 namespace BigBoyShakedown.Player.State
 {
-    [RequireComponent(typeof(StateMachine), typeof(PlayerInputRelay), typeof(PlayerController))]
+    [RequireComponent(typeof(StateMachine), typeof(PlayerInputRelay), typeof(PlayerController)), RequireComponent(typeof(StateCarryOver))]
     public class State : MonoBehaviour
     {
         public StateMachine machine;
         public PlayerInputRelay inputRelay;
         public PlayerController controller;
+        public StateCarryOver carryOver;
 
         #region stateInitialize
         public void Initialize(StateMachine machine)
@@ -76,6 +77,7 @@ namespace BigBoyShakedown.Player.State
             this.machine = GetComponent<StateMachine>();
             this.inputRelay = GetComponent<PlayerInputRelay>();
             this.controller = GetComponent<PlayerController>();
+            this.carryOver = GetComponent<StateCarryOver>();
         }
 
         public static implicit operator bool(State state)

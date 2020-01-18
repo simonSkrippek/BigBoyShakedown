@@ -72,15 +72,18 @@ namespace BigBoyShakedown.Player.State
             Time.StartTimer(new VariableReference<bool>(() => playerTargeted, (val) => { playerTargeted = val; }).SetEndValue(false), .1f);
         }
 
-        private void OnPlayerHitHandler(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended) 
+        private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended) 
         {
             if (from.size > controller.size)
             {
                 controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+                carryOver.stunDuration = stunDurationIntended;
+                carryOver.knockbackDistance = knockbackDistanceIntended;
+                machine.SetState<StunnedState>();
             }
             else
             {
-                controller.ReceiveHit(from, damageIntended, 0f, 0f);
+                controller.ReceiveHit(from, damageIntended, Vector3.zero, 0f);
             }
         }
 
@@ -93,6 +96,8 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput += OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
+
+            carryOver.Reset();
         }
         protected override void OnStateExit()
         {
@@ -102,6 +107,8 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput -= OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted -= OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit -= OnPlayerHitHandler;
+
+            carryOver.previousMovement = movement;
         }
         protected override void OnStateInitialize(StateMachine machine = null)
         {

@@ -21,10 +21,10 @@ MonoBehaviour:
   playerMaxScore: {x: 120, y: 3600}
   changeAnimationRate: 2
   playerScale:
-  - 0.75
-  - 1
-  - 1.5
-  - 2
+  - 4
+  - 4
+  - 4
+  - 4
   - 2.5
   playerMoveSpeed:
   - 1.25

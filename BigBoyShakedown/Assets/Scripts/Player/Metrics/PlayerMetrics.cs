@@ -43,7 +43,7 @@ namespace BigBoyShakedown.Player.Metrics
         private Vector2[] playerScale = { new Vector2(1f, .5f), new Vector2(1f, .5f), new Vector2(1f, .5f), new Vector2(1f, .5f), new Vector2(1f, .5f) };
         public Vector2[] PlayerScale { get => playerScale; }
 
-        [[Header("Range")]
+        [Header("Range")]
         [Tooltip("punch range player has in all stages"), SerializeField]
         //private static float[] playerPunchRange = { 1.75f, 1.8f, 2.7f, 3.6f, 4.5f };
         private float[] playerPunchRange = { 10f, 10f, 10f, 10f, 10f };
@@ -107,13 +107,33 @@ namespace BigBoyShakedown.Player.Metrics
 
 
 
-        [Header("Damage"), Tooltip("damage player does in all stages"), SerializeField]
-        private int[] playerDamage = { 40, 50, 80, 120, 200 };
-        public int[] PlayerDamage { get => playerDamage; }
+        [Header("Damage"), Tooltip("damage player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        private int[,] playerDamage = { { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80} };
+        public int[,] PlayerDamage { get => playerDamage; }
 
         [Header("Range"), Tooltip("range player has in all stages"), SerializeField]
         private float[] playerComboModifier = { 10f, 10f, 10f, 10f, 10f };
         public float[] PlayerComboModifier { get => playerComboModifier; }
+
+        [Header("knockback"), Tooltip("knockback player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        private int[,] playerPunchKnockback = { { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80} };
+        public int[,] PlayerPunchKnockback { get => playerPunchKnockback; }
+
+        [Header("stun"), Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        private int[,] playerPunchStunDuration = { { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80},
+                                        { 40, 50, 80} };
+        public int[,] PlayerPunchStunDuration { get => playerPunchStunDuration; }
         #endregion
 
         [Space()]

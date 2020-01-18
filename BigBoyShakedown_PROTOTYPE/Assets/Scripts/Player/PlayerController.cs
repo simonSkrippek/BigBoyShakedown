@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour
         if (SizeChanged)
         {
             var position = new Vector3(this.transform.position.x, CharacterSize / 2f + .3f, this.transform.position.z);
-            this.transform.localScale = new Vector3(CharacterSize, CharacterSize, CharacterSize);
+            this.transform.localScale = new Vector3(playerMetrics.PlayerScale[characterSize-1], playerMetrics.PlayerScale[characterSize - 1], playerMetrics.PlayerScale[characterSize - 1]);
             this.transform.position = position;
             SizeChanged = false;
 

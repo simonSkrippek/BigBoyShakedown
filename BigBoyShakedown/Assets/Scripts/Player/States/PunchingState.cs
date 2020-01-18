@@ -53,10 +53,10 @@ namespace BigBoyShakedown.Player.State
         private void CompletePunch()
         {
             var enemiesToAttack = controller.GetAllAttackablesInAttackCone(controller.GetAllAttackablesInRange());
-            foreach(var enemy in enemiesToAttack)
-            {
-                
-            }
+            controller.HitAllAttackables(enemiesToAttack,
+                                        controller.metrics.PlayerDamage[controller.size - 1, comboCount],
+                                        controller.metrics.PlayerPunchKnockback[controller.size - 1, comboCount] ,
+                                        controller.metrics.PlayerPunchStunDuration[controller.size - 1, comboCount]);
         }
 
         public void TargetAllAttackables()
@@ -74,15 +74,18 @@ namespace BigBoyShakedown.Player.State
             }
         }
 
-        private void OnPlayerHitHandler(PlayerController from, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
+        private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended)
         {
             if (from.size > controller.size)
             {
                 controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+                carryOver.stunDuration = stunDurationIntended;
+                carryOver.knockbackDistance = knockbackDistanceIntended;
+                machine.SetState<StunnedState>();
             }
             else
             {
-                controller.ReceiveHit(from, damageIntended, 0f, 0f);
+                controller.ReceiveHit(from, damageIntended, Vector3.zero, 0f);
             }
         }
 
