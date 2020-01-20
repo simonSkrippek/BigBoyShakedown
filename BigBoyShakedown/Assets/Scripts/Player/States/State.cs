@@ -33,6 +33,7 @@ namespace BigBoyShakedown.Player.State
 
             enabled = true;
             OnStateEnter();
+            carryOver.Reset();
         }
         protected virtual void OnStateEnter()
         {

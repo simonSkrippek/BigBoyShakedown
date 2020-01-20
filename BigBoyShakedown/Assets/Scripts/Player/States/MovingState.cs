@@ -7,13 +7,23 @@ using BigBoyShakedown.Player.Controller;
 
 namespace BigBoyShakedown.Player.State
 {
+    /// <summary>
+    /// this class represents the state responsible for normal movement.
+    /// this class handles the following input events:
+    ///     playerHit: handle, then switch state
+    ///     playerTargetted: handle here
+    ///     Dash: switch state
+    ///     Interaction: switch state
+    ///     Movement: handle here
+    ///     Punch: switch state
+    /// </summary>
     public class MovingState : State
     {
         bool playerTargeted;
 
         Vector3 movement;
 
-        void Update()
+        void FixedUpdate()
         {
             //calculate y movement
             if (!controller.IsGrounded())
@@ -29,6 +39,10 @@ namespace BigBoyShakedown.Player.State
             controller.TryApplyMovement(movement);
         }
 
+        #region inputHandlers
+        /// <summary>
+        /// Handles move event, raised by #PlayerInputHandler
+        /// </summary>
         private void OnMovementInputHandler(Vector2 movement_)
         {
             if (movement_ == Vector2.zero)
@@ -42,6 +56,9 @@ namespace BigBoyShakedown.Player.State
             }
         }
 
+        /// <summary>
+        /// Handles interaction event, raised by #PlayerInputHandler
+        /// </summary>
         private void OnInteractionInputHandler()
         {
             //switch to interaction state
@@ -55,23 +72,35 @@ namespace BigBoyShakedown.Player.State
             }
         }
 
+        /// <summary>
+        /// Handles punch event, raised by #PlayerInputHandler
+        /// </summary>
         private void OnPunchInputHandler()
         {
             machine.SetState<PunchingState>();
         }
 
+        /// <summary>
+        /// Handles dash event, raised by #PlayerInputHandler
+        /// </summary>
         private void OnDashInputHandler()
         {
             //switch to dash state when player is targeted
             if (playerTargeted) machine.SetState<DashingState>();
         }
 
+        /// <summary>
+        /// Handles targetted event, raised by #PlayerInputHandler
+        /// </summary>
         private void OnPlayerTargetedHandler()
         {
             playerTargeted = true;
             Time.StartTimer(new VariableReference<bool>(() => playerTargeted, (val) => { playerTargeted = val; }).SetEndValue(false), .1f);
         }
 
+        /// <summary>
+        /// Handles hit event, raised by #PlayerInputHandler
+        /// </summary>
         private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended) 
         {
             if (from.size > controller.size)
@@ -86,6 +115,7 @@ namespace BigBoyShakedown.Player.State
                 controller.ReceiveHit(from, damageIntended, Vector3.zero, 0f);
             }
         }
+        #endregion
 
         #region eventOverrides
         protected override void OnStateEnter()
@@ -97,7 +127,7 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
 
-            carryOver.Reset();
+            movement = carryOver.previousMovement;
         }
         protected override void OnStateExit()
         {
