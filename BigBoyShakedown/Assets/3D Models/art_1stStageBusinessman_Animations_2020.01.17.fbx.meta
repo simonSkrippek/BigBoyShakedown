@@ -1,8 +1,23 @@
 fileFormatVersion: 2
-guid: ab11a5834913b8841bda867b0d1a46ec
+guid: 71d67fc2af5f60842abd0631d79eca15
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -1740777849441421410
+    second: Armature|Mixamo_Combo1.1
+  - first:
+      74: -7832602073923279731
+    second: Armature|Mixamo_Combo1.2
+  - first:
+      74: 1982260321147785019
+    second: Armature|Mixamo_GetHit
+  - first:
+      74: 1353110697083038871
+    second: Armature|Mixamo_Idle
+  - first:
+      74: -3490961287958580190
+    second: Armature|Mixamo_Slide
   externalObjects: {}
   materials:
     materialImportMode: 1

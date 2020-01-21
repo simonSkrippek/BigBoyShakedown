@@ -8,13 +8,15 @@ namespace BigBoyShakedown.Player.State
     [RequireComponent(typeof(Animator))]
     public class StateMachine : MonoBehaviour
     {
-        public List<State> statesList = new List<State>();
+        public List<State> statesList;
         protected State currentState;
         public State GetCurrentState { get { return currentState; } }
         public Animator animator;
 
         private void Awake()
         {
+            statesList = new List<State>();
+            currentState = null;
             animator = GetComponent<Animator>();
         }
         public void Start()

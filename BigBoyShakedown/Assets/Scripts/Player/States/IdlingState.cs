@@ -14,6 +14,7 @@ namespace BigBoyShakedown.Player.State
     ///     Interaction: switch state
     ///     Movement: save movement, switch state
     ///     Punch: switch state
+    ///     death: not implemented
     /// </summary>
     public class IdlingState : State
     {
@@ -28,9 +29,9 @@ namespace BigBoyShakedown.Player.State
         /// <summary>
         /// Handles move event, raised by #PlayerInputHandler
         /// </summary>
-        private void OnMovementInputHandler(Vector2 movement_)
+        private void OnMovementInputHandler(Vector3 movement_)
         {
-            if (movement_ != Vector2.zero)
+            if (movement_ != Vector3.zero)
             {
                 carryOver.previousMovement = movement_;
                 machine.SetState<MovingState>();
@@ -116,8 +117,6 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput -= OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted -= OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit -= OnPlayerHitHandler;
-
-            carryOver.previousMovement = movement;
         }
         protected override void OnStateInitialize(StateMachine machine = null)
         {

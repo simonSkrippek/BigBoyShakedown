@@ -12,20 +12,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eeb5f7dc25d07b4394d35f4772b37d4, type: 3}
   m_Name: DefaultPlayerMetrics
   m_EditorClassIdentifier: 
+  mask_collidables:
+  - Player
+  - SolidEnvironment
+  mask_attackables:
+  - Player
+  mask_interactables:
+  - Interactables
+  priorityAttackables:
+  - Player
   playerMinimumSize: 1
   playerMaximumSize: 5
   playerStartSize: 2
+  playerScale:
+  - {x: 1.5, y: 0.5}
+  - {x: 2, y: 1}
+  - {x: 2, y: 1}
+  - {x: 2, y: 1}
+  - {x: 2, y: 1}
+  playerPunchRange:
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  playerPunchAngle:
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  playerInteractionRange:
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
   playerScore: 00000000f401000084030000dc050000d0070000ac0d0000
   playerStartScore: 600
   playerMinScore: {x: 0, y: 0}
   playerMaxScore: {x: 180, y: 3600}
   changeAnimationRate: 5
-  playerScale:
-  - 0.75
-  - 1
-  - 1.5
-  - 2
-  - 2.5
   playerMoveSpeed:
   - 1.25
   - 1
@@ -38,22 +65,37 @@ MonoBehaviour:
   - 0.9
   - 0.75
   - 0.5
-  playerPunchSpeed:
+  playerDashSpeed:
+  - 1.25
+  - 1
+  - 0.9
+  - 0.75
+  - 0.5
+  playerDashDuration:
+  - 1.25
+  - 1
+  - 0.9
+  - 0.75
+  - 0.5
+  playerWindUpTime:
   - 0.6
   - 0.75
   - 1
   - 1.75
   - 2.25
-  playerPunchRange:
+  playerPunchRecoveryTime:
+  - 0.6
+  - 0.75
+  - 1
+  - 1.75
+  - 2.25
+  playerComboModifier:
   - 10
   - 10
   - 10
   - 10
   - 10
-  playerDamage: 28000000320000005000000078000000c8000000
   playerColors: []
   defaultMaterial: {fileID: 0}
   playerRings: []
   defaultRingMaterial: {fileID: 0}
-  testMeshIdle: {fileID: 0}
-  testMeshPunching: {fileID: 0}

@@ -83,8 +83,6 @@ namespace BigBoyShakedown.Player.Metrics
 
 
         #region movement
-
-
         [Header("MovementSpeed"), Tooltip("movement speed in all stages"), SerializeField]
         private float[] playerMoveSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
         public float[] PlayerMoveSpeed { get => playerMoveSpeed; }
@@ -92,6 +90,14 @@ namespace BigBoyShakedown.Player.Metrics
         [Header("VerticalMovementSpeed"), Tooltip("movement speed in all stages"), SerializeField]
         private float[] playerYMoveSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
         public float[] PlayerYMoveSpeed { get => playerMoveSpeed; }
+
+        [Header("Dash"), Tooltip("dash speed in all stages"), SerializeField]
+        private float[] playerDashSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
+        public float[] PlayerDashSpeed { get => playerDashSpeed; }
+
+        [Tooltip("dash duration in all stages"), SerializeField]
+        private float[] playerDashDuration = { 1.25f, 1.0f, .9f, .75f, .5f };
+        public float[] PlayerDashDuration { get => playerDashDuration; }
         #endregion
 
 

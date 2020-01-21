@@ -12,6 +12,7 @@ namespace BigBoyShakedown.Player.State
     /// this class handles the following input events:
     ///     playerHit: handle, then switch state
     ///     Punch: handle here, switch to self
+    ///     death: not implemented
     /// </summary>
     public class PunchingState : State
     {
@@ -86,7 +87,7 @@ namespace BigBoyShakedown.Player.State
 
             var objectsInRange = controller.GetAllAttackablesInRange();
             var objectToSnapTo = controller.GetClosestAttackable(objectsInRange);
-            controller.TurnTo(objectToSnapTo.position);
+            if (objectToSnapTo) controller.TurnTo(objectToSnapTo.position);
             var objectsInCone = controller.GetAllAttackablesInAttackCone(objectsInRange);
             controller.TargetAttackables(objectsInCone);
 

@@ -41,10 +41,12 @@ public class Time : MonoBehaviour
                 break;
             }
         }
-        foreach (var key in keysToRemove)
+        while (keysToRemove.Count > 0)
         {
+            var key = keysToRemove[0];
             key.Set(key.valueToSetToo);
             keysToRemove.Remove(key);
+            startedTimers.Remove(key);
         }
     }
 
@@ -117,6 +119,6 @@ public class VariableReference<T>
     }
     public override int GetHashCode()
     {
-        return this.GetHashCode();
+        return base.GetHashCode();
     }
 }

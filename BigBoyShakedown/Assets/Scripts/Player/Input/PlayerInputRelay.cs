@@ -13,7 +13,7 @@ namespace BigBoyShakedown.Player.Input
         PlayerInput input;
 
         #region events
-        public event Action<Vector2> OnMovementInput;
+        public event Action<Vector3> OnMovementInput;
         public event Action OnMovementStoppedInput;
         public event Action OnPunchInput;
         public event Action OnInteractionInput;
@@ -39,6 +39,15 @@ namespace BigBoyShakedown.Player.Input
         private void Awake()
         {
             input = GetComponent<PlayerInput>();
+
+            OnMovementInput += (val) => { };
+            OnMovementStoppedInput += () => { };
+            OnPunchInput += () => { };
+            OnInteractionInput += () => { };
+            OnDashInput += () => { };
+            OnPlayerTargeted += () => { };
+            OnPlayerDeath += () => { };
+            OnPlayerHit += (val1, val2, val3, val4) => { };
         }
 
         private void OnEnable()
@@ -58,7 +67,9 @@ namespace BigBoyShakedown.Player.Input
                 switch (actionName)
                 {
                     case "Movement":
-                        OnMovementInput.Invoke(callbackContext.ReadValue<Vector2>());
+                        var move2D = callbackContext.ReadValue<Vector2>();
+                        var move3D = new Vector3(move2D.x, 0f, move2D.y);
+                        OnMovementInput.Invoke(move3D);
                         return;
                     case "Punch":
                         OnPunchInput.Invoke();

@@ -16,6 +16,7 @@ namespace BigBoyShakedown.Player.State
     ///     Interaction: switch state
     ///     Movement: handle here
     ///     Punch: switch state
+    ///     death: not implemented
     /// </summary>
     public class MovingState : State
     {
@@ -43,17 +44,23 @@ namespace BigBoyShakedown.Player.State
         /// <summary>
         /// Handles move event, raised by #PlayerInputHandler
         /// </summary>
-        private void OnMovementInputHandler(Vector2 movement_)
+        private void OnMovementInputHandler(Vector3 movement_)
         {
-            if (movement_ == Vector2.zero)
+            if (movement_ == Vector3.zero)
             {
                 machine.SetState<IdlingState>();
             }
             else
             {
-                movement.x = movement_.x;
-                movement.z = movement_.y;
+                movement = movement_;
             }
+        }
+        /// <summary>
+        /// Handles move event, raised by #PlayerInputHandler
+        /// </summary>
+        private void OnMovementStoppedInputHandler()
+        {
+            machine.SetState<IdlingState>();
         }
 
         /// <summary>
@@ -121,6 +128,7 @@ namespace BigBoyShakedown.Player.State
         protected override void OnStateEnter()
         {
             this.inputRelay.OnMovementInput += OnMovementInputHandler;
+            this.inputRelay.OnMovementStoppedInput += OnMovementStoppedInputHandler;
             this.inputRelay.OnInteractionInput += OnInteractionInputHandler;
             this.inputRelay.OnPunchInput += OnPunchInputHandler;
             this.inputRelay.OnDashInput += OnDashInputHandler;
@@ -132,6 +140,7 @@ namespace BigBoyShakedown.Player.State
         protected override void OnStateExit()
         {
             this.inputRelay.OnMovementInput -= OnMovementInputHandler;
+            this.inputRelay.OnMovementStoppedInput -= OnMovementStoppedInputHandler;
             this.inputRelay.OnInteractionInput -= OnInteractionInputHandler;
             this.inputRelay.OnPunchInput -= OnPunchInputHandler;
             this.inputRelay.OnDashInput -= OnDashInputHandler;

@@ -4,16 +4,17 @@ using UnityEngine;
 using BigBoyShakedown.Player.Input;
 using BigBoyShakedown.Player.Metrics;
 using System;
+using BigBoyShakedown.Player.State;
 
 namespace BigBoyShakedown.Player.Controller
 {
-    [RequireComponent(typeof(PlayerInputRelay))]
+    [RequireComponent(typeof(PlayerInputRelay), typeof(StateMachine), typeof(StateCarryOver))]
     public class PlayerController : MonoBehaviour
     {
         PlayerInputRelay inputRelay;
 
         public PlayerMetrics metrics;
-        public int size;
+        public int size = 1;
         public int score;
 
         private void Awake()
@@ -136,7 +137,7 @@ namespace BigBoyShakedown.Player.Controller
             if (Physics.CapsuleCast(point1, point2, radius, movement.normalized, out hit, movement.magnitude, mask, QueryTriggerInteraction.Collide) && hit.transform.root != this.transform)
                 return hit.distance * movement.normalized;
             else
-                return Vector3.zero;
+                return movement;
         }
 
         /// <summary>
@@ -246,7 +247,8 @@ namespace BigBoyShakedown.Player.Controller
                     }
                 }
             }
-            return closestCollider.transform.root;
+            if (closestCollider) return closestCollider.transform.root;
+            else return null;
         }
 
         /// <summary>

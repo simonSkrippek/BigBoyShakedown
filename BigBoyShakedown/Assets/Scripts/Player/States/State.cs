@@ -7,18 +7,28 @@ using BigBoyShakedown.Player.Controller;
 
 namespace BigBoyShakedown.Player.State
 {
+    /// <summary>
+    /// the template for all states
+    /// </summary>
     [RequireComponent(typeof(StateMachine), typeof(PlayerInputRelay), typeof(PlayerController)), RequireComponent(typeof(StateCarryOver))]
     public class State : MonoBehaviour
     {
+        bool initialized = false;
+
         public StateMachine machine;
         public PlayerInputRelay inputRelay;
         public PlayerController controller;
         public StateCarryOver carryOver;
 
         #region stateInitialize
+        private void Awake()
+        {
+            if (!initialized) this.enabled = false;
+        }
         public void Initialize(StateMachine machine)
         {
             this.machine = machine;
+            initialized = true;
             OnStateInitialize(machine);
         }
         protected virtual void OnStateInitialize(StateMachine machine = null)
@@ -56,19 +66,24 @@ namespace BigBoyShakedown.Player.State
         #region enable/disable
         public void OnEnable()
         {
-            if (this != machine.GetCurrentState)
+            if (initialized)
             {
-                enabled = false;
-                Debug.LogWarning("Do not enable States directly. Use StateMachine.SetState");
+                if (this != machine.GetCurrentState)
+                {
+                    enabled = false;
+                    Debug.LogWarning("Do not enable States directly. Use StateMachine.SetState");
+                }
             }
         }
-
         public void OnDisable()
         {
-            if (this == machine.GetCurrentState)
+            if (initialized)
             {
-                enabled = true;
-                Debug.LogWarning("Do not disable States directly. Use StateMachine.SetState");
+                if (this == machine.GetCurrentState)
+                {
+                    enabled = true;
+                    Debug.LogWarning("Do not disable States directly. Use StateMachine.SetState");
+                }
             }
         }
         #endregion
