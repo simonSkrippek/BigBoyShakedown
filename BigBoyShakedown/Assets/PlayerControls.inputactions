@@ -22,18 +22,18 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Grow",
+                    "name": "Interaction",
                     "type": "Button",
-                    "id": "088df195-d377-4101-bf84-9992a06df4ca",
+                    "id": "ced79473-617c-4dda-a75d-74a17102eb4c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 },
                 {
-                    "name": "Shrink",
+                    "name": "Dash",
                     "type": "Button",
-                    "id": "12fda82b-a1fd-4f2c-a9ca-8e5e20d55ec2",
-                    "expectedControlType": "Button",
+                    "id": "d2cda820-7fb0-4253-83a9-2dbd416d5f28",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
                 }
@@ -44,7 +44,7 @@
                     "id": "bcad5a77-4988-45e0-a0f6-928247110b73",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "StickDeadzone(max=0.925)",
+                    "processors": "StickDeadzone(max=1)",
                     "groups": "",
                     "action": "Movement",
                     "isComposite": false,
@@ -129,45 +129,56 @@
                 },
                 {
                     "name": "",
-                    "id": "d3e75d33-7ec3-41be-ad17-4f8dccb1c113",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "b1cd8856-2e41-4a02-aaba-fa50e06e1bf3",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Grow",
+                    "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c3a5cc70-fea4-4993-9114-df3824d1fa42",
+                    "id": "f0afbded-be1c-4150-a58f-45f47b59bf9a",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Grow",
+                    "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "df523d26-a59c-4994-bcda-24de1a01a57c",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "7d141f7f-1217-4247-92ee-f4083a316db5",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Shrink",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "1a5b5afc-584b-4274-8dc9-9b30f6266ea7",
-                    "path": "<Keyboard>/q",
+                    "id": "84fab6e4-0368-4788-9aae-cf43acc494f1",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Shrink",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "431e710c-4588-4913-a10e-44eaae678c91",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

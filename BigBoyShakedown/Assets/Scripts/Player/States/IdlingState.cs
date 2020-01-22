@@ -69,6 +69,7 @@ namespace BigBoyShakedown.Player.State
         {
             //switch to dash state when player is targeted
             if (playerTargeted) machine.SetState<DashingState>();
+            else Debug.Log("Tried to dash!");
         }
 
         /// <summary>

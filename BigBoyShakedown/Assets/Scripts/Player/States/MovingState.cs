@@ -37,7 +37,7 @@ namespace BigBoyShakedown.Player.State
             }
             //1. check for collision
             //2. move
-            controller.TryApplyMovement(movement);
+            controller.TryApplyMovement(movement * controller.metrics.PlayerMoveSpeed[controller.size-1] * .1f);
         }
 
         #region inputHandlers
@@ -94,6 +94,7 @@ namespace BigBoyShakedown.Player.State
         {
             //switch to dash state when player is targeted
             if (playerTargeted) machine.SetState<DashingState>();
+            else Debug.Log("Tried to dash!");
         }
 
         /// <summary>

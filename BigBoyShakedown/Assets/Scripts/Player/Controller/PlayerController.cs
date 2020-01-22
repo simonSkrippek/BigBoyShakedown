@@ -17,9 +17,24 @@ namespace BigBoyShakedown.Player.Controller
         public int size = 1;
         public int score;
 
+        Vector3 cameraForward, cameraRight;
+
+        List<Ray> raysToDraw;
+
         private void Awake()
         {
             inputRelay = GetComponent<PlayerInputRelay>();
+
+            // get main camera
+            var cam = Camera.main;
+            // Set forward to equal the camera's forward vector
+            cameraForward = cam.transform.forward;
+            // make sure y is 0
+            cameraForward.y = 0;
+            // make sure the length of vector is set to a max of 1.0
+            cameraForward.Normalize();
+            // set the right-facing vector to be facing right relative to the camera's forward vector
+            cameraRight = Quaternion.Euler(new Vector3(0, 90, 0)) * cameraForward; 
         }
 
         #region interactionMethods
@@ -117,7 +132,9 @@ namespace BigBoyShakedown.Player.Controller
         ///<param name="movement">The movement vector to apply, not adapted to camera perspective</param>
         public void TryApplyMovement(Vector3 movement)
         {
-            Vector3 possibleMovement = CheckCollisionInPath(movement);
+            movement *= -1;
+
+            Vector3 possibleMovement = CheckCollisionInPath(movement, true);
             this.transform.Translate(possibleMovement);
         }
         /// <summary>
@@ -125,19 +142,59 @@ namespace BigBoyShakedown.Player.Controller
         /// </summary>
         /// <param name="movement">the movement direction / length</param>
         /// <returns>distance / direction until the collision, ie distance that can safely be moved</returns>
-        private Vector3 CheckCollisionInPath(Vector3 movement)
+        private Vector3 CheckCollisionInPath(Vector3 movement, bool sliding)
         {
-            var point1 = this.transform.position;
-            point1.y = metrics.PlayerScale[size-1].x * 1 / 3;
-            var point2 = this.transform.position;
-            point1.y = metrics.PlayerScale[size-1].x * 2 / 3;
-            var radius = metrics.PlayerScale[size-1].y / 2;
+            raysToDraw = new List<Ray>();
             var mask = LayerMask.GetMask(metrics.Mask_collidables);
+            //var maxRayCount = 5f;
+            //for (float i = 0f; i < maxRayCount; i++)
+            //{
+            //    var rayStartPoint = this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x * i / maxRayCount, 0);
+            //    var rayDirection = movement.normalized;
+            //    Ray r = new Ray(rayStartPoint, rayDirection);
+            //    var rayDistance = movement.magnitude + metrics.PlayerScale[size - 1].y / 2;
+
+            //    raysToDraw.Add(r);
+
+            //    RaycastHit hit;
+            //    if (Physics.Raycast(r, out hit, rayDistance, mask, QueryTriggerInteraction.Collide))
+            //    {
+            //        var distanceToObject = (hit.distance - metrics.PlayerScale[size - 1].y / 2);
+            //        if (distanceToObject >= 0)
+            //        {
+            //            var distanceToGo = distanceToObject * movement.normalized;
+            //            return distanceToGo;
+            //        }
+            //        else return Vector3.zero;
+            //    }
+            //}
+
+            var point1 = this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x * 1 / 3, 0);
+            var point2 = this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x * 2 / 3, 0);
+            var radius = metrics.PlayerScale[size - 1].y / 2;
+
             RaycastHit hit;
-            if (Physics.CapsuleCast(point1, point2, radius, movement.normalized, out hit, movement.magnitude, mask, QueryTriggerInteraction.Collide) && hit.transform.root != this.transform)
-                return hit.distance * movement.normalized;
-            else
-                return movement;
+            if (Physics.CapsuleCast(point1: point1, point2: point2, radius: radius, direction: movement.normalized, hitInfo: out hit, maxDistance: movement.magnitude, layerMask: mask, QueryTriggerInteraction.Collide) && hit.transform.root != this.transform)
+            {
+                if (sliding)
+                {
+                    var movementOnColliderPlane = Vector3.ProjectOnPlane(movement, hit.normal);
+                    movementOnColliderPlane.y = 0f;
+                    return CheckCollisionInPath(movementOnColliderPlane, false);
+                }
+                else
+                {
+                    var distanceToObject = (hit.distance - .01f);
+                    if (distanceToObject >= 0)
+                    {
+                        var distanceToGo = distanceToObject * movement.normalized;
+                        return distanceToGo;
+                    }
+                    else return Vector3.zero;
+                    //return hit.distance * movement.normalized;
+                }
+            }
+            else return movement;
         }
 
         /// <summary>
@@ -385,5 +442,16 @@ namespace BigBoyShakedown.Player.Controller
             }
         }
         #endregion
+
+        private void OnDrawGizmos()
+        {
+            if (raysToDraw != null)
+            {
+                foreach (var r in raysToDraw)
+                {
+                    Gizmos.DrawRay(r);
+                }
+            }
+        }
     }
 }
