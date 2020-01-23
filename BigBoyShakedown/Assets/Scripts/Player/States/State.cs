@@ -53,9 +53,10 @@ namespace BigBoyShakedown.Player.State
         #region stateExit
         public void StateExit()
         {
+            OnStateExit();
+
             Debug.Log("State exited: " + this.GetType());
 
-            OnStateExit();
             enabled = false;
         }
         protected virtual void OnStateExit()
@@ -63,7 +64,7 @@ namespace BigBoyShakedown.Player.State
         }
         #endregion
 
-        #region enable/disable
+        #region unityEvents
         public void OnEnable()
         {
             if (initialized)
@@ -79,15 +80,13 @@ namespace BigBoyShakedown.Player.State
         {
             if (initialized)
             {
-                if (this == machine.GetCurrentState)
+                if (this == machine.GetCurrentState && this != machine.GetOldState)
                 {
                     enabled = true;
                     Debug.LogWarning("Do not disable States directly. Use StateMachine.SetState");
                 }
             }
         }
-        #endregion
-
         void OnValidate()
         {
             this.machine = GetComponent<StateMachine>();
@@ -95,6 +94,8 @@ namespace BigBoyShakedown.Player.State
             this.controller = GetComponent<PlayerController>();
             this.carryOver = GetComponent<StateCarryOver>();
         }
+        #endregion
+
 
         public static implicit operator bool(State state)
         {

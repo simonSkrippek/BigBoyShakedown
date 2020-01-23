@@ -109,6 +109,9 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput += OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
+
+            //PLAY ANIMATION
+            machine.animator.Play("Idling");
         }
         protected override void OnStateExit()
         {

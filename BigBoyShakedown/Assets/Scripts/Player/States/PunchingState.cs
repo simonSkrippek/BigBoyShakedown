@@ -20,23 +20,7 @@ namespace BigBoyShakedown.Player.State
         /// indicates how many punches have been executed in the current combo; min 1, max 3
         /// </summary>
         int comboCount;
-        /// <summary>
-        /// whether or not the punch effects have already been applied
-        /// </summary>
-        bool punchCompleted;
 
-        /// <summary>
-        /// length of wind-up, stored at start of punch
-        /// </summary>
-        public float windUpTime;
-        /// <summary>
-        /// whether or not the punch is in wind-up phase
-        /// </summary>
-        bool inWindUp;
-        /// <summary>
-        /// length of wind-up, stored at start of punch
-        /// </summary>
-        public float recoveryTime;
         /// <summary>
         /// whether or not the punch is in recovery phase
         /// </summary>
@@ -46,42 +30,21 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         bool comboChained;
 
-        void FixedUpdate()
-        {
-            if (!inRecovery)
-            {
-                if (!inWindUp)
-                {
-                    if (!punchCompleted)
-                    {
-                        CompletePunch();
+        Vector3 moveDirection;
 
-                        inRecovery = true;
-                        Time.StartTimer(new VariableReference<bool>(() => inRecovery, (val) => { inRecovery = val; }).SetEndValue(false), recoveryTime);
-                        punchCompleted = true;
-                    }
-                    else
-                    {
-                        if (comboChained)
-                        {
-                            machine.SetState<PunchingState>();
-                        }
-                        else
-                        {
-                            machine.SetState<IdlingState>();
-                        }
-                    }
-                }
-            }
+        private void FixedUpdate()
+        {
+            //controller.TryApplyMovement(moveDirection * controller.metrics.PlayerMoveSpeed[controller.size - 1] * .01f);
         }
-                
+
+
         /// <summary>
         /// starts punch, called when state is activated
         /// </summary>
         private void StartPunch()
         {
-            inWindUp = true;
-            Time.StartTimer(new VariableReference<bool>(() => inWindUp, (val) => { inWindUp = val; }).SetEndValue(false), windUpTime);
+            moveDirection = this.transform.forward.normalized;
+
             comboCount++;
             if (comboCount > 3) comboCount = 1;
 
@@ -92,20 +55,42 @@ namespace BigBoyShakedown.Player.State
             controller.TargetAttackables(objectsInCone);
 
             this.InvokeRepeating("TargetAllAttackables", .1f, .1f);
-        }
-       
+
+            machine.animator.Play("Player_Small_Punch" + comboCount + "_WindUp");
+            //Debug.Log("Punch Started! \n Combo Count: " + comboCount);
+        }       
         /// <summary>
         /// call when windup is over, before recovery starts
         /// </summary>
-        private void CompletePunch()
+        private void LandPunch()
         {
+            CancelInvoke("TargetAllAttackables");
             var enemiesToAttack = controller.GetAllAttackablesInAttackCone(controller.GetAllAttackablesInRange());
             controller.HitAllAttackables(enemiesToAttack,
-                                        controller.metrics.PlayerDamage[controller.size - 1, comboCount],
-                                        controller.metrics.PlayerPunchKnockback[controller.size - 1, comboCount],
-                                        controller.metrics.PlayerPunchStunDuration[controller.size - 1, comboCount]);
-        }
+                                        controller.metrics.PlayerDamage[controller.size - 1, comboCount-1],
+                                        controller.metrics.PlayerPunchKnockback[controller.size - 1, comboCount-1],
+                                        controller.metrics.PlayerPunchStunDuration[controller.size - 1, comboCount-1]);
+            machine.animator.Play("Player_Small_Punch" + comboCount + "_Recovery");
 
+
+            //Debug.Log("Punch Landed!" + "\n chained: " + comboChained.ToString() + "\n count: " + comboCount);
+            inRecovery = true;
+        }
+        /// <summary>
+        /// call when recovery is over
+        /// </summary>
+        private void FinishPunch()
+        {
+            //Debug.Log("Punch Finished");
+            if (comboChained)
+            {
+                if (!machine.SetState<PunchingState>()) throw new Exception("Switching states unsuccessful!");
+            }
+            else
+            {
+                if (!machine.SetState<IdlingState>()) throw new Exception("Switching states unsuccessful!");
+            }
+        }
         /// <summary>
         /// target all enemies inside of the attack cone
         /// is periodically called as long as this state is active
@@ -128,7 +113,6 @@ namespace BigBoyShakedown.Player.State
                 comboChained = true;
             }
         }
-
         /// <summary>
         /// Handles hit event, raised by #PlayerInputHandler
         /// </summary>
@@ -146,15 +130,32 @@ namespace BigBoyShakedown.Player.State
                 controller.ReceiveHit(from, damageIntended, Vector3.zero, 0f);
             }
         }
+        /// <summary>
+        /// Handles windUpComplete event, raised by #PlayerInputHandler
+        /// </summary>
+        private void OnWindUpCompleteHandler()
+        {
+            //Debug.Log("windup done!");
+            LandPunch();
+        }
+        /// <summary>
+        /// Handles recoveryComplete event, raised by #PlayerInputHandler
+        /// </summary>
+        private void OnRecoveryCompleteHandler()
+        {
+            //Debug.Log("recovery done!");
+            FinishPunch();
+        }
         #endregion
+
         #region eventOverrides
         protected override void OnStateEnter()
         {
             this.inputRelay.OnPunchInput += OnPunchInputHandler;
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
 
-            windUpTime = controller.metrics.PlayerWindUpTime[controller.size];
-            recoveryTime = controller.metrics.PlayerPunchRecoveryTime[controller.size];
+            this.inputRelay.OnRecoveryComplete += OnRecoveryCompleteHandler;
+            this.inputRelay.OnWindUpComplete += OnWindUpCompleteHandler;
 
             StartPunch();
         }
@@ -163,9 +164,12 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnPunchInput -= OnPunchInputHandler;
             this.inputRelay.OnPlayerHit -= OnPlayerHitHandler;
 
-            if (!comboChained) comboCount = 0;
+            this.inputRelay.OnRecoveryComplete -= OnRecoveryCompleteHandler;
+            this.inputRelay.OnWindUpComplete -= OnWindUpCompleteHandler;
 
-            CancelInvoke("TargetAllAttackables");
+
+            if (!comboChained) comboCount = 0;
+            comboChained = false;
         }
         protected override void OnStateInitialize(StateMachine machine = null)
         {

@@ -132,10 +132,8 @@ namespace BigBoyShakedown.Player.Controller
         ///<param name="movement">The movement vector to apply, not adapted to camera perspective</param>
         public void TryApplyMovement(Vector3 movement)
         {
-            movement *= -1;
-
             Vector3 possibleMovement = CheckCollisionInPath(movement, true);
-            this.transform.Translate(possibleMovement);
+            this.transform.position += possibleMovement;
         }
         /// <summary>
         /// cast a capsule in the movement direction, originating from this players transform. values for capsule size are taken form playerMetrics object.
@@ -144,31 +142,7 @@ namespace BigBoyShakedown.Player.Controller
         /// <returns>distance / direction until the collision, ie distance that can safely be moved</returns>
         private Vector3 CheckCollisionInPath(Vector3 movement, bool sliding)
         {
-            raysToDraw = new List<Ray>();
             var mask = LayerMask.GetMask(metrics.Mask_collidables);
-            //var maxRayCount = 5f;
-            //for (float i = 0f; i < maxRayCount; i++)
-            //{
-            //    var rayStartPoint = this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x * i / maxRayCount, 0);
-            //    var rayDirection = movement.normalized;
-            //    Ray r = new Ray(rayStartPoint, rayDirection);
-            //    var rayDistance = movement.magnitude + metrics.PlayerScale[size - 1].y / 2;
-
-            //    raysToDraw.Add(r);
-
-            //    RaycastHit hit;
-            //    if (Physics.Raycast(r, out hit, rayDistance, mask, QueryTriggerInteraction.Collide))
-            //    {
-            //        var distanceToObject = (hit.distance - metrics.PlayerScale[size - 1].y / 2);
-            //        if (distanceToObject >= 0)
-            //        {
-            //            var distanceToGo = distanceToObject * movement.normalized;
-            //            return distanceToGo;
-            //        }
-            //        else return Vector3.zero;
-            //    }
-            //}
-
             var point1 = this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x * 1 / 3, 0);
             var point2 = this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x * 2 / 3, 0);
             var radius = metrics.PlayerScale[size - 1].y / 2;
@@ -191,7 +165,6 @@ namespace BigBoyShakedown.Player.Controller
                         return distanceToGo;
                     }
                     else return Vector3.zero;
-                    //return hit.distance * movement.normalized;
                 }
             }
             else return movement;
@@ -443,15 +416,5 @@ namespace BigBoyShakedown.Player.Controller
         }
         #endregion
 
-        private void OnDrawGizmos()
-        {
-            if (raysToDraw != null)
-            {
-                foreach (var r in raysToDraw)
-                {
-                    Gizmos.DrawRay(r);
-                }
-            }
-        }
     }
 }

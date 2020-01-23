@@ -5,10 +5,11 @@ using UnityEngine;
 
 namespace BigBoyShakedown.Player.State
 {
-    [RequireComponent(typeof(Animator))]
     public class StateMachine : MonoBehaviour
     {
         public List<State> statesList;
+        protected State oldState;
+        public State GetOldState { get { return oldState; } }
         protected State currentState;
         public State GetCurrentState { get { return currentState; } }
         public Animator animator;
@@ -17,7 +18,8 @@ namespace BigBoyShakedown.Player.State
         {
             statesList = new List<State>();
             currentState = null;
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
+            if (!animator) throw new MissingMemberException("Animator not found in children");
         }
         public void Start()
         {
@@ -39,9 +41,9 @@ namespace BigBoyShakedown.Player.State
         public virtual bool SetState(State state)
         {
             bool success = false;
-            if (state && state != currentState)
+            if (state)
             {
-                State oldState = currentState;
+                oldState = currentState;
                 currentState = state;
                 if (oldState)
                     oldState.StateExit();

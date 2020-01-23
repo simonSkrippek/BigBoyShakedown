@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class StateCarryOver : MonoBehaviour
 {
+    [HideInInspector]
     public Vector3 previousMovement;
+    [HideInInspector]
     public float stunDuration;
+    [HideInInspector]
     public Vector3 knockbackDistance;
 
     void Awake()

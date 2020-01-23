@@ -37,7 +37,8 @@ namespace BigBoyShakedown.Player.State
             }
             //1. check for collision
             //2. move
-            controller.TryApplyMovement(movement * controller.metrics.PlayerMoveSpeed[controller.size-1] * .1f);
+            controller.TurnIn(-movement);
+            controller.TryApplyMovement(-movement * controller.metrics.PlayerMoveSpeed[controller.size-1] * .1f);
         }
 
         #region inputHandlers
@@ -137,6 +138,8 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
 
             movement = carryOver.previousMovement;
+            //PLAY ANIMATION
+            machine.animator.Play("Running");
         }
         protected override void OnStateExit()
         {
