@@ -7,9 +7,9 @@ using UnityEngine.InputSystem;
 
 namespace BigBoyShakedown.Player.Input
 {
-    [RequireComponent(typeof(PlayerInput))]
     public class PlayerInputRelay : MonoBehaviour
     {
+        [SerializeField]
         PlayerInput input;
         AnimationCallbackRelay animationCallbackRelay;
 
@@ -96,7 +96,6 @@ namespace BigBoyShakedown.Player.Input
         #region unityEvents
         private void Awake()
         {
-            input = GetComponent<PlayerInput>();
             animationCallbackRelay = GetComponentInChildren<AnimationCallbackRelay>();
             if (!animationCallbackRelay) throw new MissingMemberException("no animationCallbackRelay found in children");
 
@@ -111,6 +110,7 @@ namespace BigBoyShakedown.Player.Input
         }
         private void OnEnable()
         {
+            if (!input) throw new Exception("no input module set");
             //subscribe to playerInputEvents
             input.onActionTriggered += OnActionTriggeredHandler;
             //subscribe to animationCallbackEvents
@@ -122,6 +122,12 @@ namespace BigBoyShakedown.Player.Input
             input.onActionTriggered -= OnActionTriggeredHandler;
             animationCallbackRelay.OnWindUpComplete -= OnWindUpCompleteHandler;
             animationCallbackRelay.OnRecoveryComplete -= OnRecoveryCompleteHandler;
+        }
+        public void ActivateInput(PlayerInput input_)
+        {
+            if (input) throw new Exception("Input already set");
+            if (!input_) throw new Exception("Input cannot be null");
+            input = input_;
         }
         #endregion
 
@@ -136,6 +142,7 @@ namespace BigBoyShakedown.Player.Input
         }
         private void OnActionTriggeredHandler(InputAction.CallbackContext callbackContext)
         {
+            //Debug.Log("action received");
             var actionName = callbackContext.action.name;
             if (callbackContext.performed)
             {

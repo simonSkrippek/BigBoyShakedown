@@ -1,8 +1,6 @@
-﻿using BigBoyShakedown.Player.Controller;
-using BigBoyShakedown.Player.Manager;
+﻿using BigBoyShakedown.Manager;
+using BigBoyShakedown.Player.Controller;
 using BigBoyShakedown.Player.Metrics;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ public class BillboardManager : MonoBehaviour
     #region Managers
     [Header("Other Managers")]
     [Tooltip("Multiplayer Manager; ONLY ONE IN SCENE")]
-    [SerializeField] MultiplayerManager multiplayerManager;
+    [SerializeField] PersistentMultiplayerManager multiplayerManager;
     #endregion
     #region borders
     [Header("corner points")]

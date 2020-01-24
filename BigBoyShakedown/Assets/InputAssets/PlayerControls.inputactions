@@ -2,7 +2,7 @@
     "name": "PlayerControls",
     "maps": [
         {
-            "name": "All",
+            "name": "InGame",
             "id": "bec20ea7-212c-4322-bf6a-255cef458930",
             "actions": [
                 {
@@ -185,11 +185,11 @@
             ]
         },
         {
-            "name": "UI",
+            "name": "Menu",
             "id": "cdb26744-8bca-4d1d-bcd6-7ebf915078c7",
             "actions": [
                 {
-                    "name": "Left",
+                    "name": "Up",
                     "type": "Button",
                     "id": "5c3a4559-f574-42b1-ab2f-9960a721d3e6",
                     "expectedControlType": "",
@@ -197,7 +197,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Right",
+                    "name": "Down",
                     "type": "Button",
                     "id": "f2accf6e-deb7-4478-83cb-de9dff30381d",
                     "expectedControlType": "",
@@ -205,9 +205,25 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Confirm",
+                    "name": "Left",
                     "type": "Button",
                     "id": "71128353-3a86-4336-89ad-4d3b8b8319a7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "d61ef702-61c6-441d-b751-68316b034b6b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Confirm",
+                    "type": "Button",
+                    "id": "801265f5-e841-45fc-bba9-a67810509368",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -277,6 +293,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdfa24ed-f291-4ca5-9232-342b7325fbbf",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9349338-9f5e-4459-be16-08c06e564a4b",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d17919bb-ea40-44e8-9538-a3381406ef8d",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13b75c9c-7cbb-4251-aaa2-5526b25d5ce9",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
