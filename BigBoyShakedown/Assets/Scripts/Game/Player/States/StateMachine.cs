@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace BigBoyShakedown.Player.State
 {
+    [RequireComponent(typeof(Appearance.PlayerAppearance))]
     public class StateMachine : MonoBehaviour
     {
         public List<State> statesList;
@@ -12,14 +13,15 @@ namespace BigBoyShakedown.Player.State
         public State GetOldState { get { return oldState; } }
         protected State currentState;
         public State GetCurrentState { get { return currentState; } }
-        public Animator animator;
+
+        public Appearance.PlayerAppearance playerAppearance;
 
         private void Awake()
         {
             statesList = new List<State>();
             currentState = null;
-            animator = GetComponentInChildren<Animator>();
-            if (!animator) throw new MissingMemberException("Animator not found in children");
+
+            playerAppearance = GetComponent<Appearance.PlayerAppearance>();
         }
         public void Start()
         {

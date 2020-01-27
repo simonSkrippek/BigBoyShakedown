@@ -69,7 +69,9 @@ namespace BigBoyShakedown.UI.Input
                     }
                 }
             }
-            return readyCount > 1;
+            //return readyCount > 1;
+            //FOR TESTING PURPOSES; CHANGE BACK ASAP
+            return readyCount > 0;
         }
 
         public void OnPlayerJoined(PlayerInput input)

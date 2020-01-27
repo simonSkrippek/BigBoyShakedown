@@ -50,6 +50,10 @@ namespace BigBoyShakedown.Player.Input
         /// raised upon dying from playerController
         /// </summary>
         public event Action OnPlayerDeath;
+        /// <summary>
+        /// raised upon size change from playerController
+        /// </summary>
+        public event Action<int> OnPlayerSizeChanged;
         #endregion
 
         #region animationEvents
@@ -85,11 +89,19 @@ namespace BigBoyShakedown.Player.Input
             OnPlayerTargeted.Invoke();
         }
         /// <summary>
-        /// relay that this playerCharacter has died
+        /// relay that this playerController has died
         /// </summary>
         public void RelayPlayerDeath()
         {
             OnPlayerDeath.Invoke();
+        }
+        /// <summary>
+        /// relay that this playerController has changed it's size
+        /// </summary>
+        /// <param name="toSize">player's new size</param>
+        public void RelayPlayerSizeChange(int toSize)
+        {
+            OnPlayerSizeChanged.Invoke(toSize);
         }
         #endregion
 

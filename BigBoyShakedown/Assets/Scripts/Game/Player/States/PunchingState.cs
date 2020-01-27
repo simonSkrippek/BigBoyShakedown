@@ -56,7 +56,18 @@ namespace BigBoyShakedown.Player.State
 
             this.InvokeRepeating("TargetAllAttackables", .1f, .1f);
 
-            machine.animator.Play("Player_Small_Punch" + comboCount );
+            switch (comboCount)
+            {
+                case 1:
+                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch1);
+                    break;
+                case 2:
+                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch2);
+                    break;
+                case 3:
+                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch3);
+                    break;
+            }
             //Debug.Log("Punch Started! \n Combo Count: " + comboCount);
         }       
         /// <summary>

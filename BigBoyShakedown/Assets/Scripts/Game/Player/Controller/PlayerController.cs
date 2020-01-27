@@ -14,27 +14,24 @@ namespace BigBoyShakedown.Player.Controller
         PlayerInputRelay inputRelay;
 
         public PlayerMetrics metrics;
-        public int size = 1;
+        public int size = 0;
         public int score;
-
-        Vector3 cameraForward, cameraRight;
-
-        List<Ray> raysToDraw;
 
         private void Awake()
         {
             inputRelay = GetComponent<PlayerInputRelay>();
+            this.score = metrics.PlayerStartScore;
+            size = GetSizeFromScore();
+            inputRelay.RelayPlayerSizeChange(size);
+        }
 
-            // get main camera
-            var cam = Camera.main;
-            // Set forward to equal the camera's forward vector
-            cameraForward = cam.transform.forward;
-            // make sure y is 0
-            cameraForward.y = 0;
-            // make sure the length of vector is set to a max of 1.0
-            cameraForward.Normalize();
-            // set the right-facing vector to be facing right relative to the camera's forward vector
-            cameraRight = Quaternion.Euler(new Vector3(0, 90, 0)) * cameraForward; 
+        /// <summary>
+        /// calculate the players size based on its score (base on values in #playerMetrics)
+        /// </summary>
+        /// <returns>the players current size based on score</returns>
+        private int GetSizeFromScore()
+        {
+            throw new NotImplementedException();
         }
 
         #region interactionMethods

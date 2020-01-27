@@ -34,7 +34,7 @@ namespace BigBoyShakedown.Player.State
 
         private void StartDash()
         {
-            machine.animator.Play("Dashing");
+            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Dash);
 
             speed = controller.metrics.PlayerDashSpeed[controller.size];
 

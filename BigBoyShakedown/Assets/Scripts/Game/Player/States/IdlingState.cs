@@ -112,7 +112,8 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
 
             //PLAY ANIMATION
-            machine.animator.Play("Idling");
+
+            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Idle);
         }
         protected override void OnStateExit()
         {

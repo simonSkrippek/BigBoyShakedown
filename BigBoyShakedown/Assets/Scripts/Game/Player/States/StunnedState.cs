@@ -33,6 +33,8 @@ namespace BigBoyShakedown.Player.State
             knockbackPerUpdate = knockBack / stunTimer * UnityEngine.Time.fixedDeltaTime;
             stunned = true;
             Time.StartTimer(new VariableReference<bool>(() => stunned, (val) => stunned = val), stunTimer);
+
+            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.GetHit);
         }
 
         #region inputHandlers

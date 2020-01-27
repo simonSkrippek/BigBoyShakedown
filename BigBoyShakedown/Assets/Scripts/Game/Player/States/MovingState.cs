@@ -140,7 +140,8 @@ namespace BigBoyShakedown.Player.State
 
             movement = carryOver.previousMovement;
             //PLAY ANIMATION
-            machine.animator.Play("Running");
+
+            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Run);
         }
         protected override void OnStateExit()
         {

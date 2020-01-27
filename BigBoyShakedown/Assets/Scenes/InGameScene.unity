@@ -655,7 +655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 872484661}
   m_Layer: 8
-  m_Name: ArenaBorders
+  m_Name: arena_borders
   m_TagString: ArenaBorders
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionData: {fileID: 11400000, guid: 141149170d4551f41861d36ec3bf45ee, type: 2}
-  PlayerPrefab: {fileID: 1027727378385476130, guid: 062dfee5360df5744a2f4abcbdb71b0d,
+  PlayerPrefab: {fileID: 1027727378385476130, guid: dc63e0d92db60164899b22c04921fbd9,
     type: 3}
 --- !u!4 &1294458233
 Transform:
@@ -1282,7 +1282,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: f3f7031539ab8fa4fbee127a4c740875,
         type: 3}
       propertyPath: m_Name
-      value: art_completeArenaModelFBX.2020.01.21
+      value: arena_model_root
       objectReference: {fileID: 0}
     - target: {fileID: 925637291022173738, guid: f3f7031539ab8fa4fbee127a4c740875,
         type: 3}

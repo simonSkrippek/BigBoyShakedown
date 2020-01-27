@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace BigBoyShakedown.Player.Input
 {
-    [RequireComponent(typeof(Animator))]
     public class AnimationCallbackRelay : MonoBehaviour
     {
         public event Action OnWindUpComplete;
