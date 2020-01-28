@@ -13,9 +13,14 @@ namespace BigBoyShakedown.Player.Manager
     {
         public static InGameMultiplayerManager instance;
 
+        [SerializeField] BillboardManager billboardManager;
         [SerializeField] CharacterSelectionData selectionData;
 
-        [SerializeField] GameObject PlayerPrefab;
+        [SerializeField] GameObject pAce;
+        [SerializeField] GameObject pGrease;
+        [SerializeField] GameObject pMark;
+        [SerializeField] GameObject pSpecci;
+        [SerializeField] Material[] playerMaterials = new Material[4];
 
         private void Awake()
         {
@@ -30,12 +35,17 @@ namespace BigBoyShakedown.Player.Manager
         {
             Debug.Log("playerJoined: " + input_.gameObject.name + ", index: " + input_.playerIndex);
 
+            var PlayerPrefab = pMark;
+
             PlayerPrefab.SetActive(false);
-            var go = Instantiate(PlayerPrefab);
-            var inputRelay = go.GetComponent<PlayerInputRelay>();
+            var playerObject = Instantiate(PlayerPrefab);
+            var inputRelay = playerObject.GetComponent<PlayerInputRelay>();
+            var playerController = playerObject.GetComponent<Controller.PlayerController>();
             inputRelay.ActivateInput(input_);
-            go.SetActive(true);
+            playerObject.SetActive(true);
             PlayerPrefab.SetActive(true);
+
+            billboardManager.OnPlayerJoined(inputRelay, playerMaterials[input_.playerIndex], input_.playerIndex);
 
             //spawn appropriate character based on @selection data
             //TODO

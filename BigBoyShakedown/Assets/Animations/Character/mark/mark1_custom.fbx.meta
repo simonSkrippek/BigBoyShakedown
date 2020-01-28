@@ -5,10 +5,10 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 6151177917831403513
-    second: Armature|Interact_1.1
+    second: mark1_interact1
   - first:
       74: 3911417429644958479
-    second: Armature|Interact_1.2
+    second: mark1_interact2
   - first:
       74: 6691634627221796361
     second: mark1_punch1
@@ -83,7 +83,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|Interact_1.1
+      name: mark1_interact1
       takeName: Armature|Interact_1.1
       internalID: 0
       firstFrame: 0
@@ -112,7 +112,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Interact_1.2
+      name: mark1_interact2
       takeName: Armature|Interact_1.2
       internalID: 0
       firstFrame: 0
@@ -166,7 +166,15 @@ ModelImporter:
       curves: []
       events:
       - time: 0.46080452
-        functionName: NewEvent
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: RecoveryComplete
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
           type: 3}
@@ -201,7 +209,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 1
+        functionName: RecoveryComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.3997553
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -230,7 +254,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.23499185
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: RecoveryComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

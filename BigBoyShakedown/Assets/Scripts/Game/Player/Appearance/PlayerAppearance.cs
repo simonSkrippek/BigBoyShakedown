@@ -26,7 +26,6 @@ namespace BigBoyShakedown.Player.Appearance
         {
             playerInputRelay = this.GetComponent<PlayerInputRelay>();
         }
-
         private void OnEnable()
         {
             playerInputRelay.OnPlayerSizeChanged += OnPlayerSizeChangedHandler;
@@ -38,9 +37,9 @@ namespace BigBoyShakedown.Player.Appearance
 
         private void OnPlayerSizeChangedHandler(int newSize)
         {
-            currentAnimator.StopPlayback();
+            if (currentAnimator) currentAnimator.StopPlayback();
 
-            currentPlayerModel.SetActive(false);
+            if (currentPlayerModel) currentPlayerModel.SetActive(false);
             currentPlayerModel = playerModels[newSize - 1];
             currentPlayerModel.SetActive(true);
 
@@ -66,13 +65,13 @@ namespace BigBoyShakedown.Player.Appearance
                     currentAnimator.Play("dashing");
                     break;
                 case AnimatedAction.Punch1:
-                    currentAnimator.Play("punching_1");
+                    currentAnimator.Play("punching1");
                     break;
                 case AnimatedAction.Punch2:
-                    currentAnimator.Play("punching_2");
+                    currentAnimator.Play("punching2");
                     break;
                 case AnimatedAction.Punch3:
-                    currentAnimator.Play("punching_3");
+                    currentAnimator.Play("punching3");
                     break;
                 case AnimatedAction.GetHit:
                     currentAnimator.Play("gettingHit");

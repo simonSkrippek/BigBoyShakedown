@@ -20,18 +20,48 @@ namespace BigBoyShakedown.Player.Controller
         private void Awake()
         {
             inputRelay = GetComponent<PlayerInputRelay>();
+        }
+        private void Start()
+        {
             this.score = metrics.PlayerStartScore;
             size = GetSizeFromScore();
+            if (size < 0) throw new Exception("mistake calculating size");
             inputRelay.RelayPlayerSizeChange(size);
         }
-
+        private void Update()
+        {
+            int currentSize = GetSizeFromScore();
+            if (currentSize != size && currentSize > 0 && currentSize <= 5)
+            {
+                size = currentSize;
+                inputRelay.RelayPlayerSizeChange(size);
+            }
+            else if (currentSize < 1)
+            {
+                throw new Exception("invalid size calculated: " + currentSize);
+            }
+            else if (currentSize > 5)
+            {
+                Debug.LogError("player has won, end game here");
+            }
+        }
         /// <summary>
         /// calculate the players size based on its score (base on values in #playerMetrics)
         /// </summary>
         /// <returns>the players current size based on score</returns>
         private int GetSizeFromScore()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < metrics.PlayerScore.Length; i++)
+            {
+                if (i + 1 >= metrics.PlayerScore.Length)
+                {
+                    Debug.LogWarning("Player has won: " + this.gameObject.name + "\n size: " + (i+1));
+                    return i + 1;
+                }
+
+                if (score >= metrics.PlayerScore[i] && score < metrics.PlayerScore[i + 1]) return i+1;
+            }
+            return -1;
         }
 
         #region interactionMethods
@@ -350,6 +380,7 @@ namespace BigBoyShakedown.Player.Controller
         {
             //apply damage
             score -= (int) damage;
+            inputRelay.RelayPlayerScoreChange(-damage);
 
             from.HitCallback(this, damage);
         }
@@ -400,6 +431,7 @@ namespace BigBoyShakedown.Player.Controller
         public void HitCallback(PlayerController to, float damageDealt)
         {
             score += (int)damageDealt;
+            inputRelay.RelayPlayerScoreChange(damageDealt);
         }
 
         /// <summary>

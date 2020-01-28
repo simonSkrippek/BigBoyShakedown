@@ -5,24 +5,25 @@ using UnityEngine;
 
 namespace BigBoyShakedown.Player.Input
 {
+    [RequireComponent(typeof(Animator))]
     public class AnimationCallbackRelay : MonoBehaviour
     {
-        public event Action OnWindUpComplete;
-        public event Action OnRecoveryComplete;
+        public event Action<AnimationCallbackRelay> OnWindUpComplete;
+        public event Action<AnimationCallbackRelay> OnRecoveryComplete;
 
         private void Awake()
         {
-            OnWindUpComplete += () => { };
-            OnRecoveryComplete += () => { };
+            OnWindUpComplete += (val) => { };
+            OnRecoveryComplete += (val) => { };
         }
 
         public void WindUpComplete()
         {
-            OnWindUpComplete.Invoke();
+            OnWindUpComplete.Invoke(this);
         }
         public void RecoveryComplete()
         {
-            OnRecoveryComplete.Invoke();
+            OnRecoveryComplete.Invoke(this);
         }
     }
 }

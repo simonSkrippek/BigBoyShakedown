@@ -11,7 +11,8 @@ namespace BigBoyShakedown.Player.Input
     {
         [SerializeField]
         PlayerInput input;
-        AnimationCallbackRelay animationCallbackRelay;
+        [SerializeField]
+        AnimationCallbackRelay[] animationCallbackRelays;
 
         #region events
         #region playerInputEvents
@@ -54,6 +55,10 @@ namespace BigBoyShakedown.Player.Input
         /// raised upon size change from playerController
         /// </summary>
         public event Action<int> OnPlayerSizeChanged;
+        /// <summary>
+        /// raised upon score change from playerController
+        /// </summary>
+        public event Action<float> OnPlayerScoreChanged;
         #endregion
 
         #region animationEvents
@@ -103,13 +108,21 @@ namespace BigBoyShakedown.Player.Input
         {
             OnPlayerSizeChanged.Invoke(toSize);
         }
+        /// <summary>
+        /// relay that this playerController has changed it's score
+        /// </summary>
+        /// <param name="toSize">player's new size</param>
+        public void RelayPlayerScoreChange (float scoreChange)
+        {
+            OnPlayerScoreChanged.Invoke(scoreChange);
+        }
         #endregion
 
         #region unityEvents
         private void Awake()
         {
-            animationCallbackRelay = GetComponentInChildren<AnimationCallbackRelay>();
-            if (!animationCallbackRelay) throw new MissingMemberException("no animationCallbackRelay found in children");
+            //animationCallbackRelays = GetComponentsInChildren<AnimationCallbackRelay>();
+            if (animationCallbackRelays.Length < 5) throw new MissingMemberException("not all animationCallbackRelay found in children");
 
             OnMovementInput += (val) => { };
             OnMovementStoppedInput += () => { };
@@ -119,6 +132,9 @@ namespace BigBoyShakedown.Player.Input
             OnPlayerTargeted += () => { };
             OnPlayerDeath += () => { };
             OnPlayerHit += (val1, val2, val3, val4) => { };
+            OnPlayerScoreChanged += (val) => { };
+            OnPlayerSizeChanged += (val) => { };
+
         }
         private void OnEnable()
         {
@@ -126,14 +142,20 @@ namespace BigBoyShakedown.Player.Input
             //subscribe to playerInputEvents
             input.onActionTriggered += OnActionTriggeredHandler;
             //subscribe to animationCallbackEvents
-            animationCallbackRelay.OnWindUpComplete += OnWindUpCompleteHandler;
-            animationCallbackRelay.OnRecoveryComplete += OnRecoveryCompleteHandler;
+            foreach (var animationCallbackRelay in animationCallbackRelays)
+            {
+                animationCallbackRelay.OnWindUpComplete += OnWindUpCompleteHandler;
+                animationCallbackRelay.OnRecoveryComplete += OnRecoveryCompleteHandler;
+            }
         }
         private void OnDisable()
         {
             input.onActionTriggered -= OnActionTriggeredHandler;
-            animationCallbackRelay.OnWindUpComplete -= OnWindUpCompleteHandler;
-            animationCallbackRelay.OnRecoveryComplete -= OnRecoveryCompleteHandler;
+            foreach (var animationCallbackRelay in animationCallbackRelays)
+            {
+                animationCallbackRelay.OnWindUpComplete -= OnWindUpCompleteHandler;
+                animationCallbackRelay.OnRecoveryComplete -= OnRecoveryCompleteHandler;
+            }
         }
         public void ActivateInput(PlayerInput input_)
         {
@@ -144,13 +166,13 @@ namespace BigBoyShakedown.Player.Input
         #endregion
 
         #region eventHandlers
-        private void OnWindUpCompleteHandler()
+        private void OnWindUpCompleteHandler(AnimationCallbackRelay source)
         {
-            OnWindUpComplete.Invoke();
+            if (source.isActiveAndEnabled) OnWindUpComplete.Invoke();
         }
-        private void OnRecoveryCompleteHandler()
+        private void OnRecoveryCompleteHandler(AnimationCallbackRelay source)
         {
-            OnRecoveryComplete.Invoke();
+            if (source.isActiveAndEnabled) OnRecoveryComplete.Invoke();
         }
         private void OnActionTriggeredHandler(InputAction.CallbackContext callbackContext)
         {

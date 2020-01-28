@@ -1,16 +1,11 @@
-﻿using BigBoyShakedown.Manager;
-using BigBoyShakedown.Player.Controller;
+﻿using BigBoyShakedown.Player.Input;
 using BigBoyShakedown.Player.Metrics;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BillboardManager : MonoBehaviour
 {
-    #region Managers
-    [Header("Other Managers")]
-    [Tooltip("Multiplayer Manager; ONLY ONE IN SCENE")]
-    [SerializeField] PersistentMultiplayerManager multiplayerManager;
-    #endregion
     #region borders
     [Header("corner points")]
     [Tooltip("empty game object used to mark bottom left & top right of the billboard; use gizmo script")]
@@ -32,8 +27,6 @@ public class BillboardManager : MonoBehaviour
 
     private void Awake()
     {
-        //multiplayerManager.NewPlayerJoinedEvent += NewPlayerJoinedEventHandler;
-
         graphManagers = new List<GraphManager>();
         graphs = new List<LineRenderer>();
         InitialiseGraphs();
@@ -53,11 +46,47 @@ public class BillboardManager : MonoBehaviour
         Debug.Log("GraphsInitialized");
     }
 
-    private void NewPlayerJoinedEventHandler(PlayerController player, Material material)
+    public void OnPlayerJoined(PlayerInputRelay relay, Material material, int index)
     {
+        if (relay is null)
+        {
+            throw new System.ArgumentNullException(nameof(relay));
+        }
         AddGraph(material);
-        //player.scoreChangedEvent += ScoreChangedEventHandler;
+        switch (index)
+        {
+            case 0:
+                relay.OnPlayerScoreChanged += Player1ScoreChangedEventHandler;
+                break;
+            case 1:
+                relay.OnPlayerScoreChanged += Player2ScoreChangedEventHandler;
+                break;
+            case 2:
+                relay.OnPlayerScoreChanged += Player3ScoreChangedEventHandler;
+                break;
+            case 3:
+                relay.OnPlayerScoreChanged += Player4ScoreChangedEventHandler;
+                break;
+        }
     }
+
+    private void Player1ScoreChangedEventHandler(float scoreChange)
+    {
+        graphManagers[0].ChangeBy(scoreChange);
+    }
+    private void Player2ScoreChangedEventHandler(float scoreChange)
+    {
+        graphManagers[1].ChangeBy(scoreChange);
+    }
+    private void Player3ScoreChangedEventHandler(float scoreChange)
+    {
+        graphManagers[2].ChangeBy(scoreChange);
+    }
+    private void Player4ScoreChangedEventHandler(float scoreChange)
+    {
+        graphManagers[3].ChangeBy(scoreChange);
+    }
+
     private void AddGraph(Material graphMaterial)
     {
         if (graphManagers.Count >= 4) return;
@@ -79,10 +108,5 @@ public class BillboardManager : MonoBehaviour
         {
             item.FixedUpdate();
         }
-    }
-
-    private void ScoreChangedEventHandler(int playerIndex, int scoreChange)
-    {
-        graphManagers[playerIndex].ChangeBy(scoreChange);
     }
 }

@@ -5,10 +5,10 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 6151177917831403513
-    second: Armature|Interact_1.1
+    second: mark2_interact1
   - first:
       74: 3911417429644958479
-    second: Armature|Interact_1.2
+    second: mark2_interact2
   - first:
       74: 1982260321147785019
     second: Armature|Mixamo_GetHit
@@ -17,7 +17,7 @@ ModelImporter:
     second: Armature|Mixamo_Slide
   - first:
       74: 6691634627221796361
-    second: Armature|Punch_1
+    second: mark2_punch1
   - first:
       74: 2279490028789316275
     second: Armature|Punch_1.1
@@ -29,7 +29,7 @@ ModelImporter:
     second: Armature|Punch_1.3
   - first:
       74: -8006506831671958479
-    second: Armature|Punch_2
+    second: mark2_ounch2
   - first:
       74: -4592325882776153276
     second: Armature|Punch_2.1_original
@@ -41,7 +41,7 @@ ModelImporter:
     second: Armature|Punch_2_original
   - first:
       74: 5829676004243819284
-    second: Armature|Punch_3
+    second: mark2_punch3
   - first:
       74: -3218412197715040969
     second: Armature|Punch_3.1_original
@@ -51,6 +51,9 @@ ModelImporter:
   - first:
       74: -5193690039439583476
     second: Armature|Punch_3_original
+  - first:
+      74: 7838650946914020774
+    second: mark2_punch2
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -133,7 +136,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|Interact_1.1
+      name: mark2_interact1
       takeName: Armature|Interact_1.1
       internalID: 0
       firstFrame: 0
@@ -162,7 +165,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Interact_1.2
+      name: mark2_interact2
       takeName: Armature|Interact_1.2
       internalID: 0
       firstFrame: 0
@@ -191,7 +194,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Punch_1
+      name: mark2_punch1
       takeName: Armature|Punch_1
       internalID: 0
       firstFrame: 0
@@ -214,13 +217,29 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.4496602
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: RecoveryComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Punch_2
+      name: mark2_punch2
       takeName: Armature|Punch_2
       internalID: 0
       firstFrame: 0
@@ -243,13 +262,29 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.3985355
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: RecoveryComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Punch_3
+      name: mark2_punch3
       takeName: Armature|Punch_3
       internalID: 0
       firstFrame: 0
@@ -272,7 +307,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.6090412
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: RecoveryComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
