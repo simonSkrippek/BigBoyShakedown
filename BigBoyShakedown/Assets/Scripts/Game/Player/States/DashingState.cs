@@ -36,7 +36,7 @@ namespace BigBoyShakedown.Player.State
         {
             machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Dash);
 
-            speed = controller.metrics.PlayerDashSpeed[controller.size];
+            speed = controller.metrics.PlayerDashSpeed[controller.size - 1];
 
             movement = carryOver.previousMovement;
             movement.y = 0;

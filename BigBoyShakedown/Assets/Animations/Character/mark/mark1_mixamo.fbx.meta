@@ -11,7 +11,7 @@ ModelImporter:
     second: Armature|Mixamo_Combo1.2
   - first:
       74: 1982260321147785019
-    second: Armature|Mixamo_GetHit
+    second: mark1_getHit
   - first:
       74: 1353110697083038871
     second: Mark1_Idle
@@ -20,7 +20,7 @@ ModelImporter:
     second: Mark1_Running
   - first:
       74: -3490961287958580190
-    second: Armature|Mixamo_Slide
+    second: mark1_dash
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -56,7 +56,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Armature|Mixamo_GetHit
+      name: mark1_getHit
       takeName: Armature|Mixamo_GetHit
       internalID: 0
       firstFrame: 0
@@ -143,7 +143,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Mixamo_Slide
+      name: mark1_dash
       takeName: Armature|Mixamo_Slide
       internalID: 0
       firstFrame: 0
@@ -166,7 +166,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 1
+        functionName: RecoveryComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
