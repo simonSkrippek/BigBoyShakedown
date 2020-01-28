@@ -750,6 +750,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1415423012499464321, guid: 6e0bb554b2c3f3d4e9bacfa4bb1cde2d,
+        type: 3}
+      propertyPath: defaultMaterial
+      value: 
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 2421243398185277780, guid: 6e0bb554b2c3f3d4e9bacfa4bb1cde2d,
         type: 3}
       propertyPath: m_Name
@@ -809,6 +814,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3004890858885306725, guid: 6e0bb554b2c3f3d4e9bacfa4bb1cde2d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483968922354447386, guid: 6e0bb554b2c3f3d4e9bacfa4bb1cde2d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483968922354447386, guid: 6e0bb554b2c3f3d4e9bacfa4bb1cde2d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
       objectReference: {fileID: 0}
     - target: {fileID: 5483968922354447389, guid: 6e0bb554b2c3f3d4e9bacfa4bb1cde2d,
         type: 3}
@@ -1200,10 +1220,10 @@ MonoBehaviour:
   pMark: {fileID: 1027727378385476130, guid: dc63e0d92db60164899b22c04921fbd9, type: 3}
   pSpecci: {fileID: 0}
   playerMaterials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: ec49aa2855e798443b1011640c586c9f, type: 2}
+  - {fileID: 2100000, guid: f5f9967b35d386347bd29175ad294453, type: 2}
+  - {fileID: 2100000, guid: e21f1a8f105b0ac4296b6cfd4321f6a0, type: 2}
+  - {fileID: 2100000, guid: 5ae64dae8fbc6ac45a20c08ed46d80d5, type: 2}
 --- !u!4 &1294458233
 Transform:
   m_ObjectHideFlags: 0

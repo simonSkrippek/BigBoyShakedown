@@ -15,6 +15,7 @@ public class BillboardManager : MonoBehaviour
     #region lines
     List<GraphManager> graphManagers;
     List<LineRenderer> graphs;
+    [SerializeField] Material defaultMaterial;
 
     [Header("graph")]
     [Tooltip("prefab from which all graphs are instantiated")]
@@ -40,7 +41,9 @@ public class BillboardManager : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            GameObject g = Instantiate(graphPrefab, this.transform.root);
+            var pos = this.transform.root.position;
+            pos.z = 0;
+            GameObject g = Instantiate(graphPrefab, pos, Quaternion.identity);
             graphs.Add(g.GetComponent<LineRenderer>());
         }
         Debug.Log("GraphsInitialized");
@@ -52,7 +55,9 @@ public class BillboardManager : MonoBehaviour
         {
             throw new System.ArgumentNullException(nameof(relay));
         }
+        if (!material) material = defaultMaterial;
         AddGraph(material);
+
         switch (index)
         {
             case 0:

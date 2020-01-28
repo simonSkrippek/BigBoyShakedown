@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5837025938213827171}
   - component: {fileID: 5837025938213827100}
-  m_Layer: 9
+  m_Layer: 30
   m_Name: graph
   m_TagString: BillboardRecording
   m_Icon: {fileID: 0}
@@ -45,6 +45,7 @@ LineRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

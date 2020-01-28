@@ -22,6 +22,9 @@ namespace BigBoyShakedown.Player.Appearance
 
         PlayerInputRelay playerInputRelay;
 
+        bool switchNeeded;
+        int stageToSwitchTo;
+
         private void Awake()
         {
             playerInputRelay = this.GetComponent<PlayerInputRelay>();
@@ -37,8 +40,12 @@ namespace BigBoyShakedown.Player.Appearance
 
         private void OnPlayerSizeChangedHandler(int newSize)
         {
-            if (currentAnimator) currentAnimator.StopPlayback();
+            stageToSwitchTo = newSize;
+            switchNeeded = true;
+        }
 
+        public void SwitchStage(int newSize)
+        {
             if (currentPlayerModel) currentPlayerModel.SetActive(false);
             currentPlayerModel = playerModels[newSize - 1];
             currentPlayerModel.SetActive(true);
@@ -49,10 +56,16 @@ namespace BigBoyShakedown.Player.Appearance
                 currentAnimator = currentPlayerModel.GetComponentInChildren<Animator>();
                 if (!currentAnimator) throw new MissingMemberException("Animator not found; PlayerPrefab setup compromised: " + this.gameObject.name);
             }
+
+            switchNeeded = false;
         }
 
         public void PlayAnimation(AnimatedAction action)
         {
+            if (switchNeeded) 
+            { 
+                SwitchStage(stageToSwitchTo); 
+            }
             switch (action)
             {
                 case AnimatedAction.Idle:
