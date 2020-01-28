@@ -45,6 +45,7 @@ namespace BigBoyShakedown.Player.State
                 movement = this.transform.forward * -1;
             }
             movement.Normalize();
+            //Debug.Log(movement);
         }
         
         #region inputHandlers
