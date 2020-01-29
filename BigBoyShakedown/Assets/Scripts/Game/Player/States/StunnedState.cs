@@ -25,6 +25,13 @@ namespace BigBoyShakedown.Player.State
         {
             controller.TryApplyMovement(knockbackPerUpdate);
         }
+        private void Update()
+        {
+            if (!stunned)
+            {
+                machine.SetState<IdlingState>();
+            }
+        }
 
         private void StartStun()
         {
@@ -32,7 +39,7 @@ namespace BigBoyShakedown.Player.State
             knockBack = carryOver.knockbackDistance;
             knockbackPerUpdate = knockBack / stunTimer * UnityEngine.Time.fixedDeltaTime;
             stunned = true;
-            Time.StartTimer(new VariableReference<bool>(() => stunned, (val) => stunned = val), stunTimer);
+            Time.StartTimer(new VariableReference<bool>(() => stunned, (val) => stunned = val).SetEndValue(false), stunTimer);
 
             machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.GetHit);
         }

@@ -66,60 +66,7 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Armature|Interact_1.1' has import animation
-      warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'mixamorig:LeftUpLeg' has
-      translation animation that will be discarded.\n\t'mixamorig:RightUpLeg' has
-      scale animation that will be discarded.\n\t'mixamorig:RightLeg' has scale animation
-      that will be discarded.\n\nClip 'Armature|Punch_1' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:RightShoulder' has translation
-      animation that will be discarded.\n\nClip 'Armature|Punch_1.1' has import animation
-      warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'mixamorig:RightShoulder'
-      has translation animation that will be discarded.\n\t'mixamorig:RightUpLeg'
-      has scale animation that will be discarded.\n\t'mixamorig:RightLeg' has scale
-      animation that will be discarded.\n\nClip 'Armature|Punch_1.2' has import animation
-      warnings that might lower retargeting quality:\nNote: Activate translation
-      DOF on avatar to improve retargeting quality.\n\t'mixamorig:LeftUpLeg' has
-      scale animation that will be discarded.\n\t'mixamorig:RightUpLeg' has scale
-      animation that will be discarded.\n\t'mixamorig:RightLeg' has scale animation
-      that will be discarded.\n\nClip 'Armature|Punch_1.3' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:RightUpLeg' has scale animation
-      that will be discarded.\n\t'mixamorig:RightLeg' has scale animation that will
-      be discarded.\n\nClip 'Armature|Punch_2' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:RightUpLeg' has scale animation
-      that will be discarded.\n\t'mixamorig:RightLeg' has scale animation that will
-      be discarded.\n\nClip 'Armature|Punch_2.1_original' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:RightUpLeg' has scale animation
-      that will be discarded.\n\t'mixamorig:RightLeg' has scale animation that will
-      be discarded.\n\nClip 'Armature|Punch_2.2_original' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:LeftUpLeg' has scale animation
-      that will be discarded.\n\t'mixamorig:RightUpLeg' has scale animation that
-      will be discarded.\n\t'mixamorig:RightLeg' has scale animation that will be
-      discarded.\n\nClip 'Armature|Punch_2_original' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:RightUpLeg' has scale animation
-      that will be discarded.\n\t'mixamorig:RightLeg' has scale animation that will
-      be discarded.\n\nClip 'Armature|Punch_3.1_original' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:RightShoulder' has translation
-      animation that will be discarded.\n\t'mixamorig:RightUpLeg' has scale animation
-      that will be discarded.\n\t'mixamorig:RightLeg' has scale animation that will
-      be discarded.\n\nClip 'Armature|Punch_3.2_original' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:RightUpLeg' has scale animation
-      that will be discarded.\n\t'mixamorig:RightLeg' has scale animation that will
-      be discarded.\n\nClip 'Armature|Punch_3_original' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'mixamorig:RightShoulder' has translation
-      animation that will be discarded.\n\t'mixamorig:RightUpLeg' has scale animation
-      that will be discarded.\n\t'mixamorig:RightLeg' has scale animation that will
-      be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -163,7 +110,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 3
+    tangentImportMode: 2
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
