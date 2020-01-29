@@ -46,7 +46,7 @@ namespace BigBoyShakedown.Player.Input
         /// <summary>
         /// raised upon being hit from playerController
         /// </summary>
-        public event Action<PlayerController, float, Vector3, float> OnPlayerHit;
+        public event Action<PlayerController, float, Vector3, float, bool> OnPlayerHit;
         /// <summary>
         /// raised upon dying from playerController
         /// </summary>
@@ -82,9 +82,9 @@ namespace BigBoyShakedown.Player.Input
         /// <param name="damageIntended">the damage the other player intends to inflict</param>
         /// <param name="knockbackDistanceIntended">the knockback the other player intends to inflict</param>
         /// <param name="stunDurationIntended">the stun the other player intends to inflict</param>
-        public void RelayPlayerHit(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended)
+        public void RelayPlayerHit(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize)
         {
-            OnPlayerHit.Invoke(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+            OnPlayerHit.Invoke(from, damageIntended, knockbackDistanceIntended, stunDurationIntended, ignoreSize);
         }
         /// <summary>
         /// relay that this playerController has been targetted for an attack
@@ -131,7 +131,7 @@ namespace BigBoyShakedown.Player.Input
             OnDashInput += () => { };
             OnPlayerTargeted += () => { };
             OnPlayerDeath += () => { };
-            OnPlayerHit += (val1, val2, val3, val4) => { };
+            OnPlayerHit += (val1, val2, val3, val4, val5) => { };
             OnPlayerScoreChanged += (val) => { };
             OnPlayerSizeChanged += (val) => { };
 

@@ -18,8 +18,8 @@ TagManager:
   - SolidEnvironment
   - Player
   - Interactables
-  - 
-  - 
+  - Attackables
+  - PowerUps
   - 
   - 
   - 

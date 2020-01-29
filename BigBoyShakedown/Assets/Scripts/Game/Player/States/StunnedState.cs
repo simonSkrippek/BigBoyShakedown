@@ -37,7 +37,7 @@ namespace BigBoyShakedown.Player.State
         {
             stunTimer = carryOver.stunDuration;
             knockBack = carryOver.knockbackDistance;
-            knockbackPerUpdate = knockBack / stunTimer * UnityEngine.Time.fixedDeltaTime;
+            knockbackPerUpdate = knockBack / (stunTimer!=0f?stunTimer:.00000001f) * UnityEngine.Time.fixedDeltaTime;
             stunned = true;
             Time.StartTimer(new VariableReference<bool>(() => stunned, (val) => stunned = val).SetEndValue(false), stunTimer);
 
@@ -55,9 +55,9 @@ namespace BigBoyShakedown.Player.State
         /// <summary>
         /// Handles playerHit event, raised by #PlayerInputHandler
         /// </summary>
-        private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended)
+        private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize)
         {
-            if (from.size > controller.size)
+            if (ignoreSize || from.size > controller.size)
             {
                 controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
                 carryOver.stunDuration = stunDurationIntended;

@@ -5,6 +5,8 @@ using BigBoyShakedown.Player.Input;
 using BigBoyShakedown.Player.Metrics;
 using System;
 using BigBoyShakedown.Player.State;
+using BigBoyShakedown.Game.Interactable;
+using BigBoyShakedown.Game.Attackable;
 
 namespace BigBoyShakedown.Player.Controller
 {
@@ -15,7 +17,7 @@ namespace BigBoyShakedown.Player.Controller
 
         public PlayerMetrics metrics;
         public int size = 0;
-        public int score;
+        public float score;
 
         private void Awake()
         {
@@ -118,37 +120,15 @@ namespace BigBoyShakedown.Player.Controller
             return result;
         }
         /// <summary>
-        /// Start an interaction with the specified interactable. 
-        /// notify playerInput on this gameobject, as well as the interactable
-        /// </summary>
-        /// <param name="interactable">the interactable to start interacting with</param>
-        /// <returns>whether starting the interaction was successful</returns>
-        public bool StartInteraction(Interactable interactable)
-        {
-            throw new NotImplementedException();
-            return false;
-        }
-        /// <summary>
-        /// End an interaction with the specified interactable. 
-        /// notify playerInput on this gameobject, as well as the interactable
-        /// </summary>
-        /// <param name="interactable">the interactable to finish interacting with</param>
-        /// <returns>whether ending the interaction was successful</returns>
-        public bool EndInteraction(Interactable interactable)
-        {
-            throw new NotImplementedException();
-            return false;
-        }
-        /// <summary>
         /// complete an interaction with the specified interactable.
         /// notify playerInput on this gameobject, as well as the interactable
         /// </summary>
         /// <param name="interactable">the interactable to finish interacting with</param>
         /// <returns>whether completing the interaction was successful</returns>
-        public bool CompleteInteraction(Interactable interactable)
+        public void CompleteInteraction(Interactable interactable, float reward)
         {
-            throw new NotImplementedException();
-            return false;
+            score += reward;
+            inputRelay.RelayPlayerScoreChange(reward);
         }
         #endregion
 
@@ -246,12 +226,21 @@ namespace BigBoyShakedown.Player.Controller
         }
 
         /// <summary>
-        /// get all objects on the layers classified as "attackable" in player metrics
+        /// get all objects on the layers classified as "attackable" in player metrics in this players range
         /// </summary>
         /// <returns>array of colliders in range</returns>
         public Collider[] GetAllAttackablesInRange()
         {
             return Physics.OverlapSphere(this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x, 0), metrics.PlayerPunchRange[size - 1], LayerMask.GetMask(metrics.Mask_attackables));
+        }
+
+        /// <summary>
+        /// get all objects on the layers classified as "attackable" in player metrics in this players range * rangeMod
+        /// </summary>
+        /// <returns>array of colliders in range</returns>
+        public Collider[] GetAllAttackablesInRange(float rangeMod)
+        {
+            return Physics.OverlapSphere(this.transform.position + new Vector3(0, metrics.PlayerScale[size - 1].x, 0), metrics.PlayerPunchRange[size - 1] * rangeMod, LayerMask.GetMask(metrics.Mask_attackables));
         }
 
         /// <summary>
@@ -363,9 +352,9 @@ namespace BigBoyShakedown.Player.Controller
         /// <param name="knockbackDistanceIntended">the [raw] distance the other character is trying to knock this back</param>
         /// <param name="stunDurationIntended">the [raw] duration the other character is trying to stun this for</param>
         /// [raw] => _not_ modified by current state
-        public void TryReceiveHit(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended)
+        public void TryReceiveHit(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize)
         {
-            this.inputRelay.RelayPlayerHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
+            this.inputRelay.RelayPlayerHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended, ignoreSize);
         }
 
         /// <summary>
@@ -389,22 +378,34 @@ namespace BigBoyShakedown.Player.Controller
         /// notify all attackables that they have been hit.
         /// </summary>
         /// <param name="attackables">all attackables to be hit</param>
-        public void HitAllAttackables(Transform[] attackables, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
+        public void HitAllAttackables(Transform[] attackables, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize)
         {
             foreach (var attackable in attackables)
             {
-                PlayerController otherController;
-                if (attackable.TryGetComponent<PlayerController>(out otherController))
+                if (attackable.transform.root != this.transform.root)
                 {
-                    var directionToAttackable = attackable.transform.position - this.transform.position;
-                    directionToAttackable.y = 0;
-                    directionToAttackable.Normalize();
-                    otherController.TryReceiveHit(this, damageIntended, knockbackDistanceIntended * directionToAttackable, stunDurationIntended);
-                    continue;
-                }
-                else
-                {
-
+                    //when the transform contains an playerController object
+                    PlayerController otherController;
+                    if (attackable.TryGetComponent<PlayerController>(out otherController))
+                    {
+                        //calculate knockback direction
+                        var directionToAttackable = attackable.transform.position - this.transform.position;
+                        directionToAttackable.y = 0;
+                        directionToAttackable.Normalize();
+                        //try to apply the hit
+                        otherController.TryReceiveHit(this, damageIntended, knockbackDistanceIntended * directionToAttackable, stunDurationIntended, ignoreSize);
+                        continue;
+                    }
+                    else
+                    {
+                        //when the transform contains an attackable object
+                        Attackable objectToAttack;
+                        if (attackable.TryGetComponent<Attackable>(out objectToAttack))
+                        {
+                            //try to apply the hit
+                            objectToAttack.DamageAttackable(this, damageIntended);
+                        }
+                    }
                 }
             }
         }
@@ -413,14 +414,14 @@ namespace BigBoyShakedown.Player.Controller
         /// notify all attackables that they have been hit. finds root transform and proceeds like other overload.
         /// </summary>
         /// <param name="attackables"></param>
-        public void HitAllAttackables(Collider[] attackables, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended)
+        public void HitAllAttackables(Collider[] attackables, float damageIntended, float knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize)
         {
             List<Transform> attackableTransforms = new List<Transform>();
             foreach (var collider in attackables)
             {
                 attackableTransforms.Add(collider.transform.root);
             }
-            HitAllAttackables(attackableTransforms.ToArray(), damageIntended, knockbackDistanceIntended, stunDurationIntended);
+            HitAllAttackables(attackableTransforms.ToArray(), damageIntended, knockbackDistanceIntended, stunDurationIntended, ignoreSize);
         }
         
         /// <summary>
@@ -429,6 +430,17 @@ namespace BigBoyShakedown.Player.Controller
         /// <param name="to">the character that was hit</param>
         /// <param name="damageDealt">the damage that was accepted by the other player.</param>
         public void HitCallback(PlayerController to, float damageDealt)
+        {
+            score += (int)damageDealt;
+            inputRelay.RelayPlayerScoreChange(damageDealt);
+        }
+
+        /// <summary>
+        /// apply the effects of a successful hit on an object.
+        /// </summary>
+        /// <param name="to">the object that was hit</param>
+        /// <param name="damageDealt">the damage that was accepted by the other object</param>
+        public void HitCallback(Attackable to, float damageDealt)
         {
             score += (int)damageDealt;
             inputRelay.RelayPlayerScoreChange(damageDealt);
@@ -445,6 +457,5 @@ namespace BigBoyShakedown.Player.Controller
             }
         }
         #endregion
-
     }
 }

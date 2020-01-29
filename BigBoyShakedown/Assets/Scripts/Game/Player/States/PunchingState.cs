@@ -80,7 +80,8 @@ namespace BigBoyShakedown.Player.State
             controller.HitAllAttackables(enemiesToAttack,
                                         controller.metrics.PlayerDamage[controller.size - 1, comboCount-1],
                                         controller.metrics.PlayerPunchKnockback[controller.size - 1, comboCount-1],
-                                        controller.metrics.PlayerPunchStunDuration[controller.size - 1, comboCount-1]);
+                                        controller.metrics.PlayerPunchStunDuration[controller.size - 1, comboCount-1],
+                                        false);
 
             //Debug.Log("Punch Landed!" + "\n chained: " + comboChained.ToString() + "\n count: " + comboCount);
             inRecovery = true;
@@ -125,9 +126,9 @@ namespace BigBoyShakedown.Player.State
         /// <summary>
         /// Handles hit event, raised by #PlayerInputHandler
         /// </summary>
-        private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended)
+        private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize)
         {
-            if (from.size > controller.size)
+            if (ignoreSize || from.size > controller.size)
             {
                 controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
                 carryOver.stunDuration = stunDurationIntended;

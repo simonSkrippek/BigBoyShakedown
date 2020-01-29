@@ -13,9 +13,18 @@ namespace BigBoyShakedown.Player.State
     /// </summary>
     public class DashingState : State
     {
+        float dashDuration;
+        bool dashing;
         Vector3 movement;
         float speed;
 
+        private void Update()
+        {
+            if (!dashing)
+            {
+                machine.SetState<IdlingState>();
+            }
+        }
         void FixedUpdate()
         {
             //calculate y movement
@@ -29,14 +38,17 @@ namespace BigBoyShakedown.Player.State
             }
             //1. check for collision
             //2. move
-            controller.TryApplyMovement(movement * speed * .3f);
+            controller.TryApplyMovement(-movement * speed * .1f);
         }
 
         private void StartDash()
         {
             machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Dash);
 
+            dashDuration = controller.metrics.PlayerDashDuration[controller.size - 1];
             speed = controller.metrics.PlayerDashSpeed[controller.size - 1];
+            dashing = true;
+            Time.StartTimer(new VariableReference<bool>(() => dashing, (val) => { dashing = val; }).SetEndValue(false), dashDuration);
 
             movement = carryOver.previousMovement;
             movement.y = 0;
@@ -44,7 +56,13 @@ namespace BigBoyShakedown.Player.State
             {
                 movement = this.transform.forward * -1;
             }
+            else
+            {
+                Debug.Log("got cool moves");
+            }
+
             movement.Normalize();
+            controller.TurnIn(-movement);
             //Debug.Log(movement);
         }
         

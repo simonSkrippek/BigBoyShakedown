@@ -1,4 +1,6 @@
-﻿using BigBoyShakedown.Player.Controller;
+﻿using BigBoyShakedown.Game.Interactable;
+using BigBoyShakedown.Player.Controller;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,13 +21,40 @@ namespace BigBoyShakedown.Player.State
     public class InteractingState : State
     {
         bool playerTargeted;
+        Interactable interactable;
 
         void FixedUpdate()
         {
-
+            if (!interactable || !controller.InteractableInRange(interactable))
+            {
+                CancelInteraction();
+                machine.SetState<IdlingState>();
+            }
+        }
+        private void CancelInteraction()
+        {
+            interactable.CancelInteraction();
+            interactable = null;
+            playerTargeted = false;
+        }
+        private void StartInteraction()
+        {
+            interactable = controller.GetClosestInteractable();
+            if (!interactable)
+            {
+                machine.SetState<IdlingState>();
+                return;
+            }
+            interactable.StartInteraction(this.controller);
+            this.machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Interact);
         }
 
         #region inputHandlers
+        private void OnInteractionCompleteHandler()
+        {
+            machine.SetState<IdlingState>();
+        }
+
         /// <summary>
         /// Handles move event, raised by #PlayerInputHandler
         /// </summary>
@@ -43,15 +72,8 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnInteractionInputHandler()
         {
-            //switch to interaction state
-            if (controller.InteractableInRange())
-            {
-                machine.SetState<InteractingState>();
-            }
-            else
-            {
-
-            }
+            CancelInteraction();
+            machine.SetState<IdlingState>();
         }
 
         /// <summary>
@@ -59,6 +81,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnPunchInputHandler()
         {
+            CancelInteraction();
             machine.SetState<PunchingState>();
         }
 
@@ -68,7 +91,11 @@ namespace BigBoyShakedown.Player.State
         private void OnDashInputHandler()
         {
             //switch to dash state when player is targeted
-            if (playerTargeted) machine.SetState<DashingState>();
+            if (playerTargeted)
+            {
+                CancelInteraction();
+                machine.SetState<DashingState>();
+            }
         }
 
         /// <summary>
@@ -83,13 +110,14 @@ namespace BigBoyShakedown.Player.State
         /// <summary>
         /// Handles hit event, raised by #PlayerInputHandler
         /// </summary>
-        private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended)
+        private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize)
         {
-            if (from.size > controller.size)
+            if (ignoreSize || from.size > controller.size)
             {
                 controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
                 carryOver.stunDuration = stunDurationIntended;
                 carryOver.knockbackDistance = knockbackDistanceIntended;
+                CancelInteraction();
                 machine.SetState<StunnedState>();
             }
             else
@@ -108,6 +136,8 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput += OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
+
+            StartInteraction();
         }
         protected override void OnStateExit()
         {

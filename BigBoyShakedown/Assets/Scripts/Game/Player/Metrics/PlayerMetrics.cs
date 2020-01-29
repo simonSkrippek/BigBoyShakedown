@@ -23,20 +23,16 @@ namespace BigBoyShakedown.Player.Metrics
         public string[] PriorityAttackables { get => priorityAttackables; }
         #endregion
 
-        #region PlayerSize
-        [Header("MinimumSize"), Tooltip("minimum size player can have"), SerializeField]
-        [Min(1)]
-        private int playerMinimumSize = 1;
-        public int PlayerMinimumSize { get => playerMinimumSize; }
+        //#region PlayerSize
+        //[Header("Sizes"), Tooltip("minimum size player can have"), SerializeField]
+        //[Min(1)]
+        //private int playerMinimumSize = 1;
+        //public int PlayerMinimumSize { get => playerMinimumSize; }
 
-        [Header("MaximumSize"), Tooltip("maximum size player can have"), SerializeField]
-        private int playerMaximumSize = 5;
-        public int PlayerMaximumSize { get => playerMaximumSize; }
-
-        [Header("StartSize"), Tooltip("size player starts on when joining the game"), SerializeField]
-        private int playerStartSize = 2;
-        public int PlayerStartSize { get => playerStartSize; }
-        #endregion
+        //[Tooltip("maximum size player can have"), SerializeField]
+        //private int playerMaximumSize = 5;
+        //public int PlayerMaximumSize { get => playerMaximumSize; }
+        //#endregion
 
         #region PlayerScale&Reach
         [Header("Scale"), Tooltip("real world scale of player characters in all stages; x => height, y => width"), SerializeField]
@@ -59,46 +55,8 @@ namespace BigBoyShakedown.Player.Metrics
         public float[] PlayerInteractionRange { get => playerInteractionRange; }
         #endregion
 
-        #region score
-        [Header("Score Stages"), Tooltip("monetary value associated with each plasyerSize"), SerializeField]
-        private int[] playerScore = { 0, 500, 900, 1500, 2000, 3500 };
-        public int[] PlayerScore { get => playerScore; }
-
-        [Header("Start Score"), Tooltip("monetary value player starts on when joining the game"), SerializeField]
-        private int playerStartScore = 600;
-        public int PlayerStartScore { get => playerStartScore; }
-
-        [Header("Min Score"), Tooltip("0 point of score coordinate system: time on x, score on y"), SerializeField]
-        private Vector2 playerMinScore = new Vector2(0, 0);
-        public Vector2 PlayerMinScore { get => playerMinScore; }
-
-        [Header("Max Score"), Tooltip("monetary value player starts on when joining the game"), SerializeField]
-        private Vector2 playerMaxScore = new Vector2(0, 0);
-        public Vector2 PlayerMaxScore { get => playerMaxScore; }
-
-        [Header("Change Animation Rate"), Tooltip("rate at which graphs change"), SerializeField]
-        private float changeAnimationRate = 5f;
-        public float ChangeAnimationRate { get => changeAnimationRate; }
-        #endregion
-
-
-        #region movement
-        [Header("MovementSpeed"), Tooltip("movement speed in all stages"), SerializeField]
-        private float[] playerMoveSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
-        public float[] PlayerMoveSpeed { get => playerMoveSpeed; }
-
-        [Header("VerticalMovementSpeed"), Tooltip("movement speed in all stages"), SerializeField]
-        private float[] playerYMoveSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
-        public float[] PlayerYMoveSpeed { get => playerYMoveSpeed; }
-
-        [Header("Dash"), Tooltip("dash speed in all stages"), SerializeField]
-        private float[] playerDashSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
-        public float[] PlayerDashSpeed { get => playerDashSpeed; }
-        #endregion
-
-
         #region combat        
-        [Header("Damage"), Tooltip("damage player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        [Header("Punch"), Tooltip("damage player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
         private int[,] playerDamage = { { 40, 50, 80},
                                         { 40, 50, 80},
                                         { 40, 50, 80},
@@ -106,47 +64,61 @@ namespace BigBoyShakedown.Player.Metrics
                                         { 40, 50, 80} };
         public int[,] PlayerDamage { get => playerDamage; }
 
-        [Header("Range"), Tooltip("range player has in all stages"), SerializeField]
-        private float[] playerComboModifier = { 10f, 10f, 10f, 10f, 10f };
-        public float[] PlayerComboModifier { get => playerComboModifier; }
+        [Tooltip("knockback player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        private float[,] playerPunchKnockback = { { 1f, 1f, 1f},
+                                        { 1f, 1f, 1f},
+                                        { 1f, 1f, 1f},
+                                        { 1f, 1f, 1f},
+                                        { 1f, 1f, 1f}};
+        public float[,] PlayerPunchKnockback { get => playerPunchKnockback; }
 
-        [Header("knockback"), Tooltip("knockback player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
-        private int[,] playerPunchKnockback = { { 40, 50, 80},
-                                        { 40, 50, 80},
-                                        { 40, 50, 80},
-                                        { 40, 50, 80},
-                                        { 40, 50, 80} };
-        public int[,] PlayerPunchKnockback { get => playerPunchKnockback; }
-
-        [Header("stun"), Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
-        private int[,] playerPunchStunDuration = { { 40, 50, 80},
-                                        { 40, 50, 80},
-                                        { 40, 50, 80},
-                                        { 40, 50, 80},
-                                        { 40, 50, 80} };
-        public int[,] PlayerPunchStunDuration { get => playerPunchStunDuration; }
+        [Header("Combat"), Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        private float[,] playerPunchStunDuration = { { 1f, 1f, 1f},
+                                        { 1f, 1f, 1f},
+                                        { 1f, 1f, 1f},
+                                        { 1f, 1f, 1f},
+                                        { 1f, 1f, 1f}};
+        public float[,] PlayerPunchStunDuration { get => playerPunchStunDuration; }
         #endregion
 
-        [Space()]
+        #region score
+        [Header("Score"), Tooltip("monetary value associated with each plasyerSize"), SerializeField]
+        private int[] playerScore = { 0, 500, 900, 1500, 2000, 3500 };
+        public int[] PlayerScore { get => playerScore; }
 
-        #region appearance
-        [Header("player colors")]
-        [Tooltip("array of colors that will be assigned to players, in order of joining"), SerializeField]
-        private Material[] playerColors;
-        public Material[] PlayerColors { get => playerColors; }
-        [Tooltip("default material that will be assigned if not enough materials in playerColors"), SerializeField]
-        private Material defaultMaterial;
-        public Material DefaultMaterial { get => defaultMaterial; }
+        [Tooltip("monetary value player starts on when joining the game"), SerializeField]
+        private int playerStartScore = 600;
+        public int PlayerStartScore { get => playerStartScore; }
 
+        [Tooltip("0 point of score coordinate system: time on x, score on y"), SerializeField]
+        private Vector2 playerMinScore = new Vector2(0, 0);
+        public Vector2 PlayerMinScore { get => playerMinScore; }
 
-        [Header("player rings")]
-        [Tooltip("array of colors that will be assigned to player rings, in order of joining"), SerializeField]
-        private Material[] playerRings;
-        public Material[] PlayerRings { get => playerRings; }
-        [Tooltip("default material that will be assigned if not enough materials in playerRings"), SerializeField]
-        private Material defaultRingMaterial;
-        public Material DefaultRingMaterial { get => defaultRingMaterial; }
+        [Tooltip("monetary value player starts on when joining the game"), SerializeField]
+        private Vector2 playerMaxScore = new Vector2(0, 0);
+        public Vector2 PlayerMaxScore { get => playerMaxScore; }
+
+        [Tooltip("rate at which graphs change"), SerializeField]
+        private float changeAnimationRate = 5f;
+        public float ChangeAnimationRate { get => changeAnimationRate; }
         #endregion
 
+        #region movement
+        [Header("Movement"), Tooltip("movement speed in all stages"), SerializeField]
+        private float[] playerMoveSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
+        public float[] PlayerMoveSpeed { get => playerMoveSpeed; }
+
+        [Tooltip("movement speed in all stages"), SerializeField]
+        private float[] playerYMoveSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
+        public float[] PlayerYMoveSpeed { get => playerYMoveSpeed; }
+
+        [Header("Dash"), Tooltip("dash speed in all stages"), SerializeField]
+        private float[] playerDashSpeed = { 1.25f, 1.0f, .9f, .75f, .5f };
+        public float[] PlayerDashSpeed { get => playerDashSpeed; }
+
+        [Tooltip("dash duration in all stages"), SerializeField]
+        private float[] playerDashDuration = { 1.25f, 1.0f, .9f, .75f, .5f };
+        public float[] PlayerDashDuration { get => playerDashDuration; }
+        #endregion
     }
 }   

@@ -7,8 +7,8 @@ namespace BigBoyShakedown.Player.Appearance
     public enum AnimatedAction {  
                             Idle,
                             Run, Dash,
-                            Punch1, Punch2, Punch3, GetHit,/*,
-                            StartInteract, Interact, CompleteInteract, CancelInteract */
+                            Punch1, Punch2, Punch3, GetHit,
+                            Interact
     }
 
     [RequireComponent(typeof(PlayerInputRelay))]
@@ -88,6 +88,9 @@ namespace BigBoyShakedown.Player.Appearance
                     break;
                 case AnimatedAction.GetHit:
                     currentAnimator.Play("gettingHit");
+                    break;
+                case AnimatedAction.Interact:
+                    currentAnimator.Play("interacting");
                     break;
             }
         }
