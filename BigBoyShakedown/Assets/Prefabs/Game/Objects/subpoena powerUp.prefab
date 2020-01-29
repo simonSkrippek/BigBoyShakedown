@@ -129,7 +129,7 @@ MonoBehaviour:
   rigidbody: {fileID: 5365240142283336500}
   PLAYER_LAYER: Player
   playerToFollow: {fileID: 0}
-  timeActive: 120
+  timeActive: 10
   knockbackDistance: 1
   stunDuration: 0.2
   timeBetweenWaves: 0.7
