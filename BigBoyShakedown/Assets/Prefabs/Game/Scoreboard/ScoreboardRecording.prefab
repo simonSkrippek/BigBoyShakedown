@@ -377,12 +377,12 @@ PrefabInstance:
     - target: {fileID: 4481958560095042515, guid: 85d7c89ba22f5504c834c52b787f26f4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.65
+      value: 2.07
       objectReference: {fileID: 0}
     - target: {fileID: 4481958560095042515, guid: 85d7c89ba22f5504c834c52b787f26f4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.86
+      value: 1.84
       objectReference: {fileID: 0}
     - target: {fileID: 4481958560095042515, guid: 85d7c89ba22f5504c834c52b787f26f4,
         type: 3}
@@ -429,6 +429,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4481958560095042516, guid: 85d7c89ba22f5504c834c52b787f26f4,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1073741824
+      objectReference: {fileID: 0}
+    - target: {fileID: 4481958560095042516, guid: 85d7c89ba22f5504c834c52b787f26f4,
+        type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: f5e4750b77ad7c44693ba56e09da58af, type: 2}
     - target: {fileID: 4481958560095042518, guid: 85d7c89ba22f5504c834c52b787f26f4,
         type: 3}
       propertyPath: m_Name
@@ -438,6 +448,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769815539030151352, guid: 85d7c89ba22f5504c834c52b787f26f4,
+        type: 3}
+      propertyPath: m_RenderShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769815539030151352, guid: 85d7c89ba22f5504c834c52b787f26f4,
+        type: 3}
+      propertyPath: m_RequiresOpaqueTextureOption
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85d7c89ba22f5504c834c52b787f26f4, type: 3}
@@ -467,7 +487,7 @@ PrefabInstance:
     - target: {fileID: 5863295604042081345, guid: 2c10dbd2bc672a2468d989c5bf59e580,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.41
       objectReference: {fileID: 0}
     - target: {fileID: 5863295604042081345, guid: 2c10dbd2bc672a2468d989c5bf59e580,
         type: 3}
@@ -521,6 +541,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5863295604042081346, guid: 2c10dbd2bc672a2468d989c5bf59e580,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863295604042081346, guid: 2c10dbd2bc672a2468d989c5bf59e580,
+        type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e1d415c83c9a4a149b0612f65aaaf95c,
@@ -550,6 +575,11 @@ PrefabInstance:
       propertyPath: worldEndPoint
       value: 
       objectReference: {fileID: 6983805532424932703}
+    - target: {fileID: 7730868164230471077, guid: 2c10dbd2bc672a2468d989c5bf59e580,
+        type: 3}
+      propertyPath: defaultMaterial
+      value: 
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 7730868164230471077, guid: 2c10dbd2bc672a2468d989c5bf59e580,
         type: 3}
       propertyPath: graphPrefab

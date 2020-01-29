@@ -11,7 +11,7 @@ public class SubPoena : MonoBehaviour
     [SerializeField] Rigidbody rigidbody;
     #endregion
     #region player
-    [SerializeField] string PLAYER_LAYER;
+    [SerializeField] int PLAYER_LAYER = 9;
     [SerializeField] PlayerController playerToFollow;
     #endregion
     #region lifetime
@@ -83,7 +83,7 @@ public class SubPoena : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!following && other.transform.root.gameObject.layer == 9)
+        if (!following && other.transform.root.gameObject.layer == PLAYER_LAYER)
         {
             other.transform.root.TryGetComponent<PlayerController>(out playerToFollow);
             if (playerToFollow)
