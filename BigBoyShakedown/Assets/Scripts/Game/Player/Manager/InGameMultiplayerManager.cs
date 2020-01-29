@@ -16,10 +16,10 @@ namespace BigBoyShakedown.Player.Manager
         [SerializeField] BillboardManager billboardManager;
         [SerializeField] CharacterSelectionData selectionData;
 
-        [SerializeField] GameObject pAce;
-        [SerializeField] GameObject pGrease;
-        [SerializeField] GameObject pMark;
-        [SerializeField] GameObject pSpecci;
+        [SerializeField] GameObject[] pAce;
+        [SerializeField] GameObject[] pGrease;
+        [SerializeField] GameObject[] pMark;
+        [SerializeField] GameObject[] pSpecci;
         [SerializeField] Material[] playerMaterials = new Material[4];
 
         private void Awake()
@@ -35,7 +35,7 @@ namespace BigBoyShakedown.Player.Manager
         {
             Debug.Log("playerJoined: " + input_.gameObject.name + ", index: " + input_.playerIndex);
 
-            var PlayerPrefab = pMark;
+            var PlayerPrefab = pMark[input_.playerIndex];
 
             PlayerPrefab.SetActive(false);
             var playerObject = Instantiate(PlayerPrefab);

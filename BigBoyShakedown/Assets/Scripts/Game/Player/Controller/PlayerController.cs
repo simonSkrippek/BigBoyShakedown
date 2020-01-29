@@ -42,7 +42,7 @@ namespace BigBoyShakedown.Player.Controller
             }
             else if (currentSize > 5)
             {
-                Debug.LogError("player has won, end game here");
+                Debug.Log("player has won, end game here");
             }
         }
         /// <summary>

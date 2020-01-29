@@ -1,18 +1,26 @@
-﻿using System.Collections;
+﻿using BigBoyShakedown.Player.Controller;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] float timeUntilCompletion;
+    float timeLeftUntilCompletion;
+    bool beingInteractedWith;
+    [SerializeField] float monetaryReward;
+    PlayerController interactingPlayer;
 
-    // Update is called once per frame
-    void Update()
+    public void StartInteraction(PlayerController player)
     {
-        
+
+    }
+    public void CancelInteraction()
+    {
+
+    }
+    public void CompleteInteraction()
+    {
+
     }
 }
