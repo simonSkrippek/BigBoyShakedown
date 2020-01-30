@@ -40,7 +40,7 @@ namespace BigBoyShakedown.Game.Attackable
         /// <param name="damageIntended">the damage they intend to deal</param>
         public void DamageAttackable(Player.Controller.PlayerController from, float damageIntended)
         {
-            from.HitCallback(this, (damageIntended>health)?health:damageIntended);
+            if (from) from.HitCallback(this, (damageIntended>health)?health:damageIntended);
 
             health -= damageIntended;
             if (health <= 0)

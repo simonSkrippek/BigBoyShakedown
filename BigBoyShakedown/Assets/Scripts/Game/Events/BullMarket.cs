@@ -4,74 +4,77 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BullMarket : MonoBehaviour
+namespace BigBoyShakedown.Game.Event
 {
-    #region player
-    [SerializeField] int PLAYER_LAYER;
-    #endregion
-    #region theGiving
-    [SerializeField] float moneyPerGive = 150f;
-    [SerializeField] float range = 10f;
-    bool readyForNextGive;
-    [SerializeField] float timeBetweenGives;
-    #endregion
-    #region lifetime
-    [SerializeField] float lifetime = 30f;
-    bool destroyed, lifetimeOver, stoppedGiving;
-    #endregion
-
-    [SerializeField] Animator animator;
-
-    private void Awake()
+    public class BullMarket : MonoBehaviour
     {
-        animator = this.GetComponent<Animator>();
-        PLAYER_LAYER = 9;
-    }
+        #region player
+        [SerializeField] int PLAYER_LAYER;
+        #endregion
+        #region theGiving
+        [SerializeField] float moneyPerGive = 150f;
+        [SerializeField] float range = 10f;
+        bool readyForNextGive;
+        [SerializeField] float timeBetweenGives;
+        #endregion
+        #region lifetime
+        [SerializeField] float lifetime = 30f;
+        bool destroyed, lifetimeOver, stoppedGiving;
+        #endregion
 
-    private void Update()
-    {
-        if (Time.IsRunning)
+        [SerializeField] Animator animator;
+
+        private void Awake()
         {
-            if (readyForNextGive && !stoppedGiving)
+            animator = this.GetComponent<Animator>();
+            PLAYER_LAYER = 9;
+        }
+
+        private void Update()
+        {
+            if (Time.IsRunning)
             {
-                GiveMoney();
-            }
-            if (lifetimeOver)
-            {
-                StopGiving();
+                if (readyForNextGive && !stoppedGiving)
+                {
+                    GiveMoney();
+                }
+                if (lifetimeOver)
+                {
+                    StopGiving();
+                }
             }
         }
-    }
 
-    public void StartGiving()
-    {
-        GiveMoney();
-        animator.Play("BullMarketMain");
-
-        Time.StartTimer(new VariableReference<bool>(() => lifetimeOver, (val) => { lifetimeOver = val; }).SetEndValue(true), lifetime);
-    }
-    private void GiveMoney()
-    {
-        readyForNextGive = false;
-        Time.StartTimer(new VariableReference<bool>(() => readyForNextGive, (val) => { readyForNextGive = val; }).SetEndValue(true), timeBetweenGives);
-        var playersInRange = Physics.OverlapSphere(this.transform.position, range, LayerMask.GetMask("Player"), QueryTriggerInteraction.Collide);
-        foreach (var item in playersInRange)
+        public void StartGiving()
         {
-            PlayerController playerController;
-            item.transform.root.TryGetComponent<PlayerController>(out playerController);
-            if (playerController)
+            GiveMoney();
+            animator.Play("BullMarketMain");
+
+            Time.StartTimer(new VariableReference<bool>(() => lifetimeOver, (val) => { lifetimeOver = val; }).SetEndValue(true), lifetime);
+        }
+        private void GiveMoney()
+        {
+            readyForNextGive = false;
+            Time.StartTimer(new VariableReference<bool>(() => readyForNextGive, (val) => { readyForNextGive = val; }).SetEndValue(true), timeBetweenGives);
+            var playersInRange = Physics.OverlapSphere(this.transform.position, range, LayerMask.GetMask("Player"), QueryTriggerInteraction.Collide);
+            foreach (var item in playersInRange)
             {
-                playerController.HitCallback((PlayerController)null, moneyPerGive);
+                PlayerController playerController;
+                item.transform.root.TryGetComponent<PlayerController>(out playerController);
+                if (playerController)
+                {
+                    playerController.HitCallback((PlayerController)null, moneyPerGive);
+                }
             }
         }
-    }
-    public void StopGiving()
-    {
-        stoppedGiving = true;
-        animator.Play("BullMarketExit");
-    }
-    public void DestroyEvent()
-    {
-        Destroy(this.gameObject);
+        public void StopGiving()
+        {
+            stoppedGiving = true;
+            animator.Play("BullMarketExit");
+        }
+        public void DestroyEvent()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
