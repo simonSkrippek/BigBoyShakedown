@@ -22,7 +22,7 @@ namespace BigBoyShakedown.Player.State
 
         void FixedUpdate()
         {
-            if (!interactable || !controller.InteractableInRange(interactable))
+            if (!interactable.GetObject() || !controller.InteractableInRange(interactable))
             {
                 CancelInteraction();
                 machine.SetState<IdlingState>();
@@ -37,7 +37,7 @@ namespace BigBoyShakedown.Player.State
         private void StartInteraction()
         {
             interactable = controller.GetClosestInteractable();
-            if (!interactable)
+            if (!interactable.GetObject())
             {
                 machine.SetState<IdlingState>();
                 return;
@@ -47,6 +47,17 @@ namespace BigBoyShakedown.Player.State
         }
 
         #region inputHandlers
+        /// <summary>
+        /// Handles interaction cancelled handler, raised by #PlayerInputHandler
+        /// </summary>
+        private void OnInteractionCancelledHandler()
+        {
+            machine.SetState<IdlingState>();
+        }
+
+        /// <summary>
+        /// Handles interaction completed handler, raised by #PlayerInputHandler
+        /// </summary>
         private void OnInteractionCompleteHandler()
         {
             machine.SetState<IdlingState>();
@@ -133,6 +144,8 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput += OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
+            this.inputRelay.OnInteractionComplete += OnInteractionCompleteHandler;
+            this.inputRelay.OnInteractionCancelled += OnInteractionCancelledHandler;
 
             StartInteraction();
         }

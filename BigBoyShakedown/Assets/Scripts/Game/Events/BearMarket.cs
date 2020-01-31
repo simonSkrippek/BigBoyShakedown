@@ -254,15 +254,16 @@ namespace BigBoyShakedown.Game.Event
         public Collider[] GetAllAttackablesInRange()
         {
             var colliders = Physics.OverlapSphere(this.transform.position, range, LayerMask.GetMask("Player"), QueryTriggerInteraction.Collide);
-            if (colliders.Length > 0)
-            {
-                Debug.LogWarning("found sth to hit");
-            }
+            //if (colliders.Length > 0)
+            //{
+            //    Debug.LogWarning("found sth to hit");
+            //}
             return colliders;
         }
                 
         private void StartDestroyAnim()
         {
+            if (inWindUp) CompleteHit();
             attackIndicator.SetActive(false);
             animator.enabled = true;
             animationRunning = true;

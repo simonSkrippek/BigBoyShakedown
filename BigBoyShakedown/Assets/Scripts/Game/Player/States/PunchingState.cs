@@ -48,7 +48,16 @@ namespace BigBoyShakedown.Player.State
         {
             comboCount++;
             if (comboCount > 3) comboCount = 1;
-                       
+            
+            //target all attackables 1st time, initiate retargetting
+            var objectsInRange = controller.GetAllAttackablesInRange();
+            var objectToSnapTo = controller.GetClosestAttackable(objectsInRange);
+            if (objectToSnapTo) controller.TurnTo(objectToSnapTo.position);
+            var objectsInCone = controller.GetAllAttackablesInAttackCone(objectsInRange);
+            controller.TargetAttackables(objectsInCone);
+
+            this.InvokeRepeating("TargetAllAttackables", .1f, .1f);
+
             //calculate movement vars
             float animationDuration = controller.metrics.PlayerPunchAnimationDuration[controller.size - 1, comboCount-1];
             float animationSpeedMultiplier = animationDuration / controller.metrics.PlayerPunchAnimationFixedDuration;
@@ -60,16 +69,7 @@ namespace BigBoyShakedown.Player.State
 
             moving = false;
             Time.StartTimer(new VariableReference<bool>(() => moving, (val) => { moving = val; }).SetEndValue(true), movementStartPointSeconds);
-
-            //target all attackables 1st time, initiate retargetting
-            var objectsInRange = controller.GetAllAttackablesInRange();
-            var objectToSnapTo = controller.GetClosestAttackable(objectsInRange);
-            if (objectToSnapTo) controller.TurnTo(objectToSnapTo.position);
-            var objectsInCone = controller.GetAllAttackablesInAttackCone(objectsInRange);
-            controller.TargetAttackables(objectsInCone);
-
-            this.InvokeRepeating("TargetAllAttackables", .1f, .1f);
-
+            
             //Debug.Log("Punch Started! \n Combo Count: " + comboCount);
             switch (comboCount)
             {

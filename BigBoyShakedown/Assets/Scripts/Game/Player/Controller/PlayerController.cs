@@ -11,7 +11,7 @@ namespace BigBoyShakedown.Player.Controller
     [RequireComponent(typeof(PlayerInputRelay), typeof(StateMachine), typeof(StateCarryOver))]
     public class PlayerController : MonoBehaviour
     {
-        PlayerInputRelay inputRelay;
+        public PlayerInputRelay inputRelay;
 
         public PlayerMetrics metrics;
         public int size = 0;
@@ -45,6 +45,8 @@ namespace BigBoyShakedown.Player.Controller
                 Debug.Log("player has won, end game here");
             }
         }
+
+        #region scoreMethods
         /// <summary>
         /// calculate the players size based on its score (base on values in #playerMetrics)
         /// </summary>
@@ -63,6 +65,16 @@ namespace BigBoyShakedown.Player.Controller
             }
             return -1;
         }
+        /// <summary>
+        /// checks whether this player has at least a certain amount of money left
+        /// </summary>
+        /// <param name="threshhold">the amount of money that must be left</param>
+        /// <returns>whether this player has at least a certain amount of money left</returns>
+        public bool CheckRemainingMoney(float threshhold)
+        {
+            return score >= threshhold;
+        }
+        #endregion
 
         #region interactionMethods
         /// <summary>
@@ -82,7 +94,7 @@ namespace BigBoyShakedown.Player.Controller
         /// <returns>true if in range</returns>
         public bool InteractableInRange(Interactable interactable)
         {
-            return ((interactable.transform.root.position - this.transform.position).magnitude < metrics.PlayerInteractionRange[size - 1]);
+            return ((interactable.GetObject().transform.root.position - this.transform.position).magnitude < metrics.PlayerInteractionRange[size - 1]);
         }
         /// <summary>
         /// get the closest interactable to this player
@@ -95,14 +107,27 @@ namespace BigBoyShakedown.Player.Controller
             float distanceToClosestInteractable = float.MaxValue;
             foreach (var interactable in interactables)
             {
-                Interactable interactableComponent;
-                if (interactable.transform.root.TryGetComponent<Interactable>(out interactableComponent))
+                CommonInteractable interactableComponent;
+                if (interactable.transform.root.TryGetComponent<CommonInteractable>(out interactableComponent))
                 {
                     var distanceToInteractable = (interactable.transform.root.position - this.transform.position).magnitude;
                     if (distanceToInteractable < distanceToClosestInteractable)
                     {
                         distanceToClosestInteractable = distanceToInteractable;
                         closestInteractable = interactableComponent;
+                    }
+                }
+                else
+                {
+                    AutomaticTellingMachine atm;
+                    if (interactable.transform.root.TryGetComponent<AutomaticTellingMachine>(out atm))
+                    {
+                        var distanceToInteractable = (interactable.transform.root.position - this.transform.position).magnitude;
+                        if (distanceToInteractable < distanceToClosestInteractable)
+                        {
+                            distanceToClosestInteractable = distanceToInteractable;
+                            closestInteractable = interactableComponent;
+                        }
                     }
                 }
             }
@@ -122,11 +147,28 @@ namespace BigBoyShakedown.Player.Controller
         /// notify playerInput on this gameobject, as well as the interactable
         /// </summary>
         /// <param name="interactable">the interactable to finish interacting with</param>
-        /// <returns>whether completing the interaction was successful</returns>
         public void CompleteInteraction(Interactable interactable, float reward)
         {
             score += reward;
             inputRelay.RelayPlayerScoreChange(reward);
+            inputRelay.RelayInteractionComplete();
+        }
+        /// <summary>
+        /// cancel an interaction with the specified interactable.
+        /// notify playerInput on this gameobject, as well as the interactable
+        /// </summary>
+        public void CancelInteraction()
+        {
+            inputRelay.RelayInteractionCanceled();
+        }
+        /// <summary>
+        /// removes money from the player and stores it in the atm
+        /// </summary>
+        /// <param name="amount">the amount transferred to the atm</param>
+        public void BankMoney(float amount)
+        {
+            score -= amount;
+            inputRelay.RelayPlayerScoreChange(amount);
         }
         #endregion
 
@@ -140,6 +182,7 @@ namespace BigBoyShakedown.Player.Controller
             Vector3 possibleMovement = CheckCollisionInPath(movement, true);
             this.transform.position += possibleMovement;
         }
+
         /// <summary>
         /// cast a capsule in the movement direction, originating from this players transform. values for capsule size are taken form playerMetrics object.
         /// </summary>

@@ -6,6 +6,8 @@ namespace BigBoyShakedown.UI.Input
 {
     public class MainMenuMultiplayerManager : MonoBehaviour
     {
+        PlayerInput input;
+
         public static MainMenuMultiplayerManager instance;
         private void Awake()
         {
@@ -15,9 +17,14 @@ namespace BigBoyShakedown.UI.Input
             }
             else if (instance != this) Destroy(this.gameObject);
         }
+
         public void OnPlayerJoined(PlayerInput input_)
         {
-            input_.onActionTriggered += OnActionTriggeredHandler;
+            if (!input)
+            {
+                input = input_;
+                input.onActionTriggered += OnActionTriggeredHandler;
+            }
         }
 
         private void OnActionTriggeredHandler(InputAction.CallbackContext callbackContext)

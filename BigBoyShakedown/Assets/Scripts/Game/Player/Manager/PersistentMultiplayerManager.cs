@@ -106,9 +106,8 @@ namespace BigBoyShakedown.Manager
             if (input_.playerIndex < playerInputs.Length && input_.playerIndex >= 0)
             {
                 playerInputs[input_.playerIndex] = input_;
+                DontDestroyOnLoad(input_);
             }
-
-            DontDestroyOnLoad(input_);
 
             switch (currentScene)
             {

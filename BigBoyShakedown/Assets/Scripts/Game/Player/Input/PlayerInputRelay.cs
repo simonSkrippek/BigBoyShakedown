@@ -10,7 +10,7 @@ namespace BigBoyShakedown.Player.Input
     public class PlayerInputRelay : MonoBehaviour
     {
         [SerializeField]
-        PlayerInput input;
+        public PlayerInput input;
         [SerializeField]
         AnimationCallbackRelay[] animationCallbackRelays;
 
@@ -39,6 +39,14 @@ namespace BigBoyShakedown.Player.Input
         #endregion
 
         #region playerControllerEvents
+        /// <summary>
+        /// raised upon completing an interaction
+        /// </summary>
+        public event Action OnInteractionComplete;
+        /// <summary>
+        /// raised upon cancelling an interaction
+        /// </summary>
+        public event Action OnInteractionCancelled;
         /// <summary>
         /// raised upon being targetted from playerController
         /// </summary>
@@ -75,6 +83,20 @@ namespace BigBoyShakedown.Player.Input
 
 
         #region PlayerControllerRelays
+        /// <summary>
+        /// relay that an interaction was completed
+        /// </summary>
+        public void RelayInteractionComplete()
+        {
+            OnInteractionComplete?.Invoke();
+        }
+        /// <summary>
+        /// relay that an interaction was canceled
+        /// </summary>
+        public void RelayInteractionCanceled()
+        {
+            OnInteractionCancelled?.Invoke();
+        }        
         /// <summary>
         /// relay a hit the playercontroller noticed
         /// </summary>
