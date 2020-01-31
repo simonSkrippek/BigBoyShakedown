@@ -1,5 +1,6 @@
 ﻿using BigBoyShakedown.Game.PowerUp;
 using BigBoyShakedown.Player.Controller;
+using System.Collections;
 using UnityEngine;
 
 namespace BigBoyShakedown.Player.State
@@ -58,14 +59,21 @@ namespace BigBoyShakedown.Player.State
             }
         }
 
+        IEnumerator SwitchToIdle()
+        {
+            yield return new WaitForEndOfFrame();
+
+            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Idle);
+            machine.SetState<IdlingState>();
+        }
         #region inputHandlers
         /// <summary>
         /// Handles interaction cancelled handler, raised by #PlayerInputHandler
         /// </summary>
         private void OnInteractionCancelledHandler()
         {
-            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Idle);
-            machine.SetState<IdlingState>();
+            var coroutine = SwitchToIdle();
+            StartCoroutine(coroutine);
         }
 
         /// <summary>
@@ -73,8 +81,8 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnInteractionCompleteHandler()
         {
-            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Idle);
-            machine.SetState<IdlingState>();
+            var coroutine = SwitchToIdle();
+            StartCoroutine(coroutine);
         }
 
         /// <summary>
