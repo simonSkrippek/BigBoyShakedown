@@ -95,7 +95,13 @@ namespace BigBoyShakedown.Game.PowerUp
 
         public void DestroyPowerUpIfStillThere()
         {
-            if (occupied) GameObject.Destroy(powerUp);
+            if (occupied)
+            {
+                GameObject.Destroy(powerUp);
+                occupied = false;
+                powerUp = null;
+                powerUpLifeTime = 0f;
+            }
         }
     }
 }
