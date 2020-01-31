@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2614502814666844134}
   - component: {fileID: 2614502814666844135}
   - component: {fileID: 2614502814666844133}
+  - component: {fileID: 8528175483551884988}
+  - component: {fileID: -8990202442431565101}
   m_Layer: 13
   m_Name: BullMarket
   m_TagString: Untagged
@@ -70,6 +72,33 @@ MonoBehaviour:
   timeBetweenGives: 1
   lifetime: 25
   animator: {fileID: 2614502814666844135}
+--- !u!114 &8528175483551884988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614502814666844128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228d001ebb82b544ae63a7533f3d0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8990202442431565101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614502814666844128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac9e24827d00e84188d8ddfebbe6007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSpawnLocations:
+  - {fileID: 6667696050277454944, guid: 160dc4036ecefb04bba868e1d271cc86, type: 3}
+  - {fileID: 349782576230835524, guid: 80ca2edc798277d49878debfafc07e2b, type: 3}
 --- !u!1 &2614502814719775359
 GameObject:
   m_ObjectHideFlags: 0

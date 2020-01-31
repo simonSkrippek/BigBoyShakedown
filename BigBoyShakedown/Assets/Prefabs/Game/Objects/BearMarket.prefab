@@ -169,9 +169,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5351904372104209161}
+  - component: {fileID: 664086129}
   - component: {fileID: 5351904372104209167}
   - component: {fileID: 5351904372104209160}
-  - component: {fileID: 664086129}
+  - component: {fileID: -2961946254804464839}
+  - component: {fileID: -9027430144415849177}
   m_Layer: 13
   m_Name: BearMarket
   m_TagString: Untagged
@@ -195,6 +197,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &664086129
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5351904372104209163}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 19e712934512e734fb6b85ab4e2e4e41, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5351904372104209167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,22 +259,32 @@ MonoBehaviour:
   swipe2: {fileID: 21300000, guid: cb86d14cf86280b40a08bb04ddba1c2e, type: 3}
   swipeBack1: {fileID: 21300000, guid: 2bbb8e6ee87c2a342941d9d3b802cd13, type: 3}
   swipeBack2: {fileID: 21300000, guid: 5d215b4cccea42b4c96852b1501bac8d, type: 3}
---- !u!95 &664086129
-Animator:
-  serializedVersion: 3
+--- !u!114 &-2961946254804464839
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5351904372104209163}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 19e712934512e734fb6b85ab4e2e4e41, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac9e24827d00e84188d8ddfebbe6007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSpawnLocations:
+  - {fileID: 6667696050277454944, guid: 160dc4036ecefb04bba868e1d271cc86, type: 3}
+  - {fileID: 8823520202468293609, guid: ee47aa54975fcf641ac11dd7258c799b, type: 3}
+  - {fileID: 349782576230835524, guid: 80ca2edc798277d49878debfafc07e2b, type: 3}
+  - {fileID: 962804402266586616, guid: a0e05173fe6b5ed4481b4d9ac3612cb3, type: 3}
+--- !u!114 &-9027430144415849177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5351904372104209163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9228d001ebb82b544ae63a7533f3d0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

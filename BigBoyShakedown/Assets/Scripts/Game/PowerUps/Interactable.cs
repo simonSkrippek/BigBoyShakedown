@@ -1,9 +1,10 @@
 ﻿using BigBoyShakedown.Player.Controller;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BigBoyShakedown.Game.Interactable
+namespace BigBoyShakedown.Game.PowerUp
 {
     public class Interactable : MonoBehaviour
     {
@@ -13,7 +14,17 @@ namespace BigBoyShakedown.Game.Interactable
         public float MonetaryReward { get => monetaryReward; }
         PlayerController interactingPlayer;
 
+        PowerUpCallback callback;
+
         //ON Destroy animation reference
+
+        private void Awake()
+        {
+            if (!TryGetComponent<PowerUpCallback>(out callback))
+            {
+                throw new Exception("no PowerUpCallback component found");
+            }
+        }
 
         private void Update()
         {
@@ -56,7 +67,7 @@ namespace BigBoyShakedown.Game.Interactable
         public void DestroyInteractable()
         {
             //trigger on destroy animation and destroy this gameObject
-
+            callback.RelayPowerUpEnded();
             Destroy(this.gameObject);
         }
     }

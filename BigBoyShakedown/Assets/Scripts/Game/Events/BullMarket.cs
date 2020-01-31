@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace BigBoyShakedown.Game.Event
 {
+    [RequireComponent(typeof(EventCallback), typeof(EventSpawnPositionData))]
     public class BullMarket : MonoBehaviour
     {
         #region player
@@ -22,11 +23,19 @@ namespace BigBoyShakedown.Game.Event
         bool destroyed, lifetimeOver, stoppedGiving;
         #endregion
 
+        EventCallback eventCallback;
         [SerializeField] Animator animator;
 
         private void Awake()
         {
-            animator = this.GetComponent<Animator>();
+            if (!this.TryGetComponent<EventCallback>(out eventCallback))
+            {
+                throw new Exception("problem with event prefab; no eventCallback Component found");
+            }
+            if (!this.TryGetComponent<Animator>(out animator))
+            {
+                throw new Exception("problem with event prefab; no animator Component found");
+            }
             PLAYER_LAYER = 9;
         }
 
@@ -74,6 +83,7 @@ namespace BigBoyShakedown.Game.Event
         }
         public void DestroyEvent()
         {
+            eventCallback.RelayEventEnded();
             Destroy(this.gameObject);
         }
     }

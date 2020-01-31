@@ -3,14 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BigBoyShakedown.Game.Attackable
+namespace BigBoyShakedown.Game.PowerUp
 {
     public class Attackable : MonoBehaviour
     {
         [SerializeField] float health;
         bool destroyed = false;
 
+        PowerUpCallback callback;
+
         //on death animation TODO
+
+        private void Awake()
+        {
+            if (!TryGetComponent<PowerUpCallback>(out callback))
+            {
+                throw new Exception("no PowerUpCallback component found");
+            }
+        }
 
         private void Update()
         {
@@ -29,7 +39,7 @@ namespace BigBoyShakedown.Game.Attackable
         private void DestroyAttackable()
         {
             //play on death animation
-
+            callback.RelayPowerUpEnded();
             Destroy(this.gameObject);
         }
 

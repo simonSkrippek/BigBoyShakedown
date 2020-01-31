@@ -1,4 +1,5 @@
-﻿using BigBoyShakedown.Player.Controller;
+﻿using BigBoyShakedown.Game.PowerUp;
+using BigBoyShakedown.Player.Controller;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace BigBoyShakedown.Game.Event
 {
     enum HorizontalDirection { left, right}
     enum VerticalDirection { up, down}
+    [RequireComponent(typeof(EventCallback), typeof(EventSpawnPositionData))]
     public class BearMarket : MonoBehaviour
     {
         [SerializeField] int PLAYER_LAYER = 9;
@@ -20,11 +22,17 @@ namespace BigBoyShakedown.Game.Event
         [SerializeField] SpriteRenderer bearImage;
         [SerializeField] Sprite roar1, roar2, swipe1, swipe2, swipeBack1, swipeBack2;
 
+        EventCallback eventCallback;
+
         HorizontalDirection lookDirectionHorizonatal;
         VerticalDirection lookDirectionVertical;
 
         private void Awake()
         {
+            if (!this.TryGetComponent<EventCallback>(out eventCallback))
+            {
+                throw new Exception("problem with event prefab; no eventCallback Component found");
+            }
             readyToHit = true;
             attackIndicator.SetActive(false);
         }
@@ -186,8 +194,8 @@ namespace BigBoyShakedown.Game.Event
                     else
                     {
                         //when the transform contains an attackable object
-                        Attackable.Attackable objectToAttack;
-                        if (attackable.TryGetComponent<Attackable.Attackable>(out objectToAttack))
+                        Attackable objectToAttack;
+                        if (attackable.TryGetComponent<Attackable>(out objectToAttack))
                         {
                             //try to apply the hit
                             objectToAttack.DamageAttackable(null, damageIntended);
@@ -257,6 +265,7 @@ namespace BigBoyShakedown.Game.Event
         }
         private void DestroyEvent()
         {
+            eventCallback.RelayEventEnded();
             Destroy(this.gameObject);
         }
     }

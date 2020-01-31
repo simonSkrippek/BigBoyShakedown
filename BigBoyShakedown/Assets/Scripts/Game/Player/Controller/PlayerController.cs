@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using BigBoyShakedown.Game.PowerUp;
 using BigBoyShakedown.Player.Input;
 using BigBoyShakedown.Player.Metrics;
-using System;
 using BigBoyShakedown.Player.State;
-using BigBoyShakedown.Game.Interactable;
-using BigBoyShakedown.Game.Attackable;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace BigBoyShakedown.Player.Controller
 {
