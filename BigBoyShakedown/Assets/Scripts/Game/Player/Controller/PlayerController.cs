@@ -55,10 +55,14 @@ namespace BigBoyShakedown.Player.Controller
         {
             for (int i = 0; i < metrics.PlayerScore.Length; i++)
             {
-                if (i + 1 >= metrics.PlayerScore.Length)
+                if (i + 1 == metrics.PlayerScore.Length)
                 {
-                    Debug.LogWarning("Player has won: " + this.gameObject.name + "\n size: " + (i+1));
-                    return i + 1;
+                    if (score >= metrics.PlayerScore[i] && score < metrics.PlayerMaxScore.y) return i + 1;
+                    else if (score >= metrics.PlayerMaxScore.y)
+                    {
+                        Debug.Log("Player has won: " + this.gameObject.name + "\n size: " + (i + 2));
+                        return i + 2;
+                    }
                 }
 
                 if (score >= metrics.PlayerScore[i] && score < metrics.PlayerScore[i + 1]) return i+1;
@@ -72,7 +76,7 @@ namespace BigBoyShakedown.Player.Controller
         /// <returns>whether this player has at least a certain amount of money left</returns>
         public bool CheckRemainingMoney(float threshhold)
         {
-            return score >= threshhold;
+            return score > threshhold;
         }
         #endregion
 
@@ -126,7 +130,7 @@ namespace BigBoyShakedown.Player.Controller
                         if (distanceToInteractable < distanceToClosestInteractable)
                         {
                             distanceToClosestInteractable = distanceToInteractable;
-                            closestInteractable = interactableComponent;
+                            closestInteractable = atm;
                         }
                     }
                 }
@@ -167,8 +171,8 @@ namespace BigBoyShakedown.Player.Controller
         /// <param name="amount">the amount transferred to the atm</param>
         public void BankMoney(float amount)
         {
-            score -= amount;
-            inputRelay.RelayPlayerScoreChange(amount);
+            score += -amount;
+            inputRelay.RelayPlayerScoreChange(-amount);
         }
         #endregion
 

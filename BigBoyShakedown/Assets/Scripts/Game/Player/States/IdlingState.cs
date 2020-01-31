@@ -109,21 +109,17 @@ namespace BigBoyShakedown.Player.State
         #region eventOverrides
         protected override void OnStateEnter()
         {
-            Debug.Log("Logging idling state startup");
-            Debug.Log("before subscribing to events");
-            if (!inputRelay) Debug.LogError("relay is null");
+            //if (!inputRelay) Debug.LogError("relay is null");
             this.inputRelay.OnMovementInput += OnMovementInputHandler;
             this.inputRelay.OnInteractionInput += OnInteractionInputHandler;
             this.inputRelay.OnPunchInput += OnPunchInputHandler;
             this.inputRelay.OnDashInput += OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
-            Debug.Log("after subscribing to events");
 
             //PLAY ANIMATION
 
             machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Idle);
-            Debug.Log("after starting animation");
         }
         protected override void OnStateExit()
         {

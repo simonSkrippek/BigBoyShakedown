@@ -22,7 +22,15 @@ namespace BigBoyShakedown.Player.State
 
         void FixedUpdate()
         {
-            if (!interactable.GetObject() || !controller.InteractableInRange(interactable))
+            try
+            {
+                if (!interactable.GetObject() || !controller.InteractableInRange(interactable))
+                {
+                    CancelInteraction();
+                    machine.SetState<IdlingState>();
+                }
+            }
+            catch (System.NullReferenceException)
             {
                 CancelInteraction();
                 machine.SetState<IdlingState>();
@@ -37,13 +45,17 @@ namespace BigBoyShakedown.Player.State
         private void StartInteraction()
         {
             interactable = controller.GetClosestInteractable();
-            if (!interactable.GetObject())
+            try
             {
+                interactable.StartInteraction(this.controller);
+                this.machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Interact);
+            }
+            catch (System.NullReferenceException e)
+            {
+                Debug.Log(e.Message);
                 machine.SetState<IdlingState>();
                 return;
             }
-            interactable.StartInteraction(this.controller);
-            this.machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Interact);
         }
 
         #region inputHandlers
@@ -52,6 +64,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnInteractionCancelledHandler()
         {
+            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Idle);
             machine.SetState<IdlingState>();
         }
 
@@ -60,6 +73,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnInteractionCompleteHandler()
         {
+            machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Idle);
             machine.SetState<IdlingState>();
         }
 

@@ -18,7 +18,7 @@ namespace BigBoyShakedown.Game.PowerUp
         int interactingPlayerIndex;
         int interactionStagesCompleted;
 
-        int minPlayerSize = 2;
+        [SerializeField] int minPlayerSize = 2;
         //ON Destroy animation reference
 
         private void Awake()
@@ -44,17 +44,22 @@ namespace BigBoyShakedown.Game.PowerUp
         /// <param name="player">the interacting player</param>
         public void StartInteraction(PlayerController player)
         {
-            interactingPlayerIndex = player.inputRelay.input.playerIndex;
+            interactingPlayer = player;
+            interactingPlayerIndex = interactingPlayer.inputRelay.input.playerIndex;
+
+            var threshhold = interactingPlayer.metrics.PlayerScore[minPlayerSize - 1] + storingAmount * Mathf.Pow(storingMultiplier, interactionStagesCompleted);
+            Debug.Log("threshold" + 5 + " fetched: " + threshhold);
+
             if (moneyList[interactingPlayerIndex] > 0)
             {
                 RetrieveStoredMoney(interactingPlayerIndex);
+                CancelInteraction();
             }
-            else if(interactingPlayer.CheckRemainingMoney(interactingPlayer.metrics.PlayerScore[minPlayerSize - 1] + storingAmount * Mathf.Pow(storingMultiplier, interactionStagesCompleted)))
+            else if(player.CheckRemainingMoney(threshhold))
             {
                 moneyList[interactingPlayerIndex] = 0;
                 interactionStagesCompleted = 0;
                 beingInteractedWith = true;
-                interactingPlayer = player;
                 interactionStageCompleted = false;
                 Time.StartTimer(new VariableReference<bool>(() => interactionStageCompleted, (val) => { interactionStageCompleted = val; }).SetEndValue(true), timeUntilStageCompletion);
             }
@@ -76,6 +81,7 @@ namespace BigBoyShakedown.Game.PowerUp
             if (interactingPlayer) interactingPlayer.CancelInteraction();
             beingInteractedWith = false;
             interactionStageCompleted = false;
+            interactionStagesCompleted = 0;
             interactingPlayer = null;
             interactingPlayerIndex = -1;
         }
@@ -84,11 +90,19 @@ namespace BigBoyShakedown.Game.PowerUp
         /// </summary>
         public void CompleteInteraction()
         {
-            interactingPlayer.BankMoney(storingAmount * Mathf.Pow(storingAmount, interactionStagesCompleted));
-            if (interactingPlayer.CheckRemainingMoney(interactingPlayer.metrics.PlayerScore[minPlayerSize-1] + storingAmount * Mathf.Pow(storingAmount, interactionStagesCompleted + 1)))
+            float moneyToBank = storingAmount * Mathf.Pow(storingMultiplier, interactionStagesCompleted);
+            moneyList[interactingPlayerIndex] += moneyToBank;
+            interactingPlayer.BankMoney(moneyToBank);
+            var threshhold = interactingPlayer.metrics.PlayerScore[minPlayerSize - 1] + storingAmount * Mathf.Pow(storingMultiplier, interactionStagesCompleted);
+            Debug.Log("threshold" + 5 + " fetched: " + threshhold);
+            if (interactingPlayer.CheckRemainingMoney(threshhold))
             {
                 interactionStageCompleted = false;
                 Time.StartTimer(new VariableReference<bool>(() => interactionStageCompleted, (val) => { interactionStageCompleted = val; }).SetEndValue(true), timeUntilStageCompletion);
+            }
+            else
+            {
+                CancelInteraction();
             }
         }
         public void DestroyInteractable()
