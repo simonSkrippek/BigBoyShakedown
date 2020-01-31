@@ -12,6 +12,8 @@ namespace BigBoyShakedown.Game.PowerUp
 {
     public class PowerUpSpawner : MonoBehaviour
     {
+        bool active;
+
         [SerializeField] PowerUpSpawnData[] powerUpSpawnLocations;
         [SerializeField] GameObject[] powerUps;
         [Header("Timings")]
@@ -30,9 +32,12 @@ namespace BigBoyShakedown.Game.PowerUp
 
         public void RollPowerUpChance()
         {
-            float roll = Random.Range(0f, 1f);
-            if (roll <= powerUpSpawnChance) SpawnPowerUp();
-            else Time.StartTimer(new VariableReference<bool>(() => (false), (val) => { RollPowerUpChance(); }), timeBetweenPowerUpChances);
+            if (active)
+            {
+                float roll = Random.Range(0f, 1f);
+                if (roll <= powerUpSpawnChance) SpawnPowerUp();
+                else Time.StartTimer(new VariableReference<bool>(() => (false), (val) => { RollPowerUpChance(); }), timeBetweenPowerUpChances);
+            }
         }
 
         private void SpawnPowerUp()
@@ -56,6 +61,15 @@ namespace BigBoyShakedown.Game.PowerUp
 
             freePosition.Occupy(Instantiate(powerUps[roll]), powerUpLifeTime);
             Time.StartTimer(new VariableReference<bool>(() => (false), (val) => { RollPowerUpChance(); }), timeBetweenPowerUps);
+        }
+
+        private void OnEnable()
+        {
+            active = true;
+        }
+        private void OnDisable()
+        {
+            active = false;
         }
     }
 

@@ -369,7 +369,7 @@ namespace BigBoyShakedown.Player.Controller
             score -= (int) damage;
             inputRelay.RelayPlayerScoreChange(-damage);
 
-            from.HitCallback(this, damage);
+            if (from) from.HitCallback(this, damage);
         }
 
         /// <summary>

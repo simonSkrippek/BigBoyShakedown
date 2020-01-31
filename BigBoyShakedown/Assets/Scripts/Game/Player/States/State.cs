@@ -29,6 +29,10 @@ namespace BigBoyShakedown.Player.State
         {
             this.machine = machine;
             initialized = true;
+            this.machine = GetComponent<StateMachine>();
+            this.inputRelay = GetComponent<PlayerInputRelay>();
+            this.controller = GetComponent<PlayerController>();
+            this.carryOver = GetComponent<StateCarryOver>();
             OnStateInitialize(machine);
         }
         protected virtual void OnStateInitialize(StateMachine machine = null)
@@ -39,7 +43,7 @@ namespace BigBoyShakedown.Player.State
         #region stateEnter
         public void StateEnter()
         {
-            Debug.Log("State entered: " + this.GetType());
+            //Debug.Log("State entered: " + this.GetType());
 
             enabled = true;
             OnStateEnter();
@@ -55,7 +59,7 @@ namespace BigBoyShakedown.Player.State
         {
             OnStateExit();
 
-            Debug.Log("State exited: " + this.GetType());
+            //Debug.Log("State exited: " + this.GetType());
 
             enabled = false;
         }
@@ -86,13 +90,6 @@ namespace BigBoyShakedown.Player.State
                     Debug.LogWarning("Do not disable States directly. Use StateMachine.SetState");
                 }
             }
-        }
-        void OnValidate()
-        {
-            this.machine = GetComponent<StateMachine>();
-            this.inputRelay = GetComponent<PlayerInputRelay>();
-            this.controller = GetComponent<PlayerController>();
-            this.carryOver = GetComponent<StateCarryOver>();
         }
         #endregion
 

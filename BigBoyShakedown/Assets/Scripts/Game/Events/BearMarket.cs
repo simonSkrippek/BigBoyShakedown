@@ -142,8 +142,7 @@ namespace BigBoyShakedown.Game.Event
             attackIndicator.SetActive(false);
 
             HitAllAttackables(GetAllAttackablesInAttackCone(GetAllAttackablesInRange()), damagePerHit, knockbackPerHit, stunPerHit, true);
-
-
+            
             if (lookDirectionHorizonatal == HorizontalDirection.left)
             {
                 bearImage.flipX = false;
@@ -254,11 +253,17 @@ namespace BigBoyShakedown.Game.Event
         /// <returns>array of colliders in range</returns>
         public Collider[] GetAllAttackablesInRange()
         {
-            return Physics.OverlapSphere(this.transform.position, range,  PLAYER_LAYER, QueryTriggerInteraction.Collide);
+            var colliders = Physics.OverlapSphere(this.transform.position, range, LayerMask.GetMask("Player"), QueryTriggerInteraction.Collide);
+            if (colliders.Length > 0)
+            {
+                Debug.LogWarning("found sth to hit");
+            }
+            return colliders;
         }
                 
         private void StartDestroyAnim()
         {
+            attackIndicator.SetActive(false);
             animator.enabled = true;
             animationRunning = true;
             animator.Play("bearMarket_end");

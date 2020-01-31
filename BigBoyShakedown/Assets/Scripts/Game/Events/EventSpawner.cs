@@ -8,6 +8,8 @@ namespace BigBoyShakedown.Game.Event
 {
     public class EventSpawner : MonoBehaviour
     {
+        bool active;
+
         [SerializeField] GameObject[] eventPrefabs;
         [Header("Timings")]
         [SerializeField] float initialEventDelay = 0f;
@@ -23,9 +25,12 @@ namespace BigBoyShakedown.Game.Event
 
         public void RollEventChance()
         {
-            float roll = Random.Range(0f, 1f);
-            if (roll <= eventSpawnChance) SpawnEvent();
-            else Time.StartTimer(new VariableReference<bool>(() => (false), (val) => { RollEventChance(); }), timeBetweenEventChances);
+            if (active)
+            {
+                float roll = Random.Range(0f, 1f);
+                if (roll <= eventSpawnChance) SpawnEvent();
+                else Time.StartTimer(new VariableReference<bool>(() => (false), (val) => { RollEventChance(); }), timeBetweenEventChances);
+            }
         }
 
         private void SpawnEvent()
@@ -57,6 +62,15 @@ namespace BigBoyShakedown.Game.Event
         private void OnEventEndedHandler()
         {
             Time.StartTimer(new VariableReference<bool>(() => (false), (val) => { RollEventChance(); }), timeBetweenEvents);
+        }
+        
+        private void OnEnable()
+        {
+            active = true;
+        }
+        private void OnDisable()
+        {
+            active = false;
         }
     }
 }

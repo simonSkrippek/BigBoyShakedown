@@ -72,13 +72,41 @@ namespace BigBoyShakedown.Player.Metrics
                                         { 1f, 1f, 1f}};
         public float[,] PlayerPunchKnockback { get => playerPunchKnockback; }
 
-        [Header("Combat"), Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        [Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
         private float[,] playerPunchStunDuration = { { 1f, 1f, 1f},
                                         { 1f, 1f, 1f},
                                         { 1f, 1f, 1f},
                                         { 1f, 1f, 1f},
                                         { 1f, 1f, 1f}};
         public float[,] PlayerPunchStunDuration { get => playerPunchStunDuration; }
+
+
+        [Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        private float[,] playerPunchForwardMovementDistance = { { 2f, 2f, 2f},
+                                        { 2f, 2f, 2f},
+                                        { 2f, 2f, 2f},
+                                        { 2f, 2f, 2f},
+                                        { 2f, 2f, 2f}};
+        public float[,] PlayerPunchForwardMovementDistance { get => playerPunchForwardMovementDistance; }
+
+        [Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        private float[,] playerPunchAnimationDurationIntended = { { 2f, 2f, 2f},
+                                        { 2f, 2f, 2f},
+                                        { 2f, 2f, 2f},
+                                        { 2f, 2f, 2f},
+                                        { 2f, 2f, 2f}};
+        public float[,] PlayerPunchAnimationDuration { get => playerPunchAnimationDurationIntended; }
+
+        [Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        private float[,] playerPunchMovementStartPoint = { { .1f, 0, .1f},
+                                        { .1f, 0, .1f},
+                                        { .1f, 0, .1f},
+                                        { .1f, 0, .1f},
+                                        { .1f, 0, .1f}};
+        public float[,] PlayerPunchMovementStartPoint { get => playerPunchMovementStartPoint; }
+
+        float playerAnimationFixedDuration = 2f;
+        public float PlayerPunchAnimationFixedDuration { get => playerAnimationFixedDuration; }
         #endregion
 
         #region score

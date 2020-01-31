@@ -247,8 +247,8 @@ MonoBehaviour:
   damagePerHit: 250
   knockbackPerHit: 5
   stunPerHit: 1.5
-  windUpDuration: 1
-  recoveryDuration: 0.5
+  windUpDuration: 2
+  recoveryDuration: 3
   lifetime: 15
   range: 4
   animator: {fileID: 664086129}

@@ -31,10 +31,13 @@ namespace BigBoyShakedown.Player.State
         bool comboChained;
 
         Vector3 moveDirection;
+        float moveSpeed;
+        bool moving;
+
 
         private void FixedUpdate()
         {
-            //controller.TryApplyMovement(moveDirection * controller.metrics.PlayerMoveSpeed[controller.size - 1] * .01f);
+            if (moving) controller.TryApplyMovement(moveDirection * moveSpeed * .01f);
         }
 
 
@@ -43,11 +46,22 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void StartPunch()
         {
-            moveDirection = this.transform.forward.normalized;
-
             comboCount++;
             if (comboCount > 3) comboCount = 1;
+                       
+            //calculate movement vars
+            float animationDuration = controller.metrics.PlayerPunchAnimationDuration[controller.size - 1, comboCount-1];
+            float animationSpeedMultiplier = animationDuration / controller.metrics.PlayerPunchAnimationFixedDuration;
+            float movementStartPointPercent = controller.metrics.PlayerPunchMovementStartPoint[controller.size - 1, comboCount-1];
+            float movementStartPointSeconds = movementStartPointPercent * animationDuration;
+            moveDirection = this.transform.forward.normalized;
+            float movementDistance = controller.metrics.PlayerPunchForwardMovementDistance[controller.size - 1, comboCount-1];
+            moveSpeed = movementDistance / (animationDuration - movementStartPointSeconds);
 
+            moving = false;
+            Time.StartTimer(new VariableReference<bool>(() => moving, (val) => { moving = val; }).SetEndValue(true), movementStartPointSeconds);
+
+            //target all attackables 1st time, initiate retargetting
             var objectsInRange = controller.GetAllAttackablesInRange();
             var objectToSnapTo = controller.GetClosestAttackable(objectsInRange);
             if (objectToSnapTo) controller.TurnTo(objectToSnapTo.position);
@@ -56,6 +70,7 @@ namespace BigBoyShakedown.Player.State
 
             this.InvokeRepeating("TargetAllAttackables", .1f, .1f);
 
+            //Debug.Log("Punch Started! \n Combo Count: " + comboCount);
             switch (comboCount)
             {
                 case 1:
@@ -68,7 +83,6 @@ namespace BigBoyShakedown.Player.State
                     machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch3);
                     break;
             }
-            //Debug.Log("Punch Started! \n Combo Count: " + comboCount);
         }       
         /// <summary>
         /// call when windup is over, before recovery starts
