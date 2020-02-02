@@ -75,14 +75,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
   m_Name: LiftGammaGain
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   lift:
     m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: 0.033370517}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0.97869307, y: 0.96647185, z: 1, w: 0.32319388}
+    m_Value: {x: 0.998885, y: 1, z: 0.9714496, w: -0.23544878}
   gain:
     m_OverrideState: 1
     m_Value: {x: 0.99389863, y: 1, z: 0.9954241, w: 1}
@@ -101,30 +101,30 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   threshold:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.8
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 8
+    m_Value: 2
     min: 0
   scatter:
     m_OverrideState: 1
-    m_Value: 0.205
+    m_Value: 0.434
     min: 0
     max: 1
   clamp:
     m_OverrideState: 0
-    m_Value: 65472
+    m_Value: 70000
     min: 0
   tint:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 1, g: 0.85529023, b: 0.75, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
   highQualityFiltering:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   dirtTexture:
     m_OverrideState: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: Global Volume Profile
+  m_Name: Ezgi Processing
   m_EditorClassIdentifier: 
   components:
   - {fileID: -3401710942281966301}
@@ -177,12 +177,12 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.489
     min: 0
     max: 1
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.01
+    m_Value: 0.154
     min: 0.01
     max: 1
   rounded:
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
@@ -223,6 +223,6 @@ MonoBehaviour:
     max: 180
   saturation:
     m_OverrideState: 1
-    m_Value: -0
+    m_Value: 0
     min: -100
     max: 100

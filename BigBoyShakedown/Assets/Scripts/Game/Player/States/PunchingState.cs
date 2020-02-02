@@ -59,8 +59,8 @@ namespace BigBoyShakedown.Player.State
             this.InvokeRepeating("TargetAllAttackables", .1f, .1f);
 
             //calculate movement vars
-            float animationDuration = controller.metrics.PlayerPunchAnimationDuration[controller.size - 1, comboCount-1];
-            float animationSpeedMultiplier = animationDuration / controller.metrics.PlayerPunchAnimationFixedDuration;
+            float animationDuration = controller.metrics.PlayerPunchAnimationDurationIntended[controller.size - 1, comboCount-1];
+            float animationSpeedMultiplier = controller.metrics.PlayerPunchAnimationFixedDuration / animationDuration;
             float movementStartPointPercent = controller.metrics.PlayerPunchMovementStartPoint[controller.size - 1, comboCount-1];
             float movementStartPointSeconds = movementStartPointPercent * animationDuration;
             moveDirection = this.transform.forward.normalized;
@@ -69,7 +69,8 @@ namespace BigBoyShakedown.Player.State
 
             moving = false;
             Time.StartTimer(new VariableReference<bool>(() => moving, (val) => { moving = val; }).SetEndValue(true), movementStartPointSeconds);
-            
+
+            machine.playerAppearance.SetAnimationSpeed(animationSpeedMultiplier);
             //Debug.Log("Punch Started! \n Combo Count: " + comboCount);
             switch (comboCount)
             {

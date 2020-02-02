@@ -28,9 +28,12 @@ namespace BigBoyShakedown.Player.Manager
 
         [Header("Timing")]
         [SerializeField] float gameStartDelay = 5f;
+        [SerializeField] float playerRespawnTimer = 1f;
 
         [Header("spacing & positions")]
         [SerializeField] Transform[] playerSpawnPositions;
+
+        public event Action<int> OnPLayerWon;
 
         private void Awake()
         {
@@ -53,6 +56,8 @@ namespace BigBoyShakedown.Player.Manager
             var inputRelay = playerObject.GetComponent<PlayerInputRelay>();
             var playerController = playerObject.GetComponent<Controller.PlayerController>();
             inputRelay.ActivateInput(input_);
+            inputRelay.OnPlayerDeath += OnPlayerDiedHandler;
+            inputRelay.OnPlayerWin += OnPlayerWonHandler;
             inputRelay.enabled = false;
             Time.StartTimer(new VariableReference<bool>(() => { return inputRelay.enabled; }, (val) => { inputRelay.enabled = val; }).SetEndValue(true), gameStartDelay);
             playerObject.SetActive(true);
@@ -62,6 +67,18 @@ namespace BigBoyShakedown.Player.Manager
 
             //TODO
             playerObject.transform.position = playerSpawnPositions[input_.playerIndex].position;
+        }
+
+        public void OnPlayerDiedHandler(Controller.PlayerController player)
+        {
+            player.transform.position = playerSpawnPositions[player.inputRelay.input.playerIndex].position;
+            player.SetScoreToStartScore();
+            player.gameObject.SetActive(false);
+            Time.StartTimer(new VariableReference<bool>(() => false, (val) => { player.gameObject.SetActive(true); }), playerRespawnTimer);
+        }
+        public void OnPlayerWonHandler(Controller.PlayerController player)
+        {
+            OnPLayerWon?.Invoke(player.inputRelay.input.playerIndex);
         }
     }
 }

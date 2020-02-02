@@ -94,5 +94,10 @@ namespace BigBoyShakedown.Player.Appearance
                     break;
             }
         }
+
+        internal void SetAnimationSpeed(float speed_)
+        {
+            currentAnimator.SetFloat("Speed", speed_);
+        }
     }
 }

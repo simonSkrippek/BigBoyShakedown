@@ -58,7 +58,7 @@ namespace BigBoyShakedown.Player.Input
         /// <summary>
         /// raised upon dying from playerController
         /// </summary>
-        public event Action OnPlayerDeath;
+        public event Action<PlayerController> OnPlayerDeath;
         /// <summary>
         /// raised upon size change from playerController
         /// </summary>
@@ -67,6 +67,10 @@ namespace BigBoyShakedown.Player.Input
         /// raised upon score change from playerController
         /// </summary>
         public event Action<float> OnPlayerScoreChanged;
+        /// <summary>
+        /// raised upon winning from playerController
+        /// </summary>
+        public event Action<PlayerController> OnPlayerWin;
         #endregion
 
         #region animationEvents
@@ -120,7 +124,14 @@ namespace BigBoyShakedown.Player.Input
         /// </summary>
         public void RelayPlayerDeath()
         {
-            OnPlayerDeath.Invoke();
+            OnPlayerDeath?.Invoke(this.GetComponent<PlayerController>());
+        }
+        /// <summary>
+        /// relay that this playerController has won
+        /// </summary>
+        public void RelayPlayerWin()
+        {
+            OnPlayerWin?.Invoke(this.GetComponent<PlayerController>());
         }
         /// <summary>
         /// relay that this playerController has changed it's size
@@ -152,7 +163,7 @@ namespace BigBoyShakedown.Player.Input
             OnInteractionInput += () => { };
             OnDashInput += () => { };
             OnPlayerTargeted += () => { };
-            OnPlayerDeath += () => { };
+            OnPlayerDeath += (val) => { };
             OnPlayerHit += (val1, val2, val3, val4, val5) => { };
             OnPlayerScoreChanged += (val) => { };
             OnPlayerSizeChanged += (val) => { };

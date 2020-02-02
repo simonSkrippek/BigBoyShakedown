@@ -23,11 +23,16 @@ namespace BigBoyShakedown.Player.Controller
         }
         private void Start()
         {
+            SetScoreToStartScore();
+        }
+        public void SetScoreToStartScore()
+        {
             this.score = metrics.PlayerStartScore;
             size = GetSizeFromScore();
             if (size < 0) throw new Exception("mistake calculating size");
             inputRelay.RelayPlayerSizeChange(size);
         }
+
         private void Update()
         {
             int currentSize = GetSizeFromScore();
@@ -58,15 +63,16 @@ namespace BigBoyShakedown.Player.Controller
                 if (i + 1 == metrics.PlayerScore.Length)
                 {
                     if (score >= metrics.PlayerScore[i] && score < metrics.PlayerMaxScore.y) return i + 1;
-                    else if (score >= metrics.PlayerMaxScore.y)
+                    else if (score > metrics.PlayerMaxScore.y)
                     {
-                        Debug.Log("Player has won: " + this.gameObject.name + "\n size: " + (i + 2));
+                        //Debug.Log("Player has won: " + this.gameObject.name + "\n size: " + (i + 2));
+                        inputRelay.RelayPlayerWin();
                         return i + 2;
                     }
                 }
-
                 if (score >= metrics.PlayerScore[i] && score < metrics.PlayerScore[i + 1]) return i+1;
             }
+            inputRelay.RelayPlayerDeath();
             return -1;
         }
         /// <summary>

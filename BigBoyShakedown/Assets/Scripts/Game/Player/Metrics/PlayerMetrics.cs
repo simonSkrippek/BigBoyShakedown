@@ -81,7 +81,14 @@ namespace BigBoyShakedown.Player.Metrics
         public float[,] PlayerPunchStunDuration { get => playerPunchStunDuration; }
 
 
-        [Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+
+
+
+
+        #region ZIADEDITTHISPLEASE
+        //punch movement / animation length shit, hope u know how to edit
+
+        [Tooltip("complete length of movement (in unity-meters)"), SerializeField]
         private float[,] playerPunchForwardMovementDistance = { { 2f, 2f, 2f},
                                         { 2f, 2f, 2f},
                                         { 2f, 2f, 2f},
@@ -89,15 +96,15 @@ namespace BigBoyShakedown.Player.Metrics
                                         { 2f, 2f, 2f}};
         public float[,] PlayerPunchForwardMovementDistance { get => playerPunchForwardMovementDistance; }
 
-        [Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
-        private float[,] playerPunchAnimationDurationIntended = { { 2f, 2f, 2f},
+        [Tooltip("complete time of punch (in seconds)"), SerializeField]
+        private float[,] playerPunchAnimationDurationIntended = { { 1.5f, 2f, 2f},
                                         { 2f, 2f, 2f},
                                         { 2f, 2f, 2f},
                                         { 2f, 2f, 2f},
                                         { 2f, 2f, 2f}};
-        public float[,] PlayerPunchAnimationDuration { get => playerPunchAnimationDurationIntended; }
+        public float[,] PlayerPunchAnimationDurationIntended { get => playerPunchAnimationDurationIntended; }
 
-        [Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)"), SerializeField]
+        [Tooltip("point in animation at that movement starts (in percent)"), SerializeField]
         private float[,] playerPunchMovementStartPoint = { { .1f, 0, .1f},
                                         { .1f, 0, .1f},
                                         { .1f, 0, .1f},
@@ -105,7 +112,15 @@ namespace BigBoyShakedown.Player.Metrics
                                         { .1f, 0, .1f}};
         public float[,] PlayerPunchMovementStartPoint { get => playerPunchMovementStartPoint; }
 
-        float playerAnimationFixedDuration = 2f;
+
+        #endregion
+
+
+
+
+
+        [Tooltip("fixed length of all punch animations"), SerializeField]
+        float playerAnimationFixedDuration = 10f;
         public float PlayerPunchAnimationFixedDuration { get => playerAnimationFixedDuration; }
         #endregion
 
