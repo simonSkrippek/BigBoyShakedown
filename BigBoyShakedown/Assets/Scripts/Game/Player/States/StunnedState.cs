@@ -50,7 +50,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnPlayerDeathHandler()
         {
-            throw new System.NotImplementedException();
+            machine.SetState<IdlingState>();
         }
         /// <summary>
         /// Handles playerHit event, raised by #PlayerInputHandler
