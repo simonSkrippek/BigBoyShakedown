@@ -48,7 +48,24 @@ namespace BigBoyShakedown.Player.Manager
         {
             Debug.Log("playerJoined: " + input_.gameObject.name + ", index: " + input_.playerIndex);
 
-            var PlayerPrefab = pMark[input_.playerIndex];
+            GameObject PlayerPrefab = null;
+            switch (selectionData.playerJoinData[input_.playerIndex].characterName)
+            {
+                case "ace":
+                    PlayerPrefab = pAce[input_.playerIndex];
+                    break;
+                case "grease":
+                    PlayerPrefab = pGrease[input_.playerIndex];
+                    break;
+                case "specci":
+                    PlayerPrefab = pSpecci[input_.playerIndex];
+                    break;
+                default:
+                    PlayerPrefab = pMark[input_.playerIndex];
+                    break;
+            }
+            if (!PlayerPrefab) PlayerPrefab = pMark[input_.playerIndex];
+
             //spawn appropriate character based on @selection data, currently ALWAYS MARK
 
             PlayerPrefab.SetActive(false);

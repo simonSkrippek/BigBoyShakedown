@@ -129,6 +129,13 @@ namespace BigBoyShakedown.Player.State
 
         #region inputHandlers
         /// <summary>
+        /// Handles death event, raised by #PlayerInputHandler
+        /// </summary>
+        private void OnPlayerDeathHandler(PlayerController player)
+        {
+            machine.SetState<IdlingState>();
+        }
+        /// <summary>
         /// Handles punch event, raised by #PlayerInputHandler
         /// </summary>
         private void OnPunchInputHandler()
@@ -182,6 +189,8 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnRecoveryComplete += OnRecoveryCompleteHandler;
             this.inputRelay.OnWindUpComplete += OnWindUpCompleteHandler;
 
+            this.inputRelay.OnPlayerDeath += OnPlayerDeathHandler;
+
             StartPunch();
         }
         protected override void OnStateExit()
@@ -192,6 +201,7 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnRecoveryComplete -= OnRecoveryCompleteHandler;
             this.inputRelay.OnWindUpComplete -= OnWindUpCompleteHandler;
 
+            this.inputRelay.OnPlayerDeath -= OnPlayerDeathHandler;
 
             if (!comboChained) comboCount = 0;
             comboChained = false;

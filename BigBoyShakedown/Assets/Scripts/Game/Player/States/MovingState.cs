@@ -130,6 +130,14 @@ namespace BigBoyShakedown.Player.State
                 controller.ReceiveHit(from, damageIntended, Vector3.zero, 0f);
             }
         }
+
+        /// <summary>
+        /// Handles death event, raised by #PlayerInputHandler
+        /// </summary>
+        private void OnPlayerDeathHandler(PlayerController player)
+        {
+            machine.SetState<IdlingState>();
+        }
         #endregion
 
         #region eventOverrides
@@ -142,6 +150,7 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput += OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted += OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
+            this.inputRelay.OnPlayerDeath += OnPlayerDeathHandler;
 
             movement = carryOver.previousMovement;
             //PLAY ANIMATION
@@ -157,6 +166,7 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput -= OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted -= OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit -= OnPlayerHitHandler;
+            this.inputRelay.OnPlayerDeath += OnPlayerDeathHandler;
 
             carryOver.previousMovement = movement;
         }

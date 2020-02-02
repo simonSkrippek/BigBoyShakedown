@@ -48,7 +48,7 @@ namespace BigBoyShakedown.Player.State
         /// <summary>
         /// Handles death event, raised by #PlayerInputHandler
         /// </summary>
-        private void OnPlayerDeathHandler()
+        private void OnPlayerDeathHandler(PlayerController player)
         {
             machine.SetState<IdlingState>();
         }

@@ -68,6 +68,14 @@ namespace BigBoyShakedown.Player.State
         }
         #region inputHandlers
         /// <summary>
+        /// Handles death event, raised by #PlayerInputHandler
+        /// </summary>
+        private void OnPlayerDeathHandler(PlayerController player)
+        {
+            machine.SetState<IdlingState>();
+        }
+
+        /// <summary>
         /// Handles interaction cancelled handler, raised by #PlayerInputHandler
         /// </summary>
         private void OnInteractionCancelledHandler()
@@ -168,6 +176,7 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnPlayerHit += OnPlayerHitHandler;
             this.inputRelay.OnInteractionComplete += OnInteractionCompleteHandler;
             this.inputRelay.OnInteractionCancelled += OnInteractionCancelledHandler;
+            this.inputRelay.OnPlayerDeath += OnPlayerDeathHandler;
 
             StartInteraction();
         }
@@ -179,6 +188,7 @@ namespace BigBoyShakedown.Player.State
             this.inputRelay.OnDashInput -= OnDashInputHandler;
             this.inputRelay.OnPlayerTargeted -= OnPlayerTargetedHandler;
             this.inputRelay.OnPlayerHit -= OnPlayerHitHandler;
+            this.inputRelay.OnPlayerDeath -= OnPlayerDeathHandler;
         }
         protected override void OnStateInitialize(StateMachine machine = null)
         {

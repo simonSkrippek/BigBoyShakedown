@@ -65,11 +65,14 @@ namespace BigBoyShakedown.Player.State
             controller.TurnIn(-movement);
             //Debug.Log(movement);
         }
-        
+
         #region inputHandlers
-        private void OnPlayerDeathHandler()
+        /// <summary>
+        /// Handles death event, raised by #PlayerInputHandler
+        /// </summary>
+        private void OnPlayerDeathHandler(PlayerController player)
         {
-            throw new NotImplementedException();
+            machine.SetState<IdlingState>();
         }
         private void OnRecoveryCompleteHandler()
         {

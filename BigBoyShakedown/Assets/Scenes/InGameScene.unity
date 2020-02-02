@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -629,7 +629,13 @@ MonoBehaviour:
   selectionData: {fileID: 11400000, guid: 141149170d4551f41861d36ec3bf45ee, type: 2}
   pAce:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   pGrease:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   pMark:
   - {fileID: 1027727378385476130, guid: dc63e0d92db60164899b22c04921fbd9, type: 3}
@@ -638,12 +644,16 @@ MonoBehaviour:
   - {fileID: 1027727378385476130, guid: 4dc13d824f08a6845b08e12784d69671, type: 3}
   pSpecci:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   playerMaterials:
   - {fileID: 2100000, guid: ec49aa2855e798443b1011640c586c9f, type: 2}
   - {fileID: 2100000, guid: f5f9967b35d386347bd29175ad294453, type: 2}
   - {fileID: 2100000, guid: e21f1a8f105b0ac4296b6cfd4321f6a0, type: 2}
   - {fileID: 2100000, guid: 5ae64dae8fbc6ac45a20c08ed46d80d5, type: 2}
   gameStartDelay: 5
+  playerRespawnTimer: 1
   playerSpawnPositions:
   - {fileID: 116951382}
   - {fileID: 843296342}

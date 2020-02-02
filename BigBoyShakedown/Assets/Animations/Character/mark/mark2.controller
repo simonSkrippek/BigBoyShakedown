@@ -103,32 +103,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-6414180468336745270
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: mark_stage1_punching_1 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1107 &-6238187462346748163
 AnimatorStateMachine:
   serializedVersion: 5
@@ -143,46 +117,28 @@ AnimatorStateMachine:
     m_Position: {x: -500, y: -500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2221906138074689783}
-    m_Position: {x: -200, y: -350, z: 0}
+    m_Position: {x: -230, y: -350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7246177429450980355}
-    m_Position: {x: -200, y: -250, z: 0}
+    m_Position: {x: -230, y: -250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7622424942422976963}
-    m_Position: {x: -200, y: -500, z: 0}
+    m_Position: {x: -230, y: -500, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5688090860228353656}
-    m_Position: {x: -200, y: -450, z: 0}
+    m_Position: {x: -230, y: -450, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8092412129954335264}
-    m_Position: {x: -200, y: -300, z: 0}
+    m_Position: {x: -230, y: -300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4884192931492965916}
-    m_Position: {x: -200, y: -400, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -6414180468336745270}
-    m_Position: {x: -200, y: -350, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1501891317161354652}
-    m_Position: {x: -200, y: -250, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -2879147630922061463}
-    m_Position: {x: -200, y: -500, z: 0}
+    m_Position: {x: -230, y: -400, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8705954779707393540}
-    m_Position: {x: -200, y: -200, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 6527383562747879063}
-    m_Position: {x: -200, y: -450, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -1425238922221299034}
-    m_Position: {x: -200, y: -300, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -3805631415355206418}
-    m_Position: {x: -200, y: -400, z: 0}
+    m_Position: {x: -230, y: -200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6918427700405111023}
-    m_Position: {x: -200, y: -150, z: 0}
+    m_Position: {x: -230, y: -150, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -215,32 +171,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-3805631415355206418
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: mark_stage1_dashing 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &-3676710025849281948
 AnimatorState:
   serializedVersion: 5
@@ -249,32 +179,6 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mark_stage2_punching_3 0
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-2879147630922061463
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: mark_stage1_idling 1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -315,32 +219,6 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 6691634627221796361, guid: f9c875d9fb404bd49be4394108226a9f,
     type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-1425238922221299034
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: mark_stage1_punching_2 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -394,32 +272,6 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &1501891317161354652
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: mark_stage1_punching_3 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &2611663998404262666
 AnimatorStateTransition:
   m_ObjectHideFlags: 3
@@ -621,32 +473,6 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -1809556862899182325, guid: c4e9b553ec9a980468edb6e8bbdd3ed7,
     type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &6527383562747879063
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: mark_stage1_running 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

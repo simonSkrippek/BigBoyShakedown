@@ -86,6 +86,7 @@ namespace BigBoyShakedown.Manager
                     playerInputs = new PlayerInput[4];
                     break;
                 case CurrentScene.InGame:
+                    InGameMultiplayerManager.instance.OnPLayerWon += InGameMultiplayerManagere_OnPLayerWon;
                     for (int i = 0; i < playerInputs.Length; i++)
                     {
                         var input = playerInputs[i];
@@ -97,6 +98,11 @@ namespace BigBoyShakedown.Manager
                     }
                     break;
             }
+        }
+
+        private void InGameMultiplayerManagere_OnPLayerWon(int index)
+        {
+            InGameMultiplayerManager.instance.OnPLayerWon -= InGameMultiplayerManagere_OnPLayerWon;
         }
 
         private void OnPlayerJoinedHandler(PlayerInput input_)
