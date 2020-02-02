@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionData: {fileID: 11400000, guid: 141149170d4551f41861d36ec3bf45ee, type: 2}
+  victoryData: {fileID: 11400000, guid: b61daf061dfa69344a0488d6f8939bf0, type: 2}
   playerInputs: []
 --- !u!114 &807621777
 MonoBehaviour:

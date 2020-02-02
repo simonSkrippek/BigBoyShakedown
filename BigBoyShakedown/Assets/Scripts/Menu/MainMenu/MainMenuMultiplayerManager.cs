@@ -32,6 +32,8 @@ namespace BigBoyShakedown.UI.Input
             //Debug.Log("action triggered");
             if (callbackContext.started && callbackContext.action.name == "Confirm") 
                 PersistentMultiplayerManager.instance.LoadScene("CharacterSelectScene");
+            else if (callbackContext.started && callbackContext.action.name == "Start")
+                PersistentMultiplayerManager.instance.QuitGame();
         }
     }
 }

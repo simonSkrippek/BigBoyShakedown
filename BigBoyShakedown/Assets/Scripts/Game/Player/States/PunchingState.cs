@@ -48,7 +48,7 @@ namespace BigBoyShakedown.Player.State
         {
             comboCount++;
             if (comboCount > 3) comboCount = 1;
-            
+
             //target all attackables 1st time, initiate retargetting
             var objectsInRange = controller.GetAllAttackablesInRange();
             var objectToSnapTo = controller.GetClosestAttackable(objectsInRange);
@@ -59,12 +59,12 @@ namespace BigBoyShakedown.Player.State
             this.InvokeRepeating("TargetAllAttackables", .1f, .1f);
 
             //calculate movement vars
-            float animationDuration = controller.metrics.PlayerPunchAnimationDurationIntended[controller.size - 1, comboCount-1];
-            float animationSpeedMultiplier = controller.metrics.PlayerPunchAnimationFixedDuration / animationDuration;
-            float movementStartPointPercent = controller.metrics.PlayerPunchMovementStartPoint[controller.size - 1, comboCount-1];
+            float animationDuration = controller.metrics.PlayerPunchAnimationDurationIntended[controller.size - 1, comboCount - 1];
+            float animationSpeedMultiplier = controller.metrics.PlayerPunchAnimationFixedDuration[controller.size - 1] / animationDuration;
+            float movementStartPointPercent = controller.metrics.PlayerPunchMovementStartPoint[controller.size - 1, comboCount - 1];
             float movementStartPointSeconds = movementStartPointPercent * animationDuration;
             moveDirection = this.transform.forward.normalized;
-            float movementDistance = controller.metrics.PlayerPunchForwardMovementDistance[controller.size - 1, comboCount-1];
+            float movementDistance = controller.metrics.PlayerPunchForwardMovementDistance[controller.size - 1, comboCount - 1];
             moveSpeed = movementDistance / (animationDuration - movementStartPointSeconds);
 
             moving = false;
@@ -84,12 +84,15 @@ namespace BigBoyShakedown.Player.State
                     machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch3);
                     break;
             }
+            machine.playerAppearance.ScaleAttackIndicator(controller.metrics.PlayerPunchRange[controller.size - 1]);
+            machine.playerAppearance.ShowAttackIndicator();
         }       
         /// <summary>
         /// call when windup is over, before recovery starts
         /// </summary>
         private void LandPunch()
         {
+            machine.playerAppearance.HideAttackIndicator();
             this.CancelInvoke("TargetAllAttackables");
             var enemiesToAttack = controller.GetAllAttackablesInAttackCone(controller.GetAllAttackablesInRange());
             controller.HitAllAttackables(enemiesToAttack,
@@ -167,7 +170,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnWindUpCompleteHandler()
         {
-            Debug.Log("windup done!");
+            //Debug.Log("windup done!");
             LandPunch();
         }
         /// <summary>
@@ -175,7 +178,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnRecoveryCompleteHandler()
         {
-            Debug.Log("recovery done!");
+            //Debug.Log("recovery done!");
             FinishPunch();
         }
         #endregion

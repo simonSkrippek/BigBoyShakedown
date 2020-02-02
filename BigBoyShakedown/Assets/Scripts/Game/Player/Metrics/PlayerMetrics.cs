@@ -120,8 +120,8 @@ namespace BigBoyShakedown.Player.Metrics
 
 
         [Tooltip("fixed length of all punch animations"), SerializeField]
-        float playerAnimationFixedDuration = 10f;
-        public float PlayerPunchAnimationFixedDuration { get => playerAnimationFixedDuration; }
+        float[] playerAnimationFixedDuration = { 10f , 10f, 10f, 10f, 10f};
+        public float[] PlayerPunchAnimationFixedDuration { get => playerAnimationFixedDuration; }
         #endregion
 
         #region score

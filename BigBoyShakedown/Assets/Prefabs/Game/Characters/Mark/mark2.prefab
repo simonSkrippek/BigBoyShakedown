@@ -111,8 +111,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a101838c4850ed0418ba68963d4b4c23, type: 2}
-  - {fileID: 2100000, guid: 240a701de8f62c644902a763b4d0016f, type: 2}
+  - {fileID: 2100000, guid: 9041a3a3b626e2841a80bf8e72644c68, type: 2}
+  - {fileID: 2100000, guid: 023b43fcc28288f41abfe5e135e96756, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -260,7 +260,7 @@ Transform:
   m_GameObject: {fileID: 408710005213121640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_Children:
   - {fileID: 5892903148845661858}
   - {fileID: 782152394661072852}
@@ -284,12 +284,11 @@ Animator:
   m_LinearVelocityBlending: 0
   m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
     are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:RightFoot'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform
-    'mixamorig:LeftHand'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:Spine1'\n\tTransform
-    'mixamorig:Spine2'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
-    'mixamorig:Head'\n\tTransform 'mixamorig:LeftArm'\n\tand more ...\n\tFrom animation
-    clip 'mark2_idle'\n\tFrom animation clip 'mark2_dash'\n\tFrom animation clip
-    'mark2_getHit'"
+    by Humanoid clips.\n\tTransform 'mixamorig:LeftHand'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
+    'mixamorig:Spine1'\n\tTransform 'mixamorig:Spine2'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform
+    'mixamorig:RightForeArm'\n\tTransform 'mixamorig:Head'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+    'mixamorig:Hips'\n\tTransform 'mixamorig:RightHand'\n\tand more ...\n\tFrom animation
+    clip 'mark2_dash'\n\tFrom animation clip 'mark2_getHit'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -920,6 +919,7 @@ Transform:
   - {fileID: 5929107572941099939}
   - {fileID: 3854150412820583157}
   - {fileID: 42962855278193970}
+  - {fileID: 58499222426758334}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -997,6 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c99de45bf7578e4da02e5731ea01815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputRelay: {fileID: 0}
   metrics: {fileID: 11400000, guid: b60760a344828f5459ad8f95108061a4, type: 2}
   size: 1
   score: 0
@@ -1018,6 +1019,7 @@ MonoBehaviour:
   - {fileID: 7211162629143617968}
   - {fileID: 408710005213121640}
   - {fileID: 3946274388100407073}
+  attackIndicator: {fileID: 5749564563866736536}
 --- !u!1 &1063661876932032758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,7 +1294,7 @@ Transform:
   m_GameObject: {fileID: 1583015531331013066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 6197713788469490058}
   - {fileID: 6422135854043002866}
@@ -2650,9 +2652,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 376cfe3806487d24cae78d5f81b4bc0b, type: 2}
-  - {fileID: 2100000, guid: 240a701de8f62c644902a763b4d0016f, type: 2}
-  - {fileID: 2100000, guid: 376cfe3806487d24cae78d5f81b4bc0b, type: 2}
+  - {fileID: 2100000, guid: d187bf23cd34a9143b2c23d5de9523c4, type: 2}
+  - {fileID: 2100000, guid: 023b43fcc28288f41abfe5e135e96756, type: 2}
+  - {fileID: 2100000, guid: d187bf23cd34a9143b2c23d5de9523c4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3175,7 +3177,7 @@ Transform:
   m_GameObject: {fileID: 3946274388100407073}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
   m_Children:
   - {fileID: 4338840950957975228}
   - {fileID: 630292744813636497}
@@ -4460,6 +4462,85 @@ Transform:
   m_Father: {fileID: 5892903148845661858}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5749564563866736536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 58499222426758334}
+  - component: {fileID: 524422167248521161}
+  - component: {fileID: 4729965538534417870}
+  m_Layer: 31
+  m_Name: cone60degrees
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &58499222426758334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749564563866736536}
+  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1027727378385476140}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+--- !u!33 &524422167248521161
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749564563866736536}
+  m_Mesh: {fileID: 4300000, guid: 34b04e25a0b32cd45a4f6d4854457ae5, type: 2}
+--- !u!23 &4729965538534417870
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749564563866736536}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: f5f9967b35d386347bd29175ad294453, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &5752237838045778418
 GameObject:
   m_ObjectHideFlags: 0
@@ -4509,9 +4590,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f61b8a3988a51ff459df95881f80826f, type: 2}
-  - {fileID: 2100000, guid: f61b8a3988a51ff459df95881f80826f, type: 2}
-  - {fileID: 2100000, guid: 240a701de8f62c644902a763b4d0016f, type: 2}
+  - {fileID: 2100000, guid: 7190b6a6562fb6742b26066fb455504e, type: 2}
+  - {fileID: 2100000, guid: 7190b6a6562fb6742b26066fb455504e, type: 2}
+  - {fileID: 2100000, guid: 023b43fcc28288f41abfe5e135e96756, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4656,9 +4737,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f61b8a3988a51ff459df95881f80826f, type: 2}
-  - {fileID: 2100000, guid: f61b8a3988a51ff459df95881f80826f, type: 2}
-  - {fileID: 2100000, guid: 240a701de8f62c644902a763b4d0016f, type: 2}
+  - {fileID: 2100000, guid: 7190b6a6562fb6742b26066fb455504e, type: 2}
+  - {fileID: 2100000, guid: 7190b6a6562fb6742b26066fb455504e, type: 2}
+  - {fileID: 2100000, guid: 023b43fcc28288f41abfe5e135e96756, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5181,9 +5262,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 376cfe3806487d24cae78d5f81b4bc0b, type: 2}
-  - {fileID: 2100000, guid: 240a701de8f62c644902a763b4d0016f, type: 2}
-  - {fileID: 2100000, guid: 376cfe3806487d24cae78d5f81b4bc0b, type: 2}
+  - {fileID: 2100000, guid: d187bf23cd34a9143b2c23d5de9523c4, type: 2}
+  - {fileID: 2100000, guid: 023b43fcc28288f41abfe5e135e96756, type: 2}
+  - {fileID: 2100000, guid: d187bf23cd34a9143b2c23d5de9523c4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5801,7 +5882,7 @@ Transform:
   m_GameObject: {fileID: 7211162629143617968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 7991181563257395245}
   - {fileID: 6516698184444564736}
@@ -5825,12 +5906,11 @@ Animator:
   m_LinearVelocityBlending: 0
   m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
     are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:RightFoot'\n\tTransform 'mixamorig:LeftLeg'\n\tTransform
-    'mixamorig:LeftHand'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:Spine1'\n\tTransform
-    'mixamorig:Spine2'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
-    'mixamorig:Head'\n\tTransform 'mixamorig:LeftArm'\n\tand more ...\n\tFrom animation
-    clip 'mark2_idle'\n\tFrom animation clip 'mark2_dash'\n\tFrom animation clip
-    'mark2_getHit'"
+    by Humanoid clips.\n\tTransform 'mixamorig:LeftHand'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform
+    'mixamorig:Spine1'\n\tTransform 'mixamorig:Spine2'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform
+    'mixamorig:RightForeArm'\n\tTransform 'mixamorig:Head'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+    'mixamorig:Hips'\n\tTransform 'mixamorig:RightHand'\n\tand more ...\n\tFrom animation
+    clip 'mark2_dash'\n\tFrom animation clip 'mark2_getHit'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0

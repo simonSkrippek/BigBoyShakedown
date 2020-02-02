@@ -4,10 +4,12 @@ using UnityEngine.InputSystem;
 using BigBoyShakedown.UI.Data;
 using BigBoyShakedown.UI.Input;
 using BigBoyShakedown.Player.Manager;
+using BigBoyShakedown.Game.Data;
+using System;
 
 namespace BigBoyShakedown.Manager
 {
-    enum CurrentScene { MainMenu, Options, CharacterSelection, InGame}
+    enum CurrentScene { MainMenu, Options, CharacterSelection, InGame, Victory}
     [RequireComponent(typeof(PlayerInputManager))]
     public class PersistentMultiplayerManager : MonoBehaviour
     {
@@ -17,6 +19,7 @@ namespace BigBoyShakedown.Manager
 
         PlayerInputManager inputManager;
         [SerializeField] CharacterSelectionData selectionData;
+        [SerializeField] VictoryData victoryData;
         [SerializeField] PlayerInput[] playerInputs = { };
 
 
@@ -66,6 +69,9 @@ namespace BigBoyShakedown.Manager
                 case "OptionsScene":
                     currentScene = CurrentScene.Options;
                     break;
+                case "VictoryScene":
+                    currentScene = CurrentScene.Victory;
+                    break;
             }
             HandleCurrentScene();
         }
@@ -86,7 +92,7 @@ namespace BigBoyShakedown.Manager
                     playerInputs = new PlayerInput[4];
                     break;
                 case CurrentScene.InGame:
-                    InGameMultiplayerManager.instance.OnPLayerWon += InGameMultiplayerManagere_OnPLayerWon;
+                    InGameMultiplayerManager.instance.OnPLayerWon += InGameMultiplayerManager_OnPlayerWon;
                     for (int i = 0; i < playerInputs.Length; i++)
                     {
                         var input = playerInputs[i];
@@ -97,12 +103,22 @@ namespace BigBoyShakedown.Manager
                         }
                     }
                     break;
+                case CurrentScene.Victory:
+                    var controllingPlayer = playerInputs[victoryData.playerIndex];
+                    controllingPlayer.SwitchCurrentActionMap("Menu");
+                    VictoryScreenManager.instance.OnPlayerJoined(controllingPlayer);
+                    break;
             }
         }
 
-        private void InGameMultiplayerManagere_OnPLayerWon(int index)
+        private void InGameMultiplayerManager_OnPlayerWon(int index)
         {
-            InGameMultiplayerManager.instance.OnPLayerWon -= InGameMultiplayerManagere_OnPLayerWon;
+            InGameMultiplayerManager.instance.OnPLayerWon -= InGameMultiplayerManager_OnPlayerWon;
+
+            victoryData.playerIndex = index;
+            victoryData.characterName = selectionData.playerJoinData[index].characterName;
+
+            LoadScene("VictoryScene");
         }
 
         private void OnPlayerJoinedHandler(PlayerInput input_)
@@ -126,6 +142,12 @@ namespace BigBoyShakedown.Manager
                     CharacterSelectMultiplayerManager.instance.OnPlayerJoined(input_);
                     break;
             }
+        }
+
+        
+        public void QuitGame()
+        {
+            Application.Quit(0);
         }
     }
 }

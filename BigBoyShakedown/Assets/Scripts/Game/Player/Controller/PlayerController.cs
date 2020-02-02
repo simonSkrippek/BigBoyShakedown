@@ -41,14 +41,6 @@ namespace BigBoyShakedown.Player.Controller
                 size = currentSize;
                 inputRelay.RelayPlayerSizeChange(size);
             }
-            else if (currentSize < 1)
-            {
-                throw new Exception("invalid size calculated: " + currentSize);
-            }
-            else if (currentSize > 5)
-            {
-                Debug.Log("player has won, end game here");
-            }
         }
 
         #region scoreMethods
@@ -58,22 +50,26 @@ namespace BigBoyShakedown.Player.Controller
         /// <returns>the players current size based on score</returns>
         private int GetSizeFromScore()
         {
-            for (int i = 0; i < metrics.PlayerScore.Length; i++)
+            if (score >= metrics.PlayerMaxScore.y)
             {
-                if (i + 1 == metrics.PlayerScore.Length)
-                {
-                    if (score >= metrics.PlayerScore[i] && score < metrics.PlayerMaxScore.y) return i + 1;
-                    else if (score > metrics.PlayerMaxScore.y)
-                    {
-                        //Debug.Log("Player has won: " + this.gameObject.name + "\n size: " + (i + 2));
-                        inputRelay.RelayPlayerWin();
-                        return i + 2;
-                    }
-                }
-                if (score >= metrics.PlayerScore[i] && score < metrics.PlayerScore[i + 1]) return i+1;
+                //Debug.Log("Player has won: " + this.gameObject.name + "\n size: " + );
+                inputRelay.RelayPlayerWin();
+                return 10;
             }
-            inputRelay.RelayPlayerDeath();
-            return -1;
+            else if (score < metrics.PlayerMinScore.y)
+            {
+                //Debug.Log("Player has died: " + this.gameObject.name + "\n size: " + -1);
+                inputRelay.RelayPlayerDeath();
+                return -1;
+            }
+
+            for (int i = 1; i < metrics.PlayerScore.Length; i++)
+            {
+                if (score >= metrics.PlayerScore[i-1] && score < metrics.PlayerScore[i]) return i;
+            }
+
+            throw new Exception("Impossible size calculated. Simon fucked this up.");
+            return int.MinValue;
         }
         /// <summary>
         /// checks whether this player has at least a certain amount of money left

@@ -17,6 +17,7 @@ namespace BigBoyShakedown.Player.Appearance
         [SerializeField, Header("Models"), Tooltip("all player models that are attached to this gameObject as children")] 
         GameObject[] playerModels;
         GameObject currentPlayerModel;
+        [Header("AttackIndicator"), Tooltip("the attackCone attached to this object"), SerializeField] GameObject attackIndicator;
 
         Animator currentAnimator;
 
@@ -95,9 +96,22 @@ namespace BigBoyShakedown.Player.Appearance
             }
         }
 
-        internal void SetAnimationSpeed(float speed_)
+        public void SetAnimationSpeed(float speed_)
         {
             currentAnimator.SetFloat("Speed", speed_);
+        }
+
+        public void ScaleAttackIndicator(float range)
+        {
+            attackIndicator.transform.localScale = new Vector3(range, range, range) / this.transform.localScale.x;
+        }
+        public void ShowAttackIndicator()
+        {
+            attackIndicator.SetActive(true);
+        }
+        public void HideAttackIndicator()
+        {
+            attackIndicator.SetActive(false);
         }
     }
 }
