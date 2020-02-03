@@ -1,7 +1,4 @@
 ﻿using BigBoyShakedown.Player.Controller;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BigBoyShakedown.Player.State

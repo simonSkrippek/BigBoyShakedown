@@ -1,4 +1,5 @@
-﻿using BigBoyShakedown.UI.Input;
+﻿using BigBoyShakedown.Manager;
+using BigBoyShakedown.UI.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -60,11 +61,14 @@ namespace BigBoyShakedown.UI.Input
                         ready = !ready;
                         if (ready)
                         {
+                            AudioManager.instance.Play("menu_confirm" + charImages[currentChar].name);
+                            AudioManager.instance.Play("announcer_" + charImages[currentChar].name);
                             this.leftArrow.gameObject.SetActive(false);
                             this.rightArrow.gameObject.SetActive(false);
                         }
                         else if (!ready)
                         {
+                            AudioManager.instance.StopPlaying("announcer_" + charImages[currentChar].name);
                             this.leftArrow.gameObject.SetActive(true);
                             this.rightArrow.gameObject.SetActive(true);
                         }
@@ -75,6 +79,8 @@ namespace BigBoyShakedown.UI.Input
 
         private void Switch(int v)
         {
+            if (v < 0) AudioManager.instance.Play("menu_down");
+            else if ( v > 0) AudioManager.instance.Play("menu_up");
             currentChar += v;
             if (currentChar < 0) currentChar += 4;
             else if (currentChar > 3) currentChar -= 4;
@@ -86,7 +92,10 @@ namespace BigBoyShakedown.UI.Input
         {
             for (int i = 0; i < charImages.Count; i++)
             {
-                if (i == currentChar) charImages[i].SetActive(true);
+                if (i == currentChar)
+                {
+                    charImages[i].SetActive(true);
+                }
                 else charImages[i].SetActive(false);
             }
         }

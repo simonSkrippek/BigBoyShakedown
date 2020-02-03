@@ -5,7 +5,6 @@ using BigBoyShakedown.UI.Data;
 using BigBoyShakedown.UI.Input;
 using BigBoyShakedown.Player.Manager;
 using BigBoyShakedown.Game.Data;
-using System;
 
 namespace BigBoyShakedown.Manager
 {
@@ -90,11 +89,16 @@ namespace BigBoyShakedown.Manager
             switch (currentScene)
             {
                 case CurrentScene.MainMenu:
+                    AudioManager.instance.StopPlaying();
+                    AudioManager.instance.Play("The Path to Freedom (Ultra Despair Girls)");
                     playerInputs = new PlayerInput[1];
                     break;
                 case CurrentScene.Options:
+                    AudioManager.instance.Play("The Path to Freedom (Ultra Despair Girls)");
                     break;
                 case CurrentScene.CharacterSelection:
+                    AudioManager.instance.StopPlaying("The Path to Freedom (Ultra Despair Girls)");
+                    AudioManager.instance.Play("Gimme, Gimme! (Options)");
                     foreach (var item in playerInputs)
                     {
                         if (item) Destroy(item.gameObject);
@@ -102,6 +106,18 @@ namespace BigBoyShakedown.Manager
                     playerInputs = new PlayerInput[4];
                     break;
                 case CurrentScene.InGame:
+                    AudioManager.instance.StopPlaying("Gimme, Gimme! (Options)");
+                    var roll = Random.Range(0, 2);
+                    switch (roll)
+                    {
+                        case 0:
+                            AudioManager.instance.Play("The Baseball Bat (Grease's Theme)");
+                            break;
+                        case 1:
+                            AudioManager.instance.Play("The Baseball Bat (Grease's Theme)");
+                            break;
+
+                    }
                     InGameMultiplayerManager.instance.OnPLayerWon += InGameMultiplayerManager_OnPlayerWon;
                     for (int i = 0; i < playerInputs.Length; i++)
                     {
@@ -114,6 +130,7 @@ namespace BigBoyShakedown.Manager
                     }
                     break;
                 case CurrentScene.Victory:
+                    AudioManager.instance.Play("The Path to Freedom (Ultra Despair Girls)");
                     var controllingPlayer = playerInputs[victoryData.playerIndex];
                     controllingPlayer.SwitchCurrentActionMap("Menu");
                     VictoryScreenManager.instance.OnPlayerJoined(controllingPlayer);

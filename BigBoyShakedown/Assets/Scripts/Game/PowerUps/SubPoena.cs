@@ -1,4 +1,5 @@
-﻿using BigBoyShakedown.Player.Controller;
+﻿using BigBoyShakedown.Player.Appearance;
+using BigBoyShakedown.Player.Controller;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace BigBoyShakedown.Game.PowerUp
     public class SubPoena : MonoBehaviour
     {
         #region components
-        [SerializeField] Collider collider;
-        [SerializeField] Rigidbody rigidbody;
+        [SerializeField] new Collider collider;
+        [SerializeField] new Rigidbody rigidbody;
         #endregion
         #region player
         [SerializeField] int PLAYER_LAYER = 9;
@@ -71,6 +72,8 @@ namespace BigBoyShakedown.Game.PowerUp
         private void DestroyPowerUp()
         {
             //play end effect?
+            playerToFollow.GetComponent<PlayerAppearance>().StopSubpoenaEffect();
+
             callback.RelayPowerUpEnded();
             Destroy(this.gameObject);
         }
@@ -117,6 +120,8 @@ namespace BigBoyShakedown.Game.PowerUp
 
             destroyed = false;
             Time.StartTimer(new VariableReference<bool>(() => destroyed, (val) => { destroyed = val; }).SetEndValue(true), timeActive);
+
+            playerToFollow.GetComponent<PlayerAppearance>().TriggerSubpoenaEffect();
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using BigBoyShakedown.UI.Data;
 using BigBoyShakedown.Player.Input;
 
 namespace BigBoyShakedown.Player.Manager
-{    
+{
     public class InGameMultiplayerManager : MonoBehaviour
     {
         public static InGameMultiplayerManager instance;

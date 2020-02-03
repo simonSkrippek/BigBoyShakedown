@@ -49,9 +49,16 @@ namespace BigBoyShakedown.UI.Input
             if (listening)
             {
                 if (callbackContext.started && callbackContext.action.name == "Confirm")
+                {
+                    AudioManager.instance.Play("menu_confirm");
                     PersistentMultiplayerManager.instance.LoadScene("CharacterSelectScene");
+                }
                 else if (callbackContext.started && callbackContext.action.name == "Start")
+                {
+                    var roll = Random.Range(1, 5);
+                    AudioManager.instance.Play("announcer_exit" + roll);
                     PersistentMultiplayerManager.instance.QuitGame();
+                }
             }
             else
             {

@@ -25,17 +25,17 @@ MonoBehaviour:
   priorityAttackables:
   - Player
   playerScale:
-  - {x: 1.3, y: 0.5}
-  - {x: 2, y: 1}
-  - {x: 2, y: 1}
-  - {x: 2, y: 1}
-  - {x: 2, y: 1}
+  - {x: 1.435583, y: 0.6490859}
+  - {x: 1.958734, y: 0.79887}
+  - {x: 2.419108, y: 1.16518}
+  - {x: 3.583863, y: 1.819678}
+  - {x: 5.054846, y: 3.025215}
   playerPunchRange:
-  - 10
-  - 10
-  - 10
-  - 10
-  - 10
+  - 2
+  - 3
+  - 4
+  - 5
+  - 5.5
   playerPunchAngle:
   - 60
   - 60
@@ -43,15 +43,21 @@ MonoBehaviour:
   - 60
   - 60
   playerInteractionRange:
-  - 10
-  - 10
-  - 10
-  - 10
-  - 10
+  - 2
+  - 3
+  - 4
+  - 5
+  - 5.5
+  playerAnimationFixedDuration:
+  - 12.458
+  - 12.458
+  - 9.967
+  - 9.967
+  - 9.967
   playerScore: 00000000f401000084030000dc050000d0070000ac0d0000
   playerStartScore: 600
   playerMinScore: {x: 0, y: 0}
-  playerMaxScore: {x: 180, y: 3600}
+  playerMaxScore: {x: 240, y: 3600}
   changeAnimationRate: 5
   playerMoveSpeed:
   - 1.25
@@ -60,11 +66,11 @@ MonoBehaviour:
   - 0.75
   - 0.5
   playerYMoveSpeed:
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.2
-  - 0.2
+  - 1.25
+  - 1
+  - 0.9
+  - 0.75
+  - 0.5
   playerDashSpeed:
   - 1.25
   - 1

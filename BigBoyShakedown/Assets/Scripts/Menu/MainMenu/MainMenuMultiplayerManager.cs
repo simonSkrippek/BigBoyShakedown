@@ -16,6 +16,8 @@ namespace BigBoyShakedown.UI.Input
                 instance = this;
             }
             else if (instance != this) Destroy(this.gameObject);
+
+            AudioManager.instance.Play("announcer_titlescreen_enter");
         }
 
         public void OnPlayerJoined(PlayerInput input_)
@@ -30,8 +32,12 @@ namespace BigBoyShakedown.UI.Input
         private void OnActionTriggeredHandler(InputAction.CallbackContext callbackContext)
         {
             //Debug.Log("action triggered");
-            if (callbackContext.started && callbackContext.action.name == "Confirm") 
+            if (callbackContext.started && callbackContext.action.name == "Confirm")
+            {
+                AudioManager.instance.Play("menu_confirm");
+                AudioManager.instance.Play("announcer_titlescreen_play");
                 PersistentMultiplayerManager.instance.LoadScene("CharacterSelectScene");
+            }
             else if (callbackContext.started && callbackContext.action.name == "Start")
                 PersistentMultiplayerManager.instance.QuitGame();
         }

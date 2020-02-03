@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 
 // an Editor method to create a cone primitive (so far no end caps)
 // the top center is placed at (0/0/0)

@@ -28,6 +28,8 @@ public class BillboardManager : MonoBehaviour
 
     private void Awake()
     {
+        playerMetrics = Resources.FindObjectsOfTypeAll<PlayerMetrics>()[0];
+
         graphManagers = new List<GraphManager>();
         graphs = new List<LineRenderer>();
         InitialiseGraphs();

@@ -66,7 +66,7 @@ Material:
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DstBlend: 0
+    - _DstBlend: 3
     - _EnvironmentReflections: 1
     - _FracUVEnable: 0
     - _GlossMapScale: 0
@@ -82,7 +82,7 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 2
+    - _SrcBlend: 6
     - _StencilComp: 0
     - _StencilRef: 0
     - _Surface: 0

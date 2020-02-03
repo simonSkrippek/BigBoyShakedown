@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using BigBoyShakedown.Player.Input;
+﻿using UnityEngine;
 using System;
 using BigBoyShakedown.Player.Controller;
 
@@ -70,22 +67,17 @@ namespace BigBoyShakedown.Player.State
             moving = false;
             Time.StartTimer(new VariableReference<bool>(() => moving, (val) => { moving = val; }).SetEndValue(true), movementStartPointSeconds);
 
-            if (animationSpeedMultiplier == 0)
-            {
-                Debug.LogError("anim speed zero?");
-            }
-            machine.playerAppearance.SetAnimationSpeed(animationSpeedMultiplier);
             //Debug.Log("Punch Started! \n Combo Count: " + comboCount);
             switch (comboCount)
             {
                 case 1:
-                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch1);
+                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch1, animationSpeedMultiplier);
                     break;
                 case 2:
-                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch2);
+                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch2, animationSpeedMultiplier);
                     break;
                 case 3:
-                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch3);
+                    machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Punch3, animationSpeedMultiplier);
                     break;
             }
             machine.playerAppearance.ScaleAttackIndicator(controller.metrics.PlayerPunchRange[controller.size - 1]);
@@ -97,8 +89,10 @@ namespace BigBoyShakedown.Player.State
         private void LandPunch()
         {
             machine.playerAppearance.HideAttackIndicator();
+            machine.playerAppearance.PlaySound("swing_pitch_1");
             this.CancelInvoke("TargetAllAttackables");
             var enemiesToAttack = controller.GetAllAttackablesInAttackCone(controller.GetAllAttackablesInRange());
+            if (enemiesToAttack.Length > 0) machine.playerAppearance.PlaySound("combo_impact_" + comboCount);
             controller.HitAllAttackables(enemiesToAttack,
                                         controller.metrics.PlayerDamage[controller.size - 1, comboCount-1],
                                         controller.metrics.PlayerPunchKnockback[controller.size - 1, comboCount-1],
@@ -133,6 +127,13 @@ namespace BigBoyShakedown.Player.State
             var objectsInCone = controller.GetAllAttackablesInAttackCone(objectsInRange);
             controller.TargetAttackables(objectsInCone);
         }
+        /// <summary>
+        /// call when punch is interrupted, revert ro normal state
+        /// </summary>
+        private void CancelPunch()
+        {
+            machine.playerAppearance.HideAttackIndicator();
+        }
 
         #region inputHandlers
         /// <summary>
@@ -140,6 +141,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnPlayerDeathHandler(PlayerController player)
         {
+            CancelPunch();
             machine.SetState<IdlingState>();
         }
         /// <summary>
@@ -157,11 +159,12 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize)
         {
-            if (ignoreSize || from.size > controller.size)
+            if (ignoreSize || from.size >= controller.size)
             {
                 controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
                 carryOver.stunDuration = stunDurationIntended;
                 carryOver.knockbackDistance = knockbackDistanceIntended;
+                CancelPunch();
                 machine.SetState<StunnedState>();
             }
             else

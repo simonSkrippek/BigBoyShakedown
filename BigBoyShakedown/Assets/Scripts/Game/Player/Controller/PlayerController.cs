@@ -20,6 +20,7 @@ namespace BigBoyShakedown.Player.Controller
         private void Awake()
         {
             inputRelay = GetComponent<PlayerInputRelay>();
+            metrics = Resources.FindObjectsOfTypeAll<PlayerMetrics>()[0];
         }
         private void Start()
         {

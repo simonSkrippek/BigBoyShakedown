@@ -118,7 +118,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnPlayerHitHandler(PlayerController from, float damageIntended, Vector3 knockbackDistanceIntended, float stunDurationIntended, bool ignoreSize) 
         {
-            if (ignoreSize || from.size > controller.size)
+            if (ignoreSize || from.size >= controller.size)
             {
                 controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
                 carryOver.stunDuration = stunDurationIntended;
