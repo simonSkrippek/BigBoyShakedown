@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilCompletion: 2
-  monetaryReward: 1000
+  monetaryReward: 500
 --- !u!114 &433321777815890527
 MonoBehaviour:
   m_ObjectHideFlags: 0

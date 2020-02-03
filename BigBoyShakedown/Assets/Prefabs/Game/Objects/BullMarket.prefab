@@ -67,10 +67,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PLAYER_LAYER: 9
-  moneyPerGive: 150
+  moneyPerGive: 100
   range: 10
-  timeBetweenGives: 1
-  lifetime: 25
+  timeBetweenGives: 3
+  lifetime: 20
   animator: {fileID: 2614502814666844135}
 --- !u!114 &8528175483551884988
 MonoBehaviour:

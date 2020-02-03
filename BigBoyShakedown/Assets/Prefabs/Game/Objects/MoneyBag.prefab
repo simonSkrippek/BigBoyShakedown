@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 394c83acf53283d4d88980c9432a721d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
+  health: 1000
 --- !u!114 &4590776824699388719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +86,7 @@ Transform:
   m_GameObject: {fileID: 4887635588301439957}
   m_LocalRotation: {x: 0.37859398, y: 0.34983623, z: -0.5972158, w: -0.6145035}
   m_LocalPosition: {x: -0.01, y: 0.88, z: -0.01}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 83129698815856890}
   m_RootOrder: 0
@@ -149,5 +149,5 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.1092023
-  m_Center: {x: -0.05241919, y: -0.009054423, z: 0.017569777}
+  m_Radius: 1.1006284
+  m_Center: {x: -0.13759016, y: -0.016891288, z: 0.01756981}

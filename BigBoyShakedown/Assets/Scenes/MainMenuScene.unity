@@ -809,6 +809,262 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mixerGroup: {fileID: 24300002, guid: a07b6a9924084f84f94327865cc8c374, type: 2}
   sounds:
+  - name: The Path to Freedom (Ultra Despair Girls)
+    clip: {fileID: 8300000, guid: 777a6364073c8994dba7249d483bf67a, type: 3}
+    volume: 0.3
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Gimme, Gimme! (Options)
+    clip: {fileID: 0}
+    volume: 0.3
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: The Baseball Bat (Grease's Theme)
+    clip: {fileID: 8300000, guid: 6fab23cda7ba00245a3f6bc8a85fee62, type: 3}
+    volume: 0.3
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: The Computer (Speccy's Theme)
+    clip: {fileID: 8300000, guid: 7dddc0420c6df0f48986903614aaf5ed, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: menu_transition
+    clip: {fileID: 8300000, guid: 86bad672645de0a4296168efb290f67b, type: 3}
+    volume: 0.3
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: menu_up
+    clip: {fileID: 8300000, guid: 64e310054a29b8c4da122a129a9fcc02, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: menu_down
+    clip: {fileID: 8300000, guid: 35285e1239ca7c44aacb0716e9afea05, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: menu_confirm
+    clip: {fileID: 8300000, guid: 6802f960f3e6e674894e6cd58de9c9c8, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: event_fatcat
+    clip: {fileID: 8300000, guid: 687ea7fa144be77418d5716ee57aac75, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: event_bullmarket
+    clip: {fileID: 8300000, guid: 01c4d4ecca2ef0748876337b96300fb1, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: event_bear
+    clip: {fileID: 8300000, guid: 0c25bf15c806a5a4eac5c722f983ac8c, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: angel_safe
+    clip: {fileID: 8300000, guid: 0ac6a202fd5903e498cea03a4d31a2bd, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: angel_bag
+    clip: {fileID: 8300000, guid: 17f2c3aff6d9a6a4fb0077a18f09ce7a, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: swing_pitch_1
+    clip: {fileID: 8300000, guid: 73329024ac241a94ca83e89146139878, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: combo_impact_1
+    clip: {fileID: 8300000, guid: 4c0c98b49ceafaa4eb0ba903b5ee4b17, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: combo_impact_2
+    clip: {fileID: 8300000, guid: 80f18b40706f0bb49a1d9fc7c54b61d9, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: combo_impact_3
+    clip: {fileID: 8300000, guid: e5afaac9cefc1b14f9e5c6fbbe241506, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_ace
+    clip: {fileID: 8300000, guid: dcc6f50a42f0dce48822675617091281, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_grease
+    clip: {fileID: 8300000, guid: 17061837fdb631b43a4a942d425c3378, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_mark
+    clip: {fileID: 8300000, guid: 00f60a619c759b441a4c9851b55c19aa, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_specci
+    clip: {fileID: 8300000, guid: 9cd3f147729138e4a943f0b3d3e332d2, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_titlescreen_enter
+    clip: {fileID: 8300000, guid: bc64df2be9eec314480161e9a3023128, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_titlescreen_play
+    clip: {fileID: 8300000, guid: 1bee902ea4d166e4baf3b625e7bb1fdd, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_titlescreen_exit0
+    clip: {fileID: 8300000, guid: 07efce1567ea15943bc6029f86d91a7d, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_titlescreen_exit1
+    clip: {fileID: 8300000, guid: 2c6d580d41501a943b386e6871437d08, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_titlescreen_exit2
+    clip: {fileID: 8300000, guid: 7f86230d060ed3c4bbeab9fef9fc19bb, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: announcer_titlescreen_exit3
+    clip: {fileID: 8300000, guid: 85c9fb6c35e536b4dbb4cee48cd7dcfc, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: ATM_interact
+    clip: {fileID: 8300000, guid: 3cce48eed18b5bd489047aed793f8c4a, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: dodge
+    clip: {fileID: 8300000, guid: 6ac6185cb3c73c74cb93890edd9f528a, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: subpoena
+    clip: {fileID: 8300000, guid: c304027fddc7e6a4e97e20f1359c70f1, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Sound1
+    clip: {fileID: 0}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Sound1
+    clip: {fileID: 0}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    source: {fileID: 0}
   - name: Sound1
     clip: {fileID: 0}
     volume: 1

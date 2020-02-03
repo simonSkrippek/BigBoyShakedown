@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputRelay: {fileID: 0}
-  metrics: {fileID: 11400000, guid: b60760a344828f5459ad8f95108061a4, type: 2}
+  metrics: {fileID: 0}
   size: 1
   score: 0
 --- !u!114 &5979134390444226931
