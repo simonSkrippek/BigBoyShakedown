@@ -1,20 +1,59 @@
 fileFormatVersion: 2
-guid: c7ea981815f616446b0ed58ff218594b
+guid: f680f1ef7feb2584c8c95bc1604e45f3
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: 1982260321147785019
-    second: mark2_getHit
+      74: 6734866790250887498
+    second: Armature|Failed_Dodge
   - first:
-      74: 1353110697083038871
-    second: mark2_idle
+      74: -4277179896304535767
+    second: Armature|Failed_Dodge_____
+  - first:
+      74: 6151177917831403513
+    second: Armature|Interact_1.1
+  - first:
+      74: 3911417429644958479
+    second: Armature|Interact_1.2
+  - first:
+      74: 1982260321147785019
+    second: Armature|Mixamo_GetHit
   - first:
       74: -3490961287958580190
-    second: mark2_dash
+    second: Armature|Mixamo_Slide
+  - first:
+      74: 6691634627221796361
+    second: Armature|Punch_1
+  - first:
+      74: 2507414931181773171
+    second: Armature|Punch_1_(300_Fr)
+  - first:
+      74: 5798005924568858602
+    second: Armature|Punch_1_Original
+  - first:
+      74: -8006506831671958479
+    second: Armature|Punch_2
+  - first:
+      74: -2677225995931608500
+    second: Armature|Punch_2_(300_Fr)
+  - first:
+      74: -5183978362719258214
+    second: Armature|Punch_2_(not_working_in_Unity)
+  - first:
+      74: -5104617686594846741
+    second: Armature|Punch_2_Original
+  - first:
+      74: 5829676004243819284
+    second: Armature|Punch_3
+  - first:
+      74: 5921333726696872847
+    second: Armature|Punch_3_(300_Fr)
+  - first:
+      74: 7059149106707846701
+    second: Armature|Punch_3_Original
   externalObjects: {}
   materials:
-    materialImportMode: 1
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -27,10 +66,35 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Armature|Mixamo_GetHit' has import animation
+    animationImportWarnings: "\nClip 'Armature|Interact_1.1' has import animation
       warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'mixamorig:LeftUpLeg' has
+      translation animation that will be discarded.\n\t'mixamorig:RightUpLeg' has
+      scale animation that will be discarded.\n\t'mixamorig:RightLeg' has scale animation
+      that will be discarded.\n\nClip 'Armature|Punch_1' has import animation warnings
+      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'mixamorig:RightShoulder' has translation
+      animation that will be discarded.\n\nClip 'Armature|Punch_1_(300_Fr)' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
       DOF on avatar to improve retargeting quality.\n\t'mixamorig:RightShoulder'
-      has translation animation that will be discarded.\n"
+      has translation animation that will be discarded.\n\nClip 'Armature|Punch_1_Original'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'mixamorig:RightShoulder'
+      has translation animation that will be discarded.\n\nClip 'Armature|Punch_2'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'mixamorig:RightLeg'
+      has scale animation that will be discarded.\n\nClip 'Armature|Punch_2_(300_Fr)'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'mixamorig:RightLeg'
+      has scale animation that will be discarded.\n\nClip 'Armature|Punch_2_(not_working_in_Unity)'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'mixamorig:RightUpLeg'
+      has scale animation that will be discarded.\n\t'mixamorig:RightLeg' has scale
+      animation that will be discarded.\n\nClip 'Armature|Punch_2_Original' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'mixamorig:RightUpLeg' has
+      scale animation that will be discarded.\n\t'mixamorig:RightLeg' has scale animation
+      that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -44,11 +108,40 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: mark2_getHit
+      name: Armature|Interact_1.2
+      takeName: Armature|Interact_1.2
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Mixamo_GetHit
       takeName: Armature|Mixamo_GetHit
       internalID: 0
       firstFrame: 0
-      lastFrame: 39
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -57,13 +150,13 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
@@ -73,40 +166,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: mark2_idle
-      takeName: Armature|Mixamo_Idle
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 39
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: mark2_dash
+      name: Armature|Mixamo_Slide
       takeName: Armature|Mixamo_Slide
       internalID: 0
       firstFrame: 0
-      lastFrame: 46
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -115,17 +179,144 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch_1_(300_Fr)
+      takeName: Armature|Punch_1_(300_Fr)
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 299
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.449571
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: RecoveryComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch_2_(300_Fr)
+      takeName: Armature|Punch_2_(300_Fr)
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 299
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.39889196
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: RecoveryComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Punch_3_(300_Fr)
+      takeName: Armature|Punch_3_(300_Fr)
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 299
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 1
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.61218834
+        functionName: WindUpComplete
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 3215959220ef1164fbfd139d7b2f8cf9,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 1
         functionName: RecoveryComplete
         data: 
@@ -145,11 +336,11 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
-    sortHierarchyByName: 1
-    importVisibility: 1
-    importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    sortHierarchyByName: 0
+    importVisibility: 0
+    importBlendShapes: 0
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1

@@ -10,7 +10,7 @@ namespace BigBoyShakedown.Player.Metrics
         #region LayerMasks
         [Header("Masks")]
         [Tooltip("mask for all layers players should collide with"), SerializeField]
-        private string[] mask_collidables = { "Player", "SolidEnvironment"};
+        private string[] mask_collidables = { "Player", "SolidEnvironment" };
         public string[] Mask_collidables { get => mask_collidables; }
         [Tooltip("mask for all layers players should be able to attack"), SerializeField]
         private string[] mask_attackables = { "Player" };
@@ -91,25 +91,25 @@ namespace BigBoyShakedown.Player.Metrics
         [Tooltip("complete length of movement (in unity-meters)"), SerializeField]
         private float[,] playerPunchForwardMovementDistance = { { 2f, 2f, 2f},
                                         { 2f, 2f, 2f},
-                                        { 2f, 2f, 2f},
-                                        { 2f, 2f, 2f},
-                                        { 2f, 2f, 2f}};
+                                        { 2f, 2f, 3f},
+                                        { 2f, 2f, 3f},
+                                        { 2f, 2f, 3f}};
         public float[,] PlayerPunchForwardMovementDistance { get => playerPunchForwardMovementDistance; }
 
         [Tooltip("complete time of punch (in seconds)"), SerializeField]
-        private float[,] playerPunchAnimationDurationIntended = { { 1.5f, 2f, 2f},
-                                        { 2f, 2f, 2f},
-                                        { 2f, 2f, 2f},
-                                        { 2f, 2f, 2f},
-                                        { 2f, 2f, 2f}};
+        private float[,] playerPunchAnimationDurationIntended = { { 0.75f, 0.75f, 1f},
+                                        { 0.75f, 0.75f, 1f},
+                                        { 0.85f, 0.85f, 1.1f},
+                                        { 1.2f, 1.2f, 1.5f},
+                                        { 1.7f, 1.7f, 2f}};
         public float[,] PlayerPunchAnimationDurationIntended { get => playerPunchAnimationDurationIntended; }
 
         [Tooltip("point in animation at that movement starts (in percent)"), SerializeField]
-        private float[,] playerPunchMovementStartPoint = { { .1f, 0, .1f},
-                                        { .1f, 0, .1f},
-                                        { .1f, 0, .1f},
-                                        { .1f, 0, .1f},
-                                        { .1f, 0, .1f}};
+        private float[,] playerPunchMovementStartPoint = { { .34f, .34f, .3f},
+                                        { .34f, .4f, .3f},
+                                        { .5f, .5f, .35f},
+                                        { .5f, .5f, .35f},
+                                        { .5f, .5f, .35f}};
         public float[,] PlayerPunchMovementStartPoint { get => playerPunchMovementStartPoint; }
 
 
@@ -120,7 +120,7 @@ namespace BigBoyShakedown.Player.Metrics
 
 
         [Tooltip("fixed length of all punch animations"), SerializeField]
-        float[] playerAnimationFixedDuration = { 10f , 10f, 10f, 10f, 10f};
+        float[] playerAnimationFixedDuration = { 12.458f, 12.458f, 9.967f, 9.967f, 9.967f };
         public float[] PlayerPunchAnimationFixedDuration { get => playerAnimationFixedDuration; }
         #endregion
 
@@ -164,4 +164,4 @@ namespace BigBoyShakedown.Player.Metrics
         public float[] PlayerDashDuration { get => playerDashDuration; }
         #endregion
     }
-}   
+}
