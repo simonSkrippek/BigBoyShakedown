@@ -70,6 +70,10 @@ namespace BigBoyShakedown.Player.State
             moving = false;
             Time.StartTimer(new VariableReference<bool>(() => moving, (val) => { moving = val; }).SetEndValue(true), movementStartPointSeconds);
 
+            if (animationSpeedMultiplier == 0)
+            {
+                Debug.LogError("anim speed zero?");
+            }
             machine.playerAppearance.SetAnimationSpeed(animationSpeedMultiplier);
             //Debug.Log("Punch Started! \n Combo Count: " + comboCount);
             switch (comboCount)

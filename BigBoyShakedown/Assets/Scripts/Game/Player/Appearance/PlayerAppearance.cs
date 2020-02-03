@@ -98,6 +98,7 @@ namespace BigBoyShakedown.Player.Appearance
 
         public void SetAnimationSpeed(float speed_)
         {
+            if (speed_ <= 0) throw new Exception("animation speed cannot be zeron or less");
             currentAnimator.SetFloat("Speed", speed_);
         }
 

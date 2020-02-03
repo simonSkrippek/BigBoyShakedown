@@ -50,7 +50,17 @@ namespace BigBoyShakedown.Manager
 
         public void LoadScene(string sceneName_)
         {
-            SceneManager.LoadScene(sceneName_);
+            if (currentScene == CurrentScene.InGame)
+            {
+                InGameTransitionPlayer.instance.animationComplete += InGameAnimComplete;
+                InGameTransitionPlayer.instance.PlayEndOfLevelAnimation();
+            }
+            else  SceneManager.LoadScene(sceneName_);
+        }
+        private void InGameAnimComplete()
+        {
+            InGameTransitionPlayer.instance.animationComplete -= InGameAnimComplete;
+            SceneManager.LoadScene("VictoryScene");
         }
 
         private void SceneLoadedHandler(Scene currentScene_, LoadSceneMode loadSceneMode_)
