@@ -41,6 +41,7 @@ namespace BigBoyShakedown.Player.State
         private void StartDash()
         {
             machine.playerAppearance.PlayAnimation(Appearance.AnimatedAction.Dash);
+            machine.playerAppearance.PlaySound("dodge");
 
             dashDuration = controller.metrics.PlayerDashDuration[controller.size - 1];
             speed = controller.metrics.PlayerDashSpeed[controller.size - 1];

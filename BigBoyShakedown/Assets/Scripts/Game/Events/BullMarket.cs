@@ -37,6 +37,8 @@ namespace BigBoyShakedown.Game.Event
                 throw new Exception("problem with event prefab; no animator Component found");
             }
             PLAYER_LAYER = 9;
+
+            Manager.AudioManager.instance.Play("event_bullmarket");
         }
 
         private void Update()

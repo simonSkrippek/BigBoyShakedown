@@ -30,7 +30,7 @@ namespace BigBoyShakedown.Player.Appearance
 
         [SerializeField] GameObject subpoenaParticle;
         float[] subpoenaPositions = {0.01f, 0.01f, 0.01f, 0.01f, 0.01f };
-        float[] subpoenaScale = {.1f, .15f, .2f, .26f, .3f };
+        float[] subpoenaScale = {.7f, .1f, .15f, .2f, .27f };
         [SerializeField] GameObject moneyParticle;
         float[] moneyPositions = { 1.411f, 1.969f, 2.35f, 3.46f, 5.19f };
         float[] moneyScale = { .1f, .15f, .2f, .26f, .3f };
@@ -212,6 +212,10 @@ namespace BigBoyShakedown.Player.Appearance
         public void TriggerMoneyRainEffect()
         {
             moneyParticle.SetActive(true);
+            foreach(Transform t in moneyParticle.transform)
+            {
+                t.gameObject.SetActive(true);
+            }
         }
         public void TriggerGrowEffect()
         {
@@ -220,10 +224,10 @@ namespace BigBoyShakedown.Player.Appearance
         public void TriggerSubpoenaEffect()
         {
             subpoenaParticle.SetActive(true);
-        }
-        public void StopSubpoenaEffect()
-        {
-            subpoenaParticle.SetActive(false);
+            foreach (Transform t in moneyParticle.transform)
+            {
+                t.gameObject.SetActive(true);
+            }
         }
 
         public void PlaySound(string soundName_)

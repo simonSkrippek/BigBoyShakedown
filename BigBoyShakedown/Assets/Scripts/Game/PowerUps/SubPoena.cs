@@ -72,7 +72,6 @@ namespace BigBoyShakedown.Game.PowerUp
         private void DestroyPowerUp()
         {
             //play end effect?
-            playerToFollow.GetComponent<PlayerAppearance>().StopSubpoenaEffect();
 
             callback.RelayPowerUpEnded();
             Destroy(this.gameObject);
@@ -82,6 +81,9 @@ namespace BigBoyShakedown.Game.PowerUp
         /// </summary>
         private void CastWave()
         {
+            playerToFollow.GetComponent<PlayerAppearance>().TriggerSubpoenaEffect();
+            Manager.AudioManager.instance.Play("subpoena");
+
             readyForNextWave = false;
             Time.StartTimer(new VariableReference<bool>(() => readyForNextWave, (val) => { readyForNextWave = val; }).SetEndValue(true), timeBetweenWaves);
 
@@ -120,8 +122,6 @@ namespace BigBoyShakedown.Game.PowerUp
 
             destroyed = false;
             Time.StartTimer(new VariableReference<bool>(() => destroyed, (val) => { destroyed = val; }).SetEndValue(true), timeActive);
-
-            playerToFollow.GetComponent<PlayerAppearance>().TriggerSubpoenaEffect();
         }
     }
 }

@@ -199,11 +199,11 @@ namespace BigBoyShakedown.Player.Input
         #region eventHandlers
         private void OnWindUpCompleteHandler(AnimationCallbackRelay source)
         {
-            if (source.isActiveAndEnabled) OnWindUpComplete.Invoke();
+            if (source.isActiveAndEnabled) OnWindUpComplete?.Invoke();
         }
         private void OnRecoveryCompleteHandler(AnimationCallbackRelay source)
         {
-            if (source.isActiveAndEnabled) OnRecoveryComplete.Invoke();
+            if (source.isActiveAndEnabled) OnRecoveryComplete?.Invoke();
         }
         private void OnActionTriggeredHandler(InputAction.CallbackContext callbackContext)
         {
@@ -216,16 +216,16 @@ namespace BigBoyShakedown.Player.Input
                     case "Movement":
                         var move2D = callbackContext.ReadValue<Vector2>();
                         var move3D = new Vector3(move2D.x, 0f, move2D.y);
-                        OnMovementInput.Invoke(move3D);
+                        OnMovementInput?.Invoke(move3D);
                         return;
                     case "Punch":
-                        OnPunchInput.Invoke();
+                        OnPunchInput?.Invoke();
                         return;
                     case "Interaction":
-                        OnInteractionInput.Invoke();
+                        OnInteractionInput?.Invoke();
                         return;
                     case "Dash":
-                        OnDashInput.Invoke();
+                        OnDashInput?.Invoke();
                         return;
                 }
             }
@@ -234,7 +234,7 @@ namespace BigBoyShakedown.Player.Input
                 switch (actionName)
                 {
                     case "Movement":
-                        OnMovementStoppedInput.Invoke();
+                        OnMovementStoppedInput?.Invoke();
                         return;
                 }
             }

@@ -42,6 +42,7 @@ namespace BigBoyShakedown.Game.PowerUp
         /// <param name="player">the interacting player</param>
         public void StartInteraction(PlayerController player)
         {
+            Manager.AudioManager.instance.Play("ATM_interact");
             beingInteractedWith = true;
             interactingPlayer = player;
             interactionCompleted = false;
@@ -52,6 +53,7 @@ namespace BigBoyShakedown.Game.PowerUp
         /// </summary>
         public void CancelInteraction()
         {
+            Manager.AudioManager.instance.StopPlaying("ATM_interact");
             beingInteractedWith = false;
             interactionCompleted = false;
             interactingPlayer = null;
@@ -61,6 +63,7 @@ namespace BigBoyShakedown.Game.PowerUp
         /// </summary>
         public void CompleteInteraction()
         {
+            Manager.AudioManager.instance.StopPlaying("ATM_interact");
             interactingPlayer.CompleteInteraction(this, MonetaryReward);
             DestroyInteractable();
         }

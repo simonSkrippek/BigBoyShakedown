@@ -35,6 +35,8 @@ namespace BigBoyShakedown.Game.Event
             }
             readyToHit = true;
             attackIndicator.SetActive(false);
+
+            Manager.AudioManager.instance.Play("event_bear");
         }
         private void Start()
         {
@@ -139,9 +141,16 @@ namespace BigBoyShakedown.Game.Event
         }
         public void CompleteHit()
         {
+            int roll = Random.Range(0, 4);
+            Manager.AudioManager.instance.Play("swing_pitch_" + roll);
             attackIndicator.SetActive(false);
-
-            HitAllAttackables(GetAllAttackablesInAttackCone(GetAllAttackablesInRange()), damagePerHit, knockbackPerHit, stunPerHit, true);
+            var attackables = GetAllAttackablesInAttackCone(GetAllAttackablesInRange());
+            if (attackables.Length > 0)
+            {
+                roll = Random.Range(0, 3);
+                Manager.AudioManager.instance.Play("combo_impact_" + roll);
+            }
+            HitAllAttackables(attackables, damagePerHit, knockbackPerHit, stunPerHit, true);
             
             if (lookDirectionHorizonatal == HorizontalDirection.left)
             {

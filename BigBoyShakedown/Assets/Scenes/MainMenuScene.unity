@@ -121,6 +121,75 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &244402057
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754313, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5966799283443754315, guid: 055231051a51a7e4d9daba92131fdd51,
+        type: 3}
+      propertyPath: m_Name
+      value: PersistantAudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 055231051a51a7e4d9daba92131fdd51, type: 3}
 --- !u!1 &590728235
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +497,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &936574927
 GameObject:
@@ -688,7 +757,7 @@ RectTransform:
   m_Children:
   - {fileID: 936574928}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -777,313 +846,4 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1905963393
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1905963395}
-  - component: {fileID: 1905963394}
-  m_Layer: 0
-  m_Name: PersistantAudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1905963394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1905963393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0d271dba4ffef9418e4901d0e3d86a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixerGroup: {fileID: 24300002, guid: a07b6a9924084f84f94327865cc8c374, type: 2}
-  sounds:
-  - name: The Path to Freedom (Ultra Despair Girls)
-    clip: {fileID: 8300000, guid: 777a6364073c8994dba7249d483bf67a, type: 3}
-    volume: 0.3
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: Gimme, Gimme! (Options)
-    clip: {fileID: 0}
-    volume: 0.3
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: The Baseball Bat (Grease's Theme)
-    clip: {fileID: 8300000, guid: 6fab23cda7ba00245a3f6bc8a85fee62, type: 3}
-    volume: 0.3
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: The Computer (Speccy's Theme)
-    clip: {fileID: 8300000, guid: 7dddc0420c6df0f48986903614aaf5ed, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: menu_transition
-    clip: {fileID: 8300000, guid: 86bad672645de0a4296168efb290f67b, type: 3}
-    volume: 0.3
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: menu_up
-    clip: {fileID: 8300000, guid: 64e310054a29b8c4da122a129a9fcc02, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: menu_down
-    clip: {fileID: 8300000, guid: 35285e1239ca7c44aacb0716e9afea05, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: menu_confirm
-    clip: {fileID: 8300000, guid: 6802f960f3e6e674894e6cd58de9c9c8, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: event_fatcat
-    clip: {fileID: 8300000, guid: 687ea7fa144be77418d5716ee57aac75, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: event_bullmarket
-    clip: {fileID: 8300000, guid: 01c4d4ecca2ef0748876337b96300fb1, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: event_bear
-    clip: {fileID: 8300000, guid: 0c25bf15c806a5a4eac5c722f983ac8c, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: angel_safe
-    clip: {fileID: 8300000, guid: 0ac6a202fd5903e498cea03a4d31a2bd, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: angel_bag
-    clip: {fileID: 8300000, guid: 17f2c3aff6d9a6a4fb0077a18f09ce7a, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: swing_pitch_1
-    clip: {fileID: 8300000, guid: 73329024ac241a94ca83e89146139878, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: combo_impact_1
-    clip: {fileID: 8300000, guid: 4c0c98b49ceafaa4eb0ba903b5ee4b17, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: combo_impact_2
-    clip: {fileID: 8300000, guid: 80f18b40706f0bb49a1d9fc7c54b61d9, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: combo_impact_3
-    clip: {fileID: 8300000, guid: e5afaac9cefc1b14f9e5c6fbbe241506, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_ace
-    clip: {fileID: 8300000, guid: dcc6f50a42f0dce48822675617091281, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_grease
-    clip: {fileID: 8300000, guid: 17061837fdb631b43a4a942d425c3378, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_mark
-    clip: {fileID: 8300000, guid: 00f60a619c759b441a4c9851b55c19aa, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_specci
-    clip: {fileID: 8300000, guid: 9cd3f147729138e4a943f0b3d3e332d2, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_titlescreen_enter
-    clip: {fileID: 8300000, guid: bc64df2be9eec314480161e9a3023128, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_titlescreen_play
-    clip: {fileID: 8300000, guid: 1bee902ea4d166e4baf3b625e7bb1fdd, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_titlescreen_exit0
-    clip: {fileID: 8300000, guid: 07efce1567ea15943bc6029f86d91a7d, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_titlescreen_exit1
-    clip: {fileID: 8300000, guid: 2c6d580d41501a943b386e6871437d08, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_titlescreen_exit2
-    clip: {fileID: 8300000, guid: 7f86230d060ed3c4bbeab9fef9fc19bb, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: announcer_titlescreen_exit3
-    clip: {fileID: 8300000, guid: 85c9fb6c35e536b4dbb4cee48cd7dcfc, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: ATM_interact
-    clip: {fileID: 8300000, guid: 3cce48eed18b5bd489047aed793f8c4a, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: dodge
-    clip: {fileID: 8300000, guid: 6ac6185cb3c73c74cb93890edd9f528a, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: subpoena
-    clip: {fileID: 8300000, guid: c304027fddc7e6a4e97e20f1359c70f1, type: 3}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Sound1
-    clip: {fileID: 0}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: Sound1
-    clip: {fileID: 0}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
-  - name: Sound1
-    clip: {fileID: 0}
-    volume: 1
-    volumeVariance: 0
-    pitch: 1
-    pitchVariance: 0
-    loop: 1
-    source: {fileID: 0}
---- !u!4 &1905963395
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1905963393}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

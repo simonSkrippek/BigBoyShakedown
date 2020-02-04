@@ -44,6 +44,7 @@ namespace BigBoyShakedown.Game.PowerUp
         /// <param name="player">the interacting player</param>
         public void StartInteraction(PlayerController player)
         {
+
             interactingPlayer = player;
             interactingPlayerIndex = interactingPlayer.inputRelay.input.playerIndex;
 
@@ -52,10 +53,12 @@ namespace BigBoyShakedown.Game.PowerUp
 
             if (moneyList[interactingPlayerIndex] > 0)
             {
+                Manager.AudioManager.instance.Play("ATM_interact");
                 Time.StartTimer(new VariableReference<bool>(()=> false, (val) => { RetrieveStoredMoney(interactingPlayerIndex); }), timeUntilStageCompletion * retrievalTimeMultiplier);
             }
             else if(player.CheckRemainingMoney(threshhold))
             {
+                Manager.AudioManager.instance.Play("ATM_interact");
                 moneyList[interactingPlayerIndex] = 0;
                 interactionStagesCompleted = 0;
                 beingInteractedWith = true;
@@ -69,6 +72,10 @@ namespace BigBoyShakedown.Game.PowerUp
         /// <param name="interactingPlayerIndex_">the player to hand their money back to</param>
         private void RetrieveStoredMoney(int interactingPlayerIndex_)
         {
+            if (interactingPlayerIndex_ < 0 || interactingPlayerIndex_ >= moneyList.Length)
+            {
+                Debug.LogError("atm mistake, index not in array");
+            }
             interactingPlayer.CompleteInteraction(this, moneyList[interactingPlayerIndex_]);
             moneyList[interactingPlayerIndex_] = 0;
             CancelInteraction();
@@ -78,6 +85,7 @@ namespace BigBoyShakedown.Game.PowerUp
         /// </summary>
         public void CancelInteraction()
         {
+            Manager.AudioManager.instance.StopPlaying("ATM_interact");
             if (interactingPlayer) interactingPlayer.CancelInteraction();
             beingInteractedWith = false;
             interactionStageCompleted = false;
@@ -90,6 +98,7 @@ namespace BigBoyShakedown.Game.PowerUp
         /// </summary>
         public void CompleteInteraction()
         {
+            Manager.AudioManager.instance.StopPlaying("ATM_interact");
             float moneyToBank = storingAmount * Mathf.Pow(storingMultiplier, interactionStagesCompleted);
             moneyList[interactingPlayerIndex] += moneyToBank;
             interactingPlayer.BankMoney(moneyToBank);
