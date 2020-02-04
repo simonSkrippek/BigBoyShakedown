@@ -3,11 +3,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using BigBoyShakedown.UI.Data;
 using BigBoyShakedown.Player.Input;
+using BigBoyShakedown.Player.Metrics;
+using BigBoyShakedown.Player.Controller;
 
 namespace BigBoyShakedown.Player.Manager
 {
     public class InGameMultiplayerManager : MonoBehaviour
     {
+        PlayerMetrics metrics;
         public static InGameMultiplayerManager instance;
 
         [Header("other managers")]
@@ -30,6 +33,8 @@ namespace BigBoyShakedown.Player.Manager
         [Header("spacing & positions")]
         [SerializeField] Transform[] playerSpawnPositions;
 
+        Controller.PlayerController[] players;
+
         public event Action<int> OnPLayerWon;
 
         private void Awake()
@@ -39,6 +44,36 @@ namespace BigBoyShakedown.Player.Manager
                 instance = this;
             }
             else if (instance != this) Destroy(this.gameObject);
+
+            metrics = Resources.FindObjectsOfTypeAll<PlayerMetrics>()[0];
+        }
+
+        private void Start()
+        {
+            Time.StartTimer(new VariableReference<bool>(() => false, (val) => { GameOverCallback();
+            }), metrics.PlayerMaxScore.x);
+        }
+
+        private void GameOverCallback()
+        {
+            PlayerController winner = null;
+            var highestScore = float.MinValue;
+            foreach (var player in players)
+            {
+                if (player.score > highestScore)
+                {
+                    highestScore = player.score;
+                    winner = player;
+                }
+            }
+            if (winner)
+            {
+                OnPLayerWon(winner.inputRelay.input.playerIndex);
+            }
+            else
+            {
+                throw new Exception("no player won, impossible game state.");
+            }
         }
 
         public void OnPlayerJoined(PlayerInput input_)
@@ -71,7 +106,6 @@ namespace BigBoyShakedown.Player.Manager
             var playerController = playerObject.GetComponent<Controller.PlayerController>();
             inputRelay.ActivateInput(input_);
             inputRelay.OnPlayerDeath += OnPlayerDiedHandler;
-            inputRelay.OnPlayerWin += OnPlayerWonHandler;
             inputRelay.enabled = false;
             Time.StartTimer(new VariableReference<bool>(() => { return inputRelay.enabled; }, (val) => { inputRelay.enabled = val; }).SetEndValue(true), gameStartDelay);
             playerObject.SetActive(true);
@@ -81,18 +115,16 @@ namespace BigBoyShakedown.Player.Manager
 
             //TODO
             playerObject.transform.position = playerSpawnPositions[input_.playerIndex].position;
+
+            players[input_.playerIndex] = playerController;
         }
 
-        public void OnPlayerDiedHandler(Controller.PlayerController player)
+        public void OnPlayerDiedHandler(PlayerController player)
         {
             player.transform.position = playerSpawnPositions[player.inputRelay.input.playerIndex].position;
             player.SetScoreToStartScore();
             player.gameObject.SetActive(false);
             Time.StartTimer(new VariableReference<bool>(() => false, (val) => { player.gameObject.SetActive(true); }), playerRespawnTimer);
-        }
-        public void OnPlayerWonHandler(Controller.PlayerController player)
-        {
-            OnPLayerWon?.Invoke(player.inputRelay.input.playerIndex);
         }
     }
 }

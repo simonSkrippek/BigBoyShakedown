@@ -47,7 +47,7 @@ MonoBehaviour:
   sounds:
   - name: The Path to Freedom (Ultra Despair Girls)
     clip: {fileID: 8300000, guid: 777a6364073c8994dba7249d483bf67a, type: 3}
-    volume: 0.05
+    volume: 0.13
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -285,27 +285,27 @@ MonoBehaviour:
     pitchVariance: 0
     loop: 0
     source: {fileID: 0}
-  - name: Sound1
-    clip: {fileID: 0}
+  - name: VictorySound
+    clip: {fileID: 8300000, guid: d9a6809808ba3644e90141e5615b84af, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
-    loop: 1
+    loop: 0
     source: {fileID: 0}
-  - name: Sound1
-    clip: {fileID: 0}
+  - name: announcer_countdown
+    clip: {fileID: 8300000, guid: fff4b7aee77f9f74e87fe83350e18e1d, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
-    loop: 1
+    loop: 0
     source: {fileID: 0}
-  - name: Sound1
-    clip: {fileID: 0}
-    volume: 1
+  - name: growth
+    clip: {fileID: 8300000, guid: 1581a10ba34cf9343bcad1fb9c9f9c83, type: 3}
+    volume: 0.08
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
-    loop: 1
+    loop: 0
     source: {fileID: 0}

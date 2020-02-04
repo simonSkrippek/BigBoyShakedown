@@ -118,6 +118,7 @@ namespace BigBoyShakedown.Player.Appearance
                 transform.localScale = new Vector3(moneyScale[newSize - 1], moneyScale[newSize - 1], moneyScale[newSize - 1]);
             }
             TriggerGrowEffect();
+            PlaySound("growth");
         }
 
         public void PlayAnimation(AnimatedAction action, float speed)

@@ -51,6 +51,7 @@ namespace BigBoyShakedown.Manager
         {
             if (currentScene == CurrentScene.InGame)
             {
+                AudioManager.instance.Play("VictorySound");
                 InGameTransitionPlayer.instance.animationComplete += InGameAnimComplete;
                 InGameTransitionPlayer.instance.PlayEndOfLevelAnimation();
             }
@@ -90,7 +91,6 @@ namespace BigBoyShakedown.Manager
             {
                 case CurrentScene.MainMenu:
                     AudioManager.instance.StopPlaying();
-                    AudioManager.instance.Play("The Path to Freedom (Ultra Despair Girls)");
                     playerInputs = new PlayerInput[1];
                     break;
                 case CurrentScene.Options:
@@ -118,6 +118,7 @@ namespace BigBoyShakedown.Manager
                             break;
 
                     }
+                    AudioManager.instance.Play("announcer_countdown");
                     InGameMultiplayerManager.instance.OnPLayerWon += InGameMultiplayerManager_OnPlayerWon;
                     for (int i = 0; i < playerInputs.Length; i++)
                     {

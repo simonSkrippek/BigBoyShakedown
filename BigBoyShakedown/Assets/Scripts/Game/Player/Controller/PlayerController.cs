@@ -53,9 +53,9 @@ namespace BigBoyShakedown.Player.Controller
         {
             if (score >= metrics.PlayerMaxScore.y)
             {
-                //Debug.Log("Player has won: " + this.gameObject.name + "\n size: " + );
-                inputRelay.RelayPlayerWin();
-                return 10;
+                score = metrics.PlayerMaxScore.y;
+                return metrics.PlayerScore.Length;
+
             }
             else if (score < metrics.PlayerMinScore.y)
             {

@@ -1,4 +1,6 @@
-﻿using BigBoyShakedown.Manager;
+﻿using System;
+using System.Collections;
+using BigBoyShakedown.Manager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,8 +18,19 @@ namespace BigBoyShakedown.UI.Input
                 instance = this;
             }
             else if (instance != this) Destroy(this.gameObject);
+        }
 
+        private void Start()
+        {
+            var coroutine = PlayIntroSounds();
+            StartCoroutine(coroutine);
+        }
+
+        private IEnumerator PlayIntroSounds()
+        {
             AudioManager.instance.Play("announcer_titlescreen_enter");
+            yield return new WaitForSeconds(3.5f);
+            AudioManager.instance.Play("The Path to Freedom (Ultra Despair Girls)");
         }
 
         public void OnPlayerJoined(PlayerInput input_)
