@@ -39,9 +39,12 @@ namespace BigBoyShakedown.Player.State
         }
         private void CancelInteraction()
         {
-            interactable.CancelInteraction();
-            interactable = null;
-            playerTargeted = false;
+            if (interactable != null)
+            {
+                interactable.CancelInteraction();
+                interactable = null;
+                playerTargeted = false;
+            }
         }
         private void StartInteraction()
         {
@@ -72,6 +75,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnPlayerDeathHandler(PlayerController player)
         {
+            CancelInteraction();
             machine.SetState<IdlingState>();
         }
 
@@ -80,6 +84,8 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnInteractionCancelledHandler()
         {
+            interactable = null;
+            playerTargeted = false;
             var coroutine = SwitchToIdle();
             StartCoroutine(coroutine);
         }
@@ -89,6 +95,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnInteractionCompleteHandler()
         {
+            CancelInteraction();
             var coroutine = SwitchToIdle();
             StartCoroutine(coroutine);
         }
@@ -98,6 +105,7 @@ namespace BigBoyShakedown.Player.State
         /// </summary>
         private void OnMovementInputHandler(Vector3 movement_)
         {
+            CancelInteraction();
             if (movement_ != Vector3.zero)
             {
                 carryOver.previousMovement = movement_;
@@ -134,6 +142,10 @@ namespace BigBoyShakedown.Player.State
                 CancelInteraction();
                 machine.SetState<DashingState>();
             }
+            else
+            {
+
+            }
         }
 
         /// <summary>
@@ -152,10 +164,10 @@ namespace BigBoyShakedown.Player.State
         {
             if (ignoreSize || from.size >= controller.size)
             {
+                CancelInteraction();
                 controller.ReceiveHit(from, damageIntended, knockbackDistanceIntended, stunDurationIntended);
                 carryOver.stunDuration = stunDurationIntended;
                 carryOver.knockbackDistance = knockbackDistanceIntended;
-                CancelInteraction();
                 machine.SetState<StunnedState>();
             }
             else

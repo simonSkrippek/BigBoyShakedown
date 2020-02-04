@@ -114,7 +114,7 @@ namespace BigBoyShakedown.Manager
                             AudioManager.instance.Play("The Baseball Bat (Grease's Theme)");
                             break;
                         case 1:
-                            AudioManager.instance.Play("The Baseball Bat (Grease's Theme)");
+                            AudioManager.instance.Play("The Computer (Speccy's Theme)");
                             break;
 
                     }
@@ -130,6 +130,7 @@ namespace BigBoyShakedown.Manager
                     }
                     break;
                 case CurrentScene.Victory:
+                    AudioManager.instance.StopPlaying();
                     AudioManager.instance.Play("The Path to Freedom (Ultra Despair Girls)");
                     var controllingPlayer = playerInputs[victoryData.playerIndex];
                     controllingPlayer.SwitchCurrentActionMap("Menu");

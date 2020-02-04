@@ -9,12 +9,13 @@ namespace BigBoyShakedown.Game.PowerUp
     public class CommonInteractable : MonoBehaviour, Interactable
     {
         [SerializeField] float timeUntilCompletion;
-        bool beingInteractedWith, interactionCompleted;
         [SerializeField] float monetaryReward;
         public float MonetaryReward { get => monetaryReward; }
         PlayerController interactingPlayer;
 
         PowerUpCallback callback;
+
+        VariableReference<bool> activeTimer;
 
         //ON Destroy animation reference
 
@@ -28,13 +29,6 @@ namespace BigBoyShakedown.Game.PowerUp
 
         private void Update()
         {
-            if (beingInteractedWith)
-            {
-                if (interactionCompleted)
-                {
-                    CompleteInteraction();
-                }
-            }
         }
         /// <summary>
         /// start an interaction by a player with this object
@@ -43,10 +37,9 @@ namespace BigBoyShakedown.Game.PowerUp
         public void StartInteraction(PlayerController player)
         {
             Manager.AudioManager.instance.Play("ATM_interact");
-            beingInteractedWith = true;
             interactingPlayer = player;
-            interactionCompleted = false;
-            Time.StartTimer(new VariableReference<bool>(() => interactionCompleted, (val) => { interactionCompleted = val; }).SetEndValue(true), timeUntilCompletion);
+            activeTimer = new VariableReference<bool>(() => false, (val) => { CompleteInteraction(); });
+            Time.StartTimer(activeTimer, timeUntilCompletion);
         }
         /// <summary>
         /// stop an interaction by the interacting player with this object
@@ -54,8 +47,8 @@ namespace BigBoyShakedown.Game.PowerUp
         public void CancelInteraction()
         {
             Manager.AudioManager.instance.StopPlaying("ATM_interact");
-            beingInteractedWith = false;
-            interactionCompleted = false;
+            Time.StopTimer(activeTimer);
+            activeTimer = null;
             interactingPlayer = null;
         }
         /// <summary>
@@ -64,8 +57,12 @@ namespace BigBoyShakedown.Game.PowerUp
         public void CompleteInteraction()
         {
             Manager.AudioManager.instance.StopPlaying("ATM_interact");
-            interactingPlayer.CompleteInteraction(this, MonetaryReward);
-            DestroyInteractable();
+            if (interactingPlayer)
+            {
+                activeTimer = null;
+                interactingPlayer.CompleteInteraction(this, MonetaryReward);
+                DestroyInteractable();
+            }
         }
         public void DestroyInteractable()
         {

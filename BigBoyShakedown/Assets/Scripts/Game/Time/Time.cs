@@ -56,6 +56,10 @@ public class Time : MonoBehaviour
         if (startedTimers.ContainsKey(variableToChange)) startedTimers.Remove(variableToChange);
         startedTimers.Add(variableToChange, timeEnlapsed + timeToChange);
     }
+    public static void StopTimer(VariableReference<bool> variableToChange)
+    {
+        if (startedTimers.ContainsKey(variableToChange)) startedTimers.Remove(variableToChange);
+    }
     public static float GetTimeLeft(VariableReference<bool> timerKey)
     {
         float timeLeft;
