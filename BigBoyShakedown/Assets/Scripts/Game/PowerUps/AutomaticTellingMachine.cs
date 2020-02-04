@@ -10,7 +10,8 @@ namespace BigBoyShakedown.Game.PowerUp
     {
         float[] moneyList;
 
-        [SerializeField] float timeUntilStageCompletion;
+        [SerializeField] float timeUntilStageCompletion = 2f;
+        [SerializeField] float retrievalTimeMultiplier = 2f;
         bool beingInteractedWith, interactionStageCompleted;
         [SerializeField] float storingAmount = 100f;
         [SerializeField] float storingMultiplier = 3f;
@@ -25,7 +26,6 @@ namespace BigBoyShakedown.Game.PowerUp
         {
             moneyList = new float[4];
         }
-
         private void Update()
         {
             if (beingInteractedWith)
@@ -52,8 +52,7 @@ namespace BigBoyShakedown.Game.PowerUp
 
             if (moneyList[interactingPlayerIndex] > 0)
             {
-                RetrieveStoredMoney(interactingPlayerIndex);
-                CancelInteraction();
+                Time.StartTimer(new VariableReference<bool>(()=> false, (val) => { RetrieveStoredMoney(interactingPlayerIndex); }), timeUntilStageCompletion * retrievalTimeMultiplier);
             }
             else if(player.CheckRemainingMoney(threshhold))
             {
@@ -72,6 +71,7 @@ namespace BigBoyShakedown.Game.PowerUp
         {
             interactingPlayer.CompleteInteraction(this, moneyList[interactingPlayerIndex_]);
             moneyList[interactingPlayerIndex_] = 0;
+            CancelInteraction();
         }
         /// <summary>
         /// stop an interaction by the interacting player with this object
