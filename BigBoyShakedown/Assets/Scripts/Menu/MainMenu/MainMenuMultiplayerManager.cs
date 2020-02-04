@@ -28,9 +28,9 @@ namespace BigBoyShakedown.UI.Input
 
         private IEnumerator PlayIntroSounds()
         {
-            AudioManager.instance.Play("announcer_titlescreen_enter");
-            yield return new WaitForSeconds(3.5f);
             AudioManager.instance.Play("The Path to Freedom (Ultra Despair Girls)");
+            yield return new WaitForSeconds(4f);
+            AudioManager.instance.Play("announcer_titlescreen_enter");
         }
 
         public void OnPlayerJoined(PlayerInput input_)

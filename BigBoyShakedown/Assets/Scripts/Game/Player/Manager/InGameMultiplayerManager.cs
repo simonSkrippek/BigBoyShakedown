@@ -46,6 +46,7 @@ namespace BigBoyShakedown.Player.Manager
             else if (instance != this) Destroy(this.gameObject);
 
             metrics = Resources.FindObjectsOfTypeAll<PlayerMetrics>()[0];
+            players = new PlayerController[4];
         }
 
         private void Start()
