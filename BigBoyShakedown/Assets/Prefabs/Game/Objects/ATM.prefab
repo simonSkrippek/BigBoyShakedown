@@ -44,10 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4626c2d49166ca44ac35c894f4ab3c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeUntilStageCompletion: 2
+  timeUntilStageCompletion: 0.7
+  retrievalTimeMultiplier: 2
   storingAmount: 100
   storingMultiplier: 3
   minPlayerSize: 2
+  inUseColor: {r: 1, g: 0.4056604, b: 0.4056604, a: 0.92156863}
+  atmRenderer: {fileID: 8695816070396841555}
 --- !u!1 &7755068756565173677
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +110,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2623000bfcd8df14db74b960b4f3fb0d, type: 2}
+  - {fileID: 2100000, guid: 5a5d66c839853a94288a972c080bcdc4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

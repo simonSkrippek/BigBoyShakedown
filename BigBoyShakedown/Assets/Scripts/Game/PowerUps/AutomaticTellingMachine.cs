@@ -20,6 +20,10 @@ namespace BigBoyShakedown.Game.PowerUp
 
         [SerializeField] int minPlayerSize = 2;
 
+        [Header("Colors"), SerializeField, ColorUsage(true)]
+        Color inUseColor;
+        [SerializeField] MeshRenderer atmRenderer;
+
         List<VariableReference<bool>> currentRunningTimers;
         //ON Destroy animation reference
 
@@ -51,8 +55,10 @@ namespace BigBoyShakedown.Game.PowerUp
             {
                 if (moneyList[interactingPlayerIndex] < 0) moneyList[interactingPlayerIndex] = 0;
 
+                atmRenderer.material.color = inUseColor;
+
                 Manager.AudioManager.instance.Play("ATM_interact");
-                interactionStagesCompleted = 0;
+
                 var timer = new VariableReference<bool>(() => false, (val) => { CompleteInteraction(); });
                 Time.StartTimer(timer, timeUntilStageCompletion);
                 currentRunningTimers.Add(timer);
@@ -84,6 +90,7 @@ namespace BigBoyShakedown.Game.PowerUp
         /// </summary>
         public void CancelInteraction()
         {
+            atmRenderer.material.color = new Color(1,1,1,0);
             Manager.AudioManager.instance.StopPlaying("ATM_interact");
 
             if (interactingPlayer) interactingPlayer.CancelInteraction();
@@ -105,6 +112,7 @@ namespace BigBoyShakedown.Game.PowerUp
         {
             if (interactingPlayer)
             {
+                atmRenderer.material.color = new Color(1, 1, 1, 0);
                 Manager.AudioManager.instance.StopPlaying("ATM_interact");
 
                 float moneyToBank = storingAmount * Mathf.Pow(storingMultiplier, interactionStagesCompleted);
@@ -114,6 +122,10 @@ namespace BigBoyShakedown.Game.PowerUp
                 interactionStagesCompleted++;
 
                 StartInteraction(interactingPlayer);
+            }
+            else
+            {
+                CancelInteraction();
             }
         }
 

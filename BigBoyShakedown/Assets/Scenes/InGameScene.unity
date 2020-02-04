@@ -568,10 +568,10 @@ MonoBehaviour:
   - {fileID: 1027727378385476130, guid: 10da86d808cd0364dab8b3a257107992, type: 3}
   - {fileID: 1027727378385476130, guid: 2d9488d201ba21649998f9e09f63faea, type: 3}
   pSpecci:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1027727378385476130, guid: 9bbfeecaf6060c5438233750720ebb75, type: 3}
+  - {fileID: 1027727378385476130, guid: e70fe60d72a1316459f1819e8c53a752, type: 3}
+  - {fileID: 1027727378385476130, guid: ca12fc5a5ffe74f4988a8d8eacd95c5d, type: 3}
+  - {fileID: 1027727378385476130, guid: 945feb31d80c85f4e99c38cf0ca4bdb8, type: 3}
   playerMaterials:
   - {fileID: 2100000, guid: e56f67f8b374f864fb7db052a1499aa4, type: 2}
   - {fileID: 2100000, guid: 40de910f230b3ca49b062b9f3425ba96, type: 2}

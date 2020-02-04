@@ -49,7 +49,7 @@ namespace BigBoyShakedown.Game.PowerUp
             Manager.AudioManager.instance.StopPlaying("ATM_interact");
             if (activeTimer == null)
             {
-                Debug.LogError("passing null not allowed");
+                //Debug.LogError("passing null not allowed");
             }
             else Time.StopTimer(activeTimer);
             activeTimer = null;
