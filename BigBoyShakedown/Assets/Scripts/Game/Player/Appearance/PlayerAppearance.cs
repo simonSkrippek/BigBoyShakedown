@@ -37,6 +37,8 @@ namespace BigBoyShakedown.Player.Appearance
         [SerializeField] GameObject growParticle;
         float[] growPositions = { 0.67f, 1f, 1.04f, 1.73f, 2.67f };
         float[] growScale = { .1f, .15f, .2f, .26f, .3f };
+        [SerializeField] GameObject playerMarker;
+        float[] markerScale = { 3f, 4f, 5.3f, 7f, 8f };
 
 
         private void Awake()
@@ -93,6 +95,9 @@ namespace BigBoyShakedown.Player.Appearance
 
 
             switchNeeded = false;
+
+            playerMarker.transform.localScale = new Vector3(markerScale[newSize - 1], markerScale[newSize - 1], markerScale[newSize - 1]);
+            playerMarker.SetActive(true);
 
             subpoenaParticle.transform.localScale = new Vector3(subpoenaScale[newSize - 1], subpoenaScale[newSize - 1], subpoenaScale[newSize - 1]);
             subpoenaParticle.transform.position = new Vector3(subpoenaParticle.transform.position.x, subpoenaPositions[newSize - 1], subpoenaParticle.transform.position.z);

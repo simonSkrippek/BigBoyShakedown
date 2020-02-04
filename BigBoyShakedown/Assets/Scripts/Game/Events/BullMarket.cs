@@ -23,6 +23,7 @@ namespace BigBoyShakedown.Game.Event
         bool destroyed, lifetimeOver, stoppedGiving;
         #endregion
 
+        [SerializeField] GameObject indicator;
         EventCallback eventCallback;
         [SerializeField] Animator animator;
 
@@ -58,6 +59,8 @@ namespace BigBoyShakedown.Game.Event
 
         public void StartGiving()
         {
+            indicator.transform.localScale = new Vector3(range * 2, range * 2, range * 2);
+            indicator.SetActive(true);
             GiveMoney();
             animator.Play("BullMarketMain");
 
@@ -80,6 +83,7 @@ namespace BigBoyShakedown.Game.Event
         }
         public void StopGiving()
         {
+            indicator.SetActive(false);
             stoppedGiving = true;
             animator.Play("BullMarketExit");
         }

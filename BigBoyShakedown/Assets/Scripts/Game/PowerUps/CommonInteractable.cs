@@ -47,7 +47,11 @@ namespace BigBoyShakedown.Game.PowerUp
         public void CancelInteraction()
         {
             Manager.AudioManager.instance.StopPlaying("ATM_interact");
-            Time.StopTimer(activeTimer);
+            if (activeTimer == null)
+            {
+                Debug.LogError("passing null not allowed");
+            }
+            else Time.StopTimer(activeTimer);
             activeTimer = null;
             interactingPlayer = null;
         }
