@@ -51,8 +51,7 @@ namespace BigBoyShakedown.Player.Manager
 
         private void Start()
         {
-            Time.StartTimer(new VariableReference<bool>(() => false, (val) => { GameOverCallback();
-            }), metrics.PlayerMaxScore.x);
+            Time.StartTimer(new VariableReference<bool>(() => false, (val) => { GameOverCallback(); }), metrics.PlayerMaxScore.x);
         }
 
         private void GameOverCallback()
@@ -61,7 +60,7 @@ namespace BigBoyShakedown.Player.Manager
             var highestScore = float.MinValue;
             foreach (var player in players)
             {
-                if (player.score > highestScore)
+                if (player && player.score > highestScore)
                 {
                     highestScore = player.score;
                     winner = player;

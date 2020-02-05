@@ -87,6 +87,7 @@ namespace BigBoyShakedown.Manager
         }
         private void HandleCurrentScene()
         {
+            Time.ResetTime();
             switch (currentScene)
             {
                 case CurrentScene.MainMenu:

@@ -18,7 +18,7 @@ public class Time : MonoBehaviour
 
     private void Awake()
     {
-        startedTimers = new Dictionary<VariableReference<bool>, float>();
+        ResetTime();
     }
     void Update()
     {
@@ -97,6 +97,14 @@ public class Time : MonoBehaviour
     public static void ContinueGame()
     {
         FindObjectOfType<Time>().GameContinuedEvent();
+    }
+
+
+    public static void ResetTime()
+    {
+        startedTimers = new Dictionary<VariableReference<bool>, float>();
+        IsRunning = true;
+        timeEnlapsed = 0f;
     }
 }
 
