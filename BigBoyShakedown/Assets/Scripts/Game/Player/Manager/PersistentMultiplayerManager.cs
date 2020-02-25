@@ -92,6 +92,10 @@ namespace BigBoyShakedown.Manager
             {
                 case CurrentScene.MainMenu:
                     AudioManager.instance.StopPlaying();
+                    foreach (var item in playerInputs)
+                    {
+                        if (item) Destroy(item.gameObject);
+                    }
                     playerInputs = new PlayerInput[1];
                     break;
                 case CurrentScene.Options:

@@ -17,7 +17,7 @@ namespace BigBoyShakedown.UI.Input
         public CharacterSelectionData selectionData;
 
         bool gameStarted;
-
+        public int minPlayerCount = 4;
 
         private void Awake()
         {
@@ -73,7 +73,7 @@ namespace BigBoyShakedown.UI.Input
             }
             //return readyCount > 1;
             //FOR TESTING PURPOSES; CHANGE BACK ASAP
-            return readyCount > 0;
+            return readyCount >= minPlayerCount;
         }
 
         public void OnPlayerJoined(PlayerInput input)

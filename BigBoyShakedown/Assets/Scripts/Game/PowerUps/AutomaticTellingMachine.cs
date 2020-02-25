@@ -51,7 +51,7 @@ namespace BigBoyShakedown.Game.PowerUp
                 Time.StartTimer(timer, timeUntilStageCompletion * retrievalTimeMultiplier);
                 currentRunningTimers.Add(timer);
             }
-            else if(player.CheckRemainingMoney(interactingPlayer.metrics.PlayerScore[minPlayerSize - 1] + storingAmount * Mathf.Pow(storingMultiplier, interactionStagesCompleted)))
+            else if(player.CheckRemainingMoney(interactingPlayer.metrics.PlayerScore[minPlayerSize - 1]))
             {
                 if (moneyList[interactingPlayerIndex] < 0) moneyList[interactingPlayerIndex] = 0;
 
@@ -116,6 +116,10 @@ namespace BigBoyShakedown.Game.PowerUp
                 Manager.AudioManager.instance.StopPlaying("ATM_interact");
 
                 float moneyToBank = storingAmount * Mathf.Pow(storingMultiplier, interactionStagesCompleted);
+                if (moneyToBank > (interactingPlayer.score - interactingPlayer.metrics.PlayerScore[minPlayerSize - 1]))
+                {
+                    moneyToBank = interactingPlayer.score - interactingPlayer.metrics.PlayerScore[minPlayerSize - 1];
+                }
                 interactingPlayer.BankMoney(moneyToBank);
                 moneyList[interactingPlayerIndex] += moneyToBank;
 

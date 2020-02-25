@@ -51,7 +51,7 @@ namespace BigBoyShakedown.UI.Input
                 if (callbackContext.started && callbackContext.action.name == "Confirm")
                 {
                     AudioManager.instance.Play("menu_confirm");
-                    PersistentMultiplayerManager.instance.LoadScene("CharacterSelectScene");
+                    PersistentMultiplayerManager.instance.LoadScene("MainMenuScene");
                 }
                 else if (callbackContext.started && callbackContext.action.name == "Start")
                 {

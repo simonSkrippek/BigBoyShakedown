@@ -69,7 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PLAYER_LAYER: 9
   moneyPerGive: 100
-  range: 10
+  range: 6
   timeBetweenGives: 3
   lifetime: 20
   indicator: {fileID: 5127612724553100662}

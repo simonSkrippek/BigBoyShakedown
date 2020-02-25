@@ -55,11 +55,11 @@ namespace BigBoyShakedown.Player.Metrics
 
         #region combat        
         [Header("Punch"), Tooltip("damage player does in all stages, on different combo hits (first param is size, second is combo number)")]
-        private int[,] playerDamage = { { 40, 50, 80},
+        private int[,] playerDamage = { { 30, 40, 70},
                                         { 40, 50, 80},
-                                        { 40, 50, 80},
-                                        { 40, 50, 80},
-                                        { 40, 50, 80} };
+                                        { 45, 55, 85},
+                                        { 70, 80, 90},
+                                        { 80, 100, 120} };
         public int[,] PlayerDamage { get => playerDamage; }
 
         [Tooltip("knockback player does in all stages, on different combo hits (first param is size, second is combo number)")]
@@ -71,11 +71,11 @@ namespace BigBoyShakedown.Player.Metrics
         public float[,] PlayerPunchKnockback { get => playerPunchKnockback; }
 
         [Tooltip("stun player does in all stages, on different combo hits (first param is size, second is combo number)")]
-        private float[,] playerPunchStunDuration = { { .6f, .7f, .8f},
-                                        { .8f, 1f, 1.2f},
-                                        { 1f, 1.2f, 1.3f},
-                                        { 1.3f, 1.5f, 1.8f},
-                                        { 2f, 2f, 2.5f}};
+        private float[,] playerPunchStunDuration = { { .3f, .3f, .6f},
+                                        { .4f, .4f, .8f},
+                                        { .6f, .6f, 1f},
+                                        { .9f, .9f, 1.1f},
+                                        { 1f, 1f, 1.5f}};
         public float[,] PlayerPunchStunDuration { get => playerPunchStunDuration; }
 
 
@@ -91,15 +91,15 @@ namespace BigBoyShakedown.Player.Metrics
                                         { 2f, 2f, 2f},
                                         { 2f, 2f, 3f},
                                         { 2f, 2f, 3f},
-                                        { 2f, 2f, 3f}};
+                                        { 2.5f, 2.5f, 3.5f}};
         public float[,] PlayerPunchForwardMovementDistance { get => playerPunchForwardMovementDistance; }
 
         [Tooltip("complete time of punch (in seconds)")]
         private float[,] playerPunchAnimationDurationIntended = { { 0.75f, 0.75f, 1f},
                                         { 0.75f, 0.75f, 1f},
-                                        { 0.85f, 0.85f, 1.1f},
-                                        { 1.2f, 1.2f, 1.5f},
-                                        { 1.7f, 1.7f, 2f}};
+                                        { 0.95f, 0.95f, 1.3f},
+                                        { 1.6f, 1.6f, 1.9f},
+                                        { 2.3f, 2.3f, 2.6f}};
         public float[,] PlayerPunchAnimationDurationIntended { get => playerPunchAnimationDurationIntended; }
 
         [Tooltip("point in animation at that movement starts (in percent)")]
